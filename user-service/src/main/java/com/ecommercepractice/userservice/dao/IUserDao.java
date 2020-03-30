@@ -9,8 +9,8 @@ public interface IUserDao {
 
     int insertUser(User user);
     List<User> selectAllUsers();
+    Optional<User> selectUserByUserName(String userId);
+    int updateUserbyUserName(String userId, User user);
+    int deleteUserbyUserName(String userId);
 
-    Optional<User> selectUserByUserName(String user_name);
-    int updateUserbyUserName(String user_name, User user);
-    int deleteUserbyUserName(String user_name);
 }

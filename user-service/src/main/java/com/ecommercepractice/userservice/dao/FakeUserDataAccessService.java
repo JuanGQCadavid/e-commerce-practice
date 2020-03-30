@@ -23,15 +23,15 @@ public class FakeUserDataAccessService implements IUserDao {
     }
 
     @Override
-    public Optional<User> selectUserByUserName(String user_name) {
+    public Optional<User> selectUserByUserName(String userId) {
         return DB.stream()
-                .filter(user -> user.getUser_id().equals(user_name))
+                .filter(user -> user.getUserId().equals(userId))
                 .findFirst();
     }
 
     @Override
-    public int updateUserbyUserName(String user_name, User user) {
-        return selectUserByUserName(user_name)
+    public int updateUserbyUserName(String userId, User user) {
+        return selectUserByUserName(userId)
                 .map(user1 -> {
                     int indexOfUserToUpdate = DB.indexOf(user1);
                     if(indexOfUserToUpdate >= 0){
@@ -45,8 +45,8 @@ public class FakeUserDataAccessService implements IUserDao {
     }
 
     @Override
-    public int deleteUserbyUserName(String user_name) {
-        Optional<User> userMaybe = selectUserByUserName(user_name);
+    public int deleteUserbyUserName(String userId) {
+        Optional<User> userMaybe = selectUserByUserName(userId);
 
         if(!userMaybe.isPresent()){
             return 1;

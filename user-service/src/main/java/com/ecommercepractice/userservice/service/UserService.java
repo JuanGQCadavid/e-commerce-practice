@@ -1,15 +1,12 @@
 package com.ecommercepractice.userservice.service;
-
-
 import com.ecommercepractice.userservice.dao.IUserDao;
 import com.ecommercepractice.userservice.models.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
-
 import java.util.List;
 import java.util.Optional;
-import java.util.UUID;
+
 
 @Service
 public class UserService {
@@ -27,15 +24,15 @@ public class UserService {
         return userDao.selectAllUsers();
     }
 
-    public Optional<User> getUserbyUserName(String user_name){
-        return userDao.selectUserByUserName(user_name);
+    public Optional<User> getUserbyUserName(String userId){
+        return userDao.selectUserByUserName(userId);
     }
 
-    public int deleteUser(String user_name){
-        return userDao.deleteUserbyUserName(user_name);
+    public int deleteUser(String userId){
+        return userDao.deleteUserbyUserName(userId);
     }
 
-    public int updateUser(String user_name, User user){
-        return userDao.updateUserbyUserName(user_name,user);
+    public int updateUser(String userId, User user){
+        return userDao.updateUserbyUserName(userId,user);
     }
 }
