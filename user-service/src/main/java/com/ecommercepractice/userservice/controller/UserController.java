@@ -6,6 +6,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RequestMapping("api/v1/user")
@@ -20,7 +21,7 @@ public class UserController {
     }
 
     @PostMapping
-    public void addUser(@RequestBody User user){
+    public void addUser(@Valid @RequestBody User user){
         log.info(String.format("USER | POST {%s}", user.toString()));
         userService.addUser(user);
     }
@@ -46,7 +47,7 @@ public class UserController {
 
 
     @PutMapping(path = "{userId}")
-    public void updateUser(@PathVariable("userId") String userId, @RequestBody User user){
+    public void updateUser(@PathVariable("userId") String userId,@Valid @RequestBody User user){
         log.info(String.format("USER | PUT | USER_ID {%s -USER{ %s }}",userId, user.toString()));
         userService.updateUser(userId,user);
 
