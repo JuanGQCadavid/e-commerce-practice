@@ -10,14 +10,16 @@ import java.util.Optional;
 
 @Service
 public class UserService {
-    private final IUserDao userDao;
-
     @Autowired
-    public UserService(@Qualifier("fakeDao") IUserDao userDao) {
-        this.userDao = userDao;
+    @Qualifier("fakeDao")
+    private IUserDao userDao;
+
+
+    public UserService() {
+
     }
 
-    public int addUser(User user){
+    public User addUser(User user){
         return userDao.insertUser(user);
     }
     public List<User> getAllusers(){
@@ -28,11 +30,11 @@ public class UserService {
         return userDao.selectUserByUserName(userId);
     }
 
-    public int deleteUser(String userId){
+    public User deleteUser(String userId){
         return userDao.deleteUserbyUserName(userId);
     }
 
-    public int updateUser(String userId, User user){
+    public User updateUser(String userId, User user){
         return userDao.updateUserbyUserName(userId,user);
     }
 }

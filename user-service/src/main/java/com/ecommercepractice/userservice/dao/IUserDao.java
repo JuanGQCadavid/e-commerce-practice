@@ -7,10 +7,10 @@ import java.util.Optional;
 
 public interface IUserDao {
 
-    int insertUser(User user);
+    User insertUser(User user);
     List<User> selectAllUsers();
     Optional<User> selectUserByUserName(String userId);
-    int updateUserbyUserName(String userId, User user);
-    int deleteUserbyUserName(String userId);
+    User updateUserbyUserName(String userId, User user);
+    User deleteUserbyUserName(String userId);
 
 }

@@ -12,9 +12,9 @@ public class FakeUserDataAccessService implements IUserDao {
     private static List<User> DB = new ArrayList<User>();
 
     @Override
-    public int insertUser(User user) {
+    public User insertUser(User user) {
         DB.add(user);
-        return 1;
+        return user;
     }
 
     @Override
@@ -30,29 +30,27 @@ public class FakeUserDataAccessService implements IUserDao {
     }
 
     @Override
-    public int updateUserbyUserName(String userId, User user) {
+    public User updateUserbyUserName(String userId, User user) {
         return selectUserByUserName(userId)
                 .map(user1 -> {
                     int indexOfUserToUpdate = DB.indexOf(user1);
                     if(indexOfUserToUpdate >= 0){
                         DB.set(indexOfUserToUpdate,user);
-                        return 1;
+                        return user1;
                     }
                     else{
-                        return 0;
+                        return null;
                     }
-                }).orElse(0);
+                }).orElse(null);
     }
 
     @Override
-    public int deleteUserbyUserName(String userId) {
+    public User deleteUserbyUserName(String userId) {
         Optional<User> userMaybe = selectUserByUserName(userId);
-
         if(!userMaybe.isPresent()){
-            return 1;
+            return null;
         }
-
-        DB.remove(userMaybe.get());
-        return 0;
+        userMaybe.get().setActive(true);
+        return updateUserbyUserName(userId,userMaybe.get());
     }
 }
