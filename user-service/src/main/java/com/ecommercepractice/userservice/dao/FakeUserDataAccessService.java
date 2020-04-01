@@ -12,9 +12,16 @@ public class FakeUserDataAccessService implements IUserDao {
     private static List<User> DB = new ArrayList<User>();
 
     @Override
-    public User insertUser(User user) {
+    public Optional<User> insertUser(User user) {
+        System.out.println("Desde inser -> " + user);
+        Optional<User> checkedUser = selectUserByUserName(user.getUserId());
+
+        if (checkedUser.isPresent()){
+            return Optional.empty();
+        }
+
         DB.add(user);
-        return user;
+        return Optional.of(user);
     }
 
     @Override

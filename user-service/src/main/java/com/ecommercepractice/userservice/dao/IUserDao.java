@@ -7,7 +7,7 @@ import java.util.Optional;
 
 public interface IUserDao {
 
-    User insertUser(User user);
+    Optional<User> insertUser(User user);
     List<User> selectAllUsers();
     Optional<User> selectUserByUserName(String userId);
     User updateUserbyUserName(String userId, User user);

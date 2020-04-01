@@ -1,5 +1,6 @@
 package com.ecommercepractice.userservice.service;
 import com.ecommercepractice.userservice.dao.IUserDao;
+import com.ecommercepractice.userservice.exception.UserAlreadyCreatedException;
 import com.ecommercepractice.userservice.exception.UserNotFoundException;
 import com.ecommercepractice.userservice.models.User;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +22,8 @@ public class UserService {
     }
 
     public User addUser(User user){
-        return userDao.insertUser(user);
+        return userDao.insertUser(user)
+                .orElseThrow(() -> new UserAlreadyCreatedException(user.getUserId(),user));
     }
 
     public List<User> getAllusers(){
