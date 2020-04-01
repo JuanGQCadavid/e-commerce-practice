@@ -36,7 +36,7 @@ public class FakeUserDataAccessService implements IUserDao {
                     int indexOfUserToUpdate = DB.indexOf(user1);
                     if(indexOfUserToUpdate >= 0){
                         DB.set(indexOfUserToUpdate,user);
-                        return user1;
+                        return DB.get(indexOfUserToUpdate);
                     }
                     else{
                         return null;
@@ -50,7 +50,7 @@ public class FakeUserDataAccessService implements IUserDao {
         if(!userMaybe.isPresent()){
             return null;
         }
-        userMaybe.get().setActive(true);
+        userMaybe.get().setActive(false);
         return updateUserbyUserName(userId,userMaybe.get());
     }
 }

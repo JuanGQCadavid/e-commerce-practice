@@ -33,6 +33,7 @@ public class UserController {
     public HttpHeaders connectionWithOtherService(){
         HttpHeaders headers = new HttpHeaders();
         headers.add("Custom-Header", "foo");
+
         return headers;
     }
 
@@ -70,6 +71,7 @@ public class UserController {
 
         return new ResponseEntity<EntityModel<User>>(entityModel,HttpStatus.OK);
     }
+
     @DeleteMapping(path = "{userId}")
     public ResponseEntity<EntityModel<User>> deleteUser(@PathVariable("userId") String userId){
 
