@@ -37,27 +37,29 @@ public class FakeUserDataAccessService implements IUserDao {
     }
 
     @Override
-    public User updateUserbyUserName(String userId, User user) {
+    public Optional updateUserbyUserName(String userId, User user) {
+
         return selectUserByUserName(userId)
-                .map(user1 -> {
-                    int indexOfUserToUpdate = DB.indexOf(user1);
+                .map(userFound -> {
+                    int indexOfUserToUpdate = DB.indexOf(userFound);
                     if(indexOfUserToUpdate >= 0){
                         DB.set(indexOfUserToUpdate,user);
-                        return DB.get(indexOfUserToUpdate);
+                        return Optional.of(DB.get(indexOfUserToUpdate));
                     }
                     else{
-                        return null;
+                        return  Optional.empty();
                     }
-                }).orElse(null);
+                }).orElse(Optional.empty());
     }
 
     @Override
-    public User deleteUserbyUserName(String userId) {
+    public Optional deleteUserbyUserName(String userId) {
         Optional<User> userMaybe = selectUserByUserName(userId);
         if(!userMaybe.isPresent()){
-            return null;
+            return Optional.empty();
         }
         userMaybe.get().setActive(false);
+
         return updateUserbyUserName(userId,userMaybe.get());
     }
 }

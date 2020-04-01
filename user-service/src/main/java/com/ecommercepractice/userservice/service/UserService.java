@@ -38,10 +38,12 @@ public class UserService {
     }
 
     public User deleteUser(String userId){
-        return userDao.deleteUserbyUserName(userId);
+        return userDao.deleteUserbyUserName(userId)
+                .orElseThrow(() -> new UserNotFoundException(userId));
     }
 
     public User updateUser(String userId, User user){
-        return userDao.updateUserbyUserName(userId,user);
+        return userDao.updateUserbyUserName(userId,user)
+                .orElseThrow(() -> new UserNotFoundException(userId));
     }
 }
