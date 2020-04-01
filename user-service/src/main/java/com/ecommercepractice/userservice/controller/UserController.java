@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.util.stream.Collectors;
 
-@RequestMapping("api/v1/user")
+@RequestMapping("api/v1/users")
 @RestController
 @Slf4j // Lombok
 public class UserController {
@@ -23,7 +23,6 @@ public class UserController {
     private UserService userService;
 
     @Autowired
-    @Qualifier("userModelAss")
     private UserModelAssembler userModelAssembler;
 
     public UserController() {
@@ -33,7 +32,6 @@ public class UserController {
     public HttpHeaders connectionWithOtherService(){
         HttpHeaders headers = new HttpHeaders();
         headers.add("Custom-Header", "foo");
-
         return headers;
     }
 
@@ -73,12 +71,12 @@ public class UserController {
     }
 
     @DeleteMapping(path = "{userId}")
-    public ResponseEntity<EntityModel<User>> deleteUser(@PathVariable("userId") String userId){
+    public ResponseEntity deleteUser(@PathVariable("userId") String userId){
 
         log.info(String.format("USER | DELETE | USER_ID  {%s}",userId));
         EntityModel<User> entityModel = userModelAssembler.toModel(userService.deleteUser(userId));
 
-        return new ResponseEntity<EntityModel<User>>(entityModel,HttpStatus.OK);
+        return new ResponseEntity(HttpStatus.NO_CONTENT);
     }
 
 

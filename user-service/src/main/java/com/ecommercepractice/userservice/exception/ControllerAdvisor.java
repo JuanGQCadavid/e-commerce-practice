@@ -71,6 +71,6 @@ public class ControllerAdvisor extends ResponseEntityExceptionHandler {
 
         body.put("errors", errors);
 
-        return new ResponseEntity<>(body,HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>(body.toMap(),HttpStatus.BAD_REQUEST);
     }
 }
