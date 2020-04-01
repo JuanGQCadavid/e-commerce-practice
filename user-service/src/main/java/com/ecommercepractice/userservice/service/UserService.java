@@ -16,7 +16,6 @@ public class UserService {
     @Qualifier("fakeDao")
     private IUserDao userDao;
 
-
     public UserService() {
 
     }

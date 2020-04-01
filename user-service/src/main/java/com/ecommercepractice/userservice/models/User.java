@@ -21,6 +21,10 @@ public class User {
     private  String userId;
 
     @NotNull
+    @Size(min= 6, max = 24)
+    private String password;
+
+    @NotNull
     @Size(max = 24)
     private  String firstName;
 
