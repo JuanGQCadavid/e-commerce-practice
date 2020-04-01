@@ -22,6 +22,7 @@ public class UserService {
     public User addUser(User user){
         return userDao.insertUser(user);
     }
+
     public List<User> getAllusers(){
         return userDao.selectAllUsers();
     }
