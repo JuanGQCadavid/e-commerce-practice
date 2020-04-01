@@ -12,9 +12,16 @@ public class FakeUserDataAccessService implements IUserDao {
     private static List<User> DB = new ArrayList<User>();
 
     @Override
-    public User insertUser(User user) {
+    public Optional<User> insertUser(User user) {
+        System.out.println("Desde inser -> " + user);
+        Optional<User> checkedUser = selectUserByUserName(user.getUserId());
+
+        if (checkedUser.isPresent()){
+            return Optional.empty();
+        }
+
         DB.add(user);
-        return user;
+        return Optional.of(user);
     }
 
     @Override
@@ -30,27 +37,29 @@ public class FakeUserDataAccessService implements IUserDao {
     }
 
     @Override
-    public User updateUserbyUserName(String userId, User user) {
+    public Optional updateUserbyUserName(String userId, User user) {
+
         return selectUserByUserName(userId)
-                .map(user1 -> {
-                    int indexOfUserToUpdate = DB.indexOf(user1);
+                .map(userFound -> {
+                    int indexOfUserToUpdate = DB.indexOf(userFound);
                     if(indexOfUserToUpdate >= 0){
                         DB.set(indexOfUserToUpdate,user);
-                        return DB.get(indexOfUserToUpdate);
+                        return Optional.of(DB.get(indexOfUserToUpdate));
                     }
                     else{
-                        return null;
+                        return  Optional.empty();
                     }
-                }).orElse(null);
+                }).orElse(Optional.empty());
     }
 
     @Override
-    public User deleteUserbyUserName(String userId) {
+    public Optional deleteUserbyUserName(String userId) {
         Optional<User> userMaybe = selectUserByUserName(userId);
         if(!userMaybe.isPresent()){
-            return null;
+            return Optional.empty();
         }
         userMaybe.get().setActive(false);
+
         return updateUserbyUserName(userId,userMaybe.get());
     }
 }

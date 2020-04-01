@@ -1,5 +1,7 @@
 package com.ecommercepractice.userservice.service;
 import com.ecommercepractice.userservice.dao.IUserDao;
+import com.ecommercepractice.userservice.exception.UserAlreadyCreatedException;
+import com.ecommercepractice.userservice.exception.UserNotFoundException;
 import com.ecommercepractice.userservice.models.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -20,21 +22,28 @@ public class UserService {
     }
 
     public User addUser(User user){
-        return userDao.insertUser(user);
+        return userDao.insertUser(user)
+                .orElseThrow(() -> new UserAlreadyCreatedException(user.getUserId(),user));
     }
+
     public List<User> getAllusers(){
         return userDao.selectAllUsers();
     }
 
-    public Optional<User> getUserbyUserName(String userId){
-        return userDao.selectUserByUserName(userId);
+    public User getUserbyUserName(String userId){
+
+        return userDao.selectUserByUserName(userId)
+                .orElseThrow(() -> new UserNotFoundException(userId));
+
     }
 
     public User deleteUser(String userId){
-        return userDao.deleteUserbyUserName(userId);
+        return userDao.deleteUserbyUserName(userId)
+                .orElseThrow(() -> new UserNotFoundException(userId));
     }
 
     public User updateUser(String userId, User user){
-        return userDao.updateUserbyUserName(userId,user);
+        return userDao.updateUserbyUserName(userId,user)
+                .orElseThrow(() -> new UserNotFoundException(userId));
     }
 }
