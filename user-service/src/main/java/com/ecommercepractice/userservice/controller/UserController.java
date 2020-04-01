@@ -67,7 +67,7 @@ public class UserController {
     public ResponseEntity<EntityModel<User>> getUserByUserName(@PathVariable("userId") String userId){
 
         log.info(String.format("USER | GET | USER_ID {%s}",userId));
-        EntityModel<User> entityModel = userModelAssembler.toModel(userService.getUserbyUserName(userId).get());
+        EntityModel<User> entityModel = userModelAssembler.toModel(userService.getUserbyUserName(userId));
 
         return new ResponseEntity<EntityModel<User>>(entityModel,HttpStatus.OK);
     }

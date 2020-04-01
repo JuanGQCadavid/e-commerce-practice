@@ -5,6 +5,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
+import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
@@ -15,6 +16,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+@ControllerAdvice
 public class ControllerAdvisor extends ResponseEntityExceptionHandler {
 
     @ExceptionHandler(UserAlreadyCreatedException.class)
@@ -32,11 +34,11 @@ public class ControllerAdvisor extends ResponseEntityExceptionHandler {
 
         body.put("error", err_msg);
 
-        return new ResponseEntity<>(body, HttpStatus.CONFLICT);
+        return new ResponseEntity<>(body.toMap(), HttpStatus.CONFLICT);
     }
 
     @ExceptionHandler(UserNotFoundException.class)
-    public ResponseEntity<Object> handleUserNotFound(
+    public ResponseEntity handleUserNotFound(
             UserNotFoundException ex, WebRequest request
     ){
         JSONObject body = new JSONObject();
@@ -50,8 +52,9 @@ public class ControllerAdvisor extends ResponseEntityExceptionHandler {
 
         body.put("error", err_msg);
 
-        return new ResponseEntity<>(body, HttpStatus.NOT_FOUND);
+        System.out.println(body);
 
+        return new ResponseEntity<>(body.toMap(), HttpStatus.NOT_FOUND);
     }
 
     @Override

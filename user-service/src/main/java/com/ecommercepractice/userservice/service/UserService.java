@@ -1,5 +1,6 @@
 package com.ecommercepractice.userservice.service;
 import com.ecommercepractice.userservice.dao.IUserDao;
+import com.ecommercepractice.userservice.exception.UserNotFoundException;
 import com.ecommercepractice.userservice.models.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -27,8 +28,11 @@ public class UserService {
         return userDao.selectAllUsers();
     }
 
-    public Optional<User> getUserbyUserName(String userId){
-        return userDao.selectUserByUserName(userId);
+    public User getUserbyUserName(String userId){
+
+        return userDao.selectUserByUserName(userId)
+                .orElseThrow(() -> new UserNotFoundException(userId));
+
     }
 
     public User deleteUser(String userId){
