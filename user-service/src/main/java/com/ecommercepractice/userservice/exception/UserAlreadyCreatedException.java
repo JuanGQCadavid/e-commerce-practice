@@ -8,11 +8,11 @@ import lombok.extern.slf4j.Slf4j;
 @Getter
 @Slf4j
 public class UserAlreadyCreatedException extends RuntimeException{
-    public User badUser;
+    public User payload;
 
     public UserAlreadyCreatedException(String userId, User badUser){
         super(String.format("User with userID %s already exist", userId));
-        this.badUser = badUser;
+        this.payload = badUser;
         log.error(this.getMessage());
     }
 
