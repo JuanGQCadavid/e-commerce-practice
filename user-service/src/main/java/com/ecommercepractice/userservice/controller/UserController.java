@@ -37,15 +37,12 @@ public class UserController {
     @Autowired
     private UserModelAssembler userModelAssembler;
 
-    public UserController() {
-
-    }
-
     public HttpHeaders connectionWithOtherService(){
         HttpHeaders headers = new HttpHeaders();
         headers.add("Custom-Header", "foo");
         return headers;
     }
+
     @ApiOperation(value = "CREATE a user.", response = User.class, responseContainer = "EntityModel")
     @PostMapping
     public ResponseEntity<EntityModel<User>> addUser(
@@ -111,5 +108,4 @@ public class UserController {
 
         return new ResponseEntity<EntityModel<User>>(entityModel,HttpStatus.ACCEPTED);
     }
-
 }
