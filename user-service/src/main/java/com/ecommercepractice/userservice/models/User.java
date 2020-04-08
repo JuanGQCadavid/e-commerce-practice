@@ -2,25 +2,25 @@ package com.ecommercepractice.userservice.models;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.NoArgsConstructor;
-import lombok.AllArgsConstructor;
-import lombok.ToString;
+import lombok.*;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 @Getter
 @Setter
-@NoArgsConstructor
-@AllArgsConstructor
+@RequiredArgsConstructor
 @ToString
 @ApiModel(value="User",description="Module used to represent the user data onto the system")
+@Entity
 public class User {
-    @NotNull
-    @Size(min = 6, max=24)
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @ApiModelProperty(value = "Unique user identifier")
     private  String userId;
 
@@ -43,8 +43,17 @@ public class User {
     @ApiModelProperty(value = "Flag that indicates the user state, True indicates tha the user is Activate, no activate in the other case ")
     private  boolean isActive;
 
+    @NotNull
     @NotEmpty
     @ApiModelProperty(value = "User's email")
     private  String email;
+
+    public User(String password, String firstName, String secondName, boolean isActive, String email){
+        this.password = password;
+        this.firstName = firstName;
+        this.secondName = secondName;
+        this.isActive = isActive;
+        this.email = email;
+    }
 
 }
