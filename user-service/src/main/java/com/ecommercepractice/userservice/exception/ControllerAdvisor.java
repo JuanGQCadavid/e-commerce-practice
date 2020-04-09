@@ -13,9 +13,20 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 import java.util.List;
 import java.util.stream.Collectors;
 
+/**
+ * Intercepts the erros occurred during the ejection time and map them
+ * to be send it to the user that perform the call indicating the problem
+ * itself
+ */
 @ControllerAdvice
 public class ControllerAdvisor extends ResponseEntityExceptionHandler {
 
+    /**
+     * The user already exist exception.
+     * @param ex
+     * @param request
+     * @return
+     */
     @ExceptionHandler(UserAlreadyCreatedException.class)
     public ResponseEntity<Object> handleUserAlreadyCreatedException(
             UserAlreadyCreatedException ex, WebRequest request){
@@ -24,6 +35,14 @@ public class ControllerAdvisor extends ResponseEntityExceptionHandler {
                 HttpStatus.CONFLICT
         );
     }
+
+    /**
+     * user doesn't exists exception.
+     * It is throwed when performing Update, delete or get
+     * @param ex
+     * @param request
+     * @return
+     */
 
     @ExceptionHandler(UserNotFoundException.class)
     public ResponseEntity handleUserNotFound(
@@ -34,6 +53,15 @@ public class ControllerAdvisor extends ResponseEntityExceptionHandler {
                 HttpStatus.NOT_FOUND);
     }
 
+    /**
+     * This method handle when the user body is missing some arguments that
+     * are required by the actual contract of the API
+     * @param ex
+     * @param headers
+     * @param status
+     * @param request
+     * @return
+     */
     @Override
     protected ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException ex,
                                                                   HttpHeaders headers,
