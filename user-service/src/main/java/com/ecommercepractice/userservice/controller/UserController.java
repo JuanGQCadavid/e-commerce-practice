@@ -45,7 +45,7 @@ public class UserController {
     @ApiOperation(value = "CREATE a user.", response = User.class, responseContainer = "EntityModel")
     @PostMapping
     public ResponseEntity<EntityModel<User>> addUser(
-            @ApiParam(name="UserData",
+            @ApiParam(name="User",
                     value = "Required user personal information",
                     required = true) @Valid @RequestBody User user){
 
@@ -100,7 +100,7 @@ public class UserController {
     @PutMapping(path = "{userId}")
     public ResponseEntity<EntityModel<User>> updateUser(
             @ApiParam(name = "User id", value = "The user id associated to the user requested" , required = true) @PathVariable("userId") Long userId,
-            @ApiParam(name = "userData", value ="User info that are gonna be update" , required = true)@Valid @RequestBody User user){
+            @ApiParam(name = "User", value ="User info that are gonna be update" , required = true)@Valid @RequestBody User user){
 
         log.info(String.format("USER | PUT | USER_ID {%s -USER{ %s }}",userId, user.toString()));
         EntityModel<User> entityModel = userModelAssembler.toModel(userService.updateUser(userId,user));

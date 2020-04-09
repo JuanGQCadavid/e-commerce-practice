@@ -2,8 +2,10 @@ package com.ecommercepractice.userservice.models;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import lombok.*;
-
+import lombok.Getter;
+import lombok.Setter;
+import lombok.RequiredArgsConstructor;
+import lombok.ToString;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
