@@ -37,7 +37,7 @@ public class UserService {
     public User getUserbyUserName(Long userId){
 
         return userDao.selectUserByUserId(userId)
-                .orElseThrow(() -> new UserNotFoundException());
+                .orElseThrow(() -> new UserNotFoundException(userId));
 
     }
 
