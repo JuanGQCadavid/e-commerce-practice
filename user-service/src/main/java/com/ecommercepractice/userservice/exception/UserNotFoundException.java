@@ -6,11 +6,11 @@ import lombok.extern.slf4j.Slf4j;
 @Getter
 @Slf4j
 public class UserNotFoundException extends RuntimeException {
-    public String payload;
+    public Long payload;
 
-    public UserNotFoundException(String userID){
-        super(String.format("User %s not found ",userID));
-        this.payload = userID;
+    public UserNotFoundException(Long userId){
+        super(String.format("User %s not found ",userId));
+        this.payload = userId;
         log.error(this.getMessage());
     }
 
