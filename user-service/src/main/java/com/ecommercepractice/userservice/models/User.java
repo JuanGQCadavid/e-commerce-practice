@@ -51,7 +51,7 @@ public class User {
     @NotNull
     @Size(max = 24)
     @ApiModelProperty(value = "User's secondName")
-    private  String secondName;
+    private  String lastName;
 
     @NotNull
     @ApiModelProperty(value = "Flag that indicates the user state, True indicates tha the user is Activate, no activate in the other case ")
@@ -62,10 +62,11 @@ public class User {
     @ApiModelProperty(value = "User's email")
     private  String email;
 
-    public User(String password, String firstName, String secondName, boolean isActive, String email){
+
+    public User(String password, String firstName, String lastName, boolean isActive, String email){
         this.password = password;
         this.firstName = firstName;
-        this.secondName = secondName;
+        this.lastName = lastName;
         this.isActive = isActive;
         this.email = email;
     }
