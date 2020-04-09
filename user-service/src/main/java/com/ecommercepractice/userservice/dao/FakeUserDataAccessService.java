@@ -14,7 +14,7 @@ public class FakeUserDataAccessService implements IUserDao {
     @Override
     public Optional<User> insertUser(User user) {
         System.out.println("Desde inser -> " + user);
-        Optional<User> checkedUser = selectUserByUserName(user.getUserId());
+        Optional<User> checkedUser = selectUserByUserId(user.getUserId());
 
         if (checkedUser.isPresent()){
             return Optional.empty();
@@ -30,16 +30,16 @@ public class FakeUserDataAccessService implements IUserDao {
     }
 
     @Override
-    public Optional<User> selectUserByUserName(String userId) {
+    public Optional<User> selectUserByUserId(Long userId) {
         return DB.stream()
                 .filter(user -> user.getUserId().equals(userId))
                 .findFirst();
     }
 
     @Override
-    public Optional updateUserbyUserName(String userId, User user) {
+    public Optional updateUserByUserId(Long userId, User user) {
 
-        return selectUserByUserName(userId)
+        return selectUserByUserId(userId)
                 .map(userFound -> {
                     int indexOfUserToUpdate = DB.indexOf(userFound);
                     if(indexOfUserToUpdate >= 0){
@@ -53,13 +53,18 @@ public class FakeUserDataAccessService implements IUserDao {
     }
 
     @Override
-    public Optional deleteUserbyUserName(String userId) {
-        Optional<User> userMaybe = selectUserByUserName(userId);
+    public Optional deleteUserByUserId(Long userId) {
+        Optional<User> userMaybe = selectUserByUserId(userId);
         if(!userMaybe.isPresent()){
             return Optional.empty();
         }
         userMaybe.get().setActive(false);
 
-        return updateUserbyUserName(userId,userMaybe.get());
+        return updateUserByUserId(userId,userMaybe.get());
+    }
+
+    @Override
+    public Optional<User> findUserByEamil(String email) {
+        return Optional.empty();
     }
 }

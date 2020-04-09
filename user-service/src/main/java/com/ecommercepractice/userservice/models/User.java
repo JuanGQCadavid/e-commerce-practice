@@ -20,9 +20,9 @@ import javax.validation.constraints.Size;
 @Entity
 public class User {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @ApiModelProperty(value = "Unique user identifier")
-    private  String userId;
+    private  Long userId;
 
     @NotNull
     @Size(min= 6, max = 24)

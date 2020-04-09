@@ -77,7 +77,7 @@ public class UserController {
     @GetMapping(path = "{userId}")
 
     public ResponseEntity<EntityModel<User>> getUserByUserName(
-            @ApiParam(name = "User id", value = "The user id associated to the user requested", required = true) @PathVariable("userId") String userId){
+            @ApiParam(name = "User id", value = "The user id associated to the user requested", required = true) @PathVariable("userId") Long userId){
 
         log.info(String.format("USER | GET | USER_ID {%s}",userId));
         EntityModel<User> entityModel = userModelAssembler.toModel(userService.getUserbyUserName(userId));
@@ -89,7 +89,7 @@ public class UserController {
     @DeleteMapping(path = "{userId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public ResponseEntity deleteUser(
-            @ApiParam(name = "User id", value = "The user id associated to the user requested" , required = true) @PathVariable("userId") String userId){
+            @ApiParam(name = "User id", value = "The user id associated to the user requested" , required = true) @PathVariable("userId") Long userId){
 
         log.info(String.format("USER | DELETE | USER_ID  {%s}",userId));
         EntityModel<User> entityModel = userModelAssembler.toModel(userService.deleteUser(userId));
@@ -100,7 +100,7 @@ public class UserController {
     @ApiOperation(value = "UPDATE a user by its userId", response = User.class)
     @PutMapping(path = "{userId}")
     public ResponseEntity<EntityModel<User>> updateUser(
-            @ApiParam(name = "User id", value = "The user id associated to the user requested" , required = true) @PathVariable("userId") String userId,
+            @ApiParam(name = "User id", value = "The user id associated to the user requested" , required = true) @PathVariable("userId") Long userId,
             @ApiParam(name = "userData", value ="User info that are gonna be update" , required = true)@Valid @RequestBody User user){
 
         log.info(String.format("USER | PUT | USER_ID {%s -USER{ %s }}",userId, user.toString()));

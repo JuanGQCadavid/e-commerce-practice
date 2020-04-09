@@ -13,7 +13,7 @@ import java.util.Optional;
 @Service
 public class UserService {
     @Autowired
-    @Qualifier("fakeDao")
+    @Qualifier("h2DAO")
     private IUserDao userDao;
 
     public UserService() {
@@ -21,28 +21,33 @@ public class UserService {
     }
 
     public User addUser(User user){
+
+        if(userDao.findUserByEamil(user.getEmail()).isPresent()){
+            throw new UserAlreadyCreatedException(user.getEmail(), user);
+        }
+
         return userDao.insertUser(user)
-                .orElseThrow(() -> new UserAlreadyCreatedException(user.getUserId(),user));
+                .get();
     }
 
     public List<User> getAllusers(){
         return userDao.selectAllUsers();
     }
 
-    public User getUserbyUserName(String userId){
+    public User getUserbyUserName(Long userId){
 
-        return userDao.selectUserByUserName(userId)
+        return userDao.selectUserByUserId(userId)
                 .orElseThrow(() -> new UserNotFoundException(userId));
 
     }
 
-    public User deleteUser(String userId){
-        return userDao.deleteUserbyUserName(userId)
+    public User deleteUser(Long userId){
+        return userDao.deleteUserByUserId(userId)
                 .orElseThrow(() -> new UserNotFoundException(userId));
     }
 
-    public User updateUser(String userId, User user){
-        return userDao.updateUserbyUserName(userId,user)
+    public User updateUser(Long userId, User user){
+        return userDao.updateUserByUserId(userId,user)
                 .orElseThrow(() -> new UserNotFoundException(userId));
     }
 }

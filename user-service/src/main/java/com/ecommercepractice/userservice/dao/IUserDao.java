@@ -9,8 +9,9 @@ public interface IUserDao {
 
     Optional<User> insertUser(User user);
     List<User> selectAllUsers();
-    Optional<User> selectUserByUserName(String userId);
-    Optional<User> updateUserbyUserName(String userId, User user);
-    Optional<User> deleteUserbyUserName(String userId);
+    Optional<User> selectUserByUserId(Long userId);
+    Optional<User> updateUserByUserId(Long userId, User user);
+    Optional<User> deleteUserByUserId(Long userId);
+    Optional<User> findUserByEamil(String email);
 
 }

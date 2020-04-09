@@ -1,4 +1,4 @@
-package com.ecommercepractice.userservice.dao;
+package com.ecommercepractice.userservice.repository;
 
 import com.ecommercepractice.userservice.models.Customers;
 import org.springframework.data.repository.CrudRepository;
