@@ -12,6 +12,18 @@ import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+/**
+ * User model.
+ *
+ * It holds the user information like:
+ *
+ *  - userId -> auto generated.
+ *  - password -> @Size(min= 6, max = 24) @NotNull
+ *  - firstName -> @Size(max = 24) @NotNull
+ *  - secondName -> @Size(max = 24) @NotNull
+ *  - isActive -> true / false @NotNull
+ *  - email -> @NotNull
+ */
 @Getter
 @Setter
 @RequiredArgsConstructor

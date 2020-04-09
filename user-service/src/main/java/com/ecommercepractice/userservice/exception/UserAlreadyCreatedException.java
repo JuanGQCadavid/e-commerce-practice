@@ -5,6 +5,14 @@ import lombok.Getter;
 import lombok.extern.log4j.Log4j;
 import lombok.extern.slf4j.Slf4j;
 
+/**
+ * User exception.
+ *
+ * Indicates the user that are attempting to save is already on the
+ * register.
+ *
+ * We base on the user email to know if the user is already or not saved.
+ */
 @Getter
 @Slf4j
 public class UserAlreadyCreatedException extends RuntimeException{
