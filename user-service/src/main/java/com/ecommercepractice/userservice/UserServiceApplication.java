@@ -10,7 +10,6 @@ import org.springframework.context.annotation.Bean;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 @SpringBootApplication
-@EnableSwagger2
 @Slf4j
 public class UserServiceApplication {
 
@@ -18,8 +17,9 @@ public class UserServiceApplication {
 		SpringApplication.run(UserServiceApplication.class, args);
 	}
 
+
 	@Bean
-	public CommandLineRunner demo(UserRepository repository) {
+	public CommandLineRunner populateDataBase(UserRepository repository) {
 		return (args) -> {
 			// save a few customers
 			repository.save(new User("asd123","Jack", "Bauer",true, "Jack.Bauer"));
