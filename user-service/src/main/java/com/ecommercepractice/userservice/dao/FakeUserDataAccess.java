@@ -1,14 +1,15 @@
 package com.ecommercepractice.userservice.dao;
 
 import com.ecommercepractice.userservice.models.User;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-@Repository("fakeDao")
-public class FakeUserDataAccessService implements IUserDao {
+@Component("fakeDao")
+public class FakeUserDataAccess implements IUserDao {
     private static List<User> DB = new ArrayList<User>();
 
     @Override
