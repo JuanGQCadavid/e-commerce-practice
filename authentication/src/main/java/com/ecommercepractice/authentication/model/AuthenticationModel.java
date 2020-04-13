@@ -29,7 +29,7 @@ public class AuthenticationModel {
 
     @NotEmpty
     @ApiModelProperty(value = "User's email")
-    private String UserEmail;
+    private String userEmail;
 
     @NotNull
     @Size(min= 6, max = 24)
