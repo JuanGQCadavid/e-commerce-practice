@@ -3,10 +3,7 @@ package com.ecommercepractice.authentication.model;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
@@ -14,6 +11,7 @@ import javax.validation.constraints.NotNull;
 
 @Getter
 @Setter
+@ToString
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
@@ -33,11 +31,11 @@ public class MobileInfoModel {
 
     @NotEmpty
     @ApiModelProperty("iOs, Android ...")
-    private String OperatingSystem;
+    private String operatingSystem;
 
     @NotEmpty
     @ApiModelProperty("Operating System version.")
-    private String SystemVersion;
+    private String systemVersion;
 
 
 }

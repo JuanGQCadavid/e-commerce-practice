@@ -26,7 +26,7 @@ public class TokenModel {
 
     @Id
     @ApiModelProperty(value = "Unique user token, used by the client to identified itself after log in.")
-    private String idToken;
+    private String tokenId;
 
     @ApiModelProperty(value = "Indicated the time when the Token was generate")
     private Timestamp generatedDate;
@@ -35,7 +35,7 @@ public class TokenModel {
     private Timestamp expiredDate;
 
     public TokenModel(Date generatedDate, Date expiredDate ){
-        this.idToken = UUID.randomUUID().toString();
+        this.tokenId = UUID.randomUUID().toString();
         this.generatedDate = new Timestamp(generatedDate.getTime());
         this.expiredDate = new Timestamp(expiredDate.getTime());
     }
