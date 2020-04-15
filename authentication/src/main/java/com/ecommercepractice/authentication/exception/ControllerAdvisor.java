@@ -1,6 +1,7 @@
 package com.ecommercepractice.authentication.exception;
 
 import com.ecommercepractice.authentication.util.Pair;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,10 +16,17 @@ import java.util.stream.Collectors;
 
 @ControllerAdvice
 public class ControllerAdvisor extends ResponseEntityExceptionHandler {
+    /*
     final String EMAILALREADYUSED = "EmailAlreadyUsedException";
     final String EMAILNOTFOUND = "EmailNotFoundException";
     final String INVALIDPASSWORD = "InvalidUserPasswordException";
     final String MISSINGFIELDS = "MissingFieldsBody";
+    final String EXPIREDTOKEN = "ExpiredUserTokenException";
+    final String INVALIDTOKEN = "InvalidUserTokenException";
+    final String TOKENNOFOUND = "TokenNotFoundException";
+     */
+
+    ErrorType errorType;
 
     @ExceptionHandler(EmailAlreadyUsedException.class)
     public ResponseEntity<Object> handleEmailAlreadyUsedException(
@@ -26,10 +34,12 @@ public class ControllerAdvisor extends ResponseEntityExceptionHandler {
             WebRequest request
     ){
         return new ResponseEntity<>(
-            new ErrorMessage(ex.getMessage(),EMAILALREADYUSED,ex.getPayload()),
+            new ErrorMessage(ex.getMessage(),errorType.EMAILALREADYUSED,ex.getPayload()),
                 HttpStatus.UNPROCESSABLE_ENTITY
         );
     }
+
+
 
     @ExceptionHandler(EmailNotFoundException.class)
     public ResponseEntity<Object> handleEmailNotFoundException(
@@ -37,8 +47,18 @@ public class ControllerAdvisor extends ResponseEntityExceptionHandler {
             WebRequest request
     ){
         return new ResponseEntity(
-                new ErrorMessage(ex.getMessage(),EMAILNOTFOUND, ex.getPayload()),
+                new ErrorMessage(ex.getMessage(),errorType.EMAILNOTFOUND, ex.getPayload()),
                 HttpStatus.NOT_FOUND
+        );
+    }
+    @ExceptionHandler(ExpiredUserTokenException.class)
+    public ResponseEntity<Object> handleExpiredUserToken(
+            ExpiredUserTokenException ex,
+            WebRequest request
+    ){
+        return new ResponseEntity<>(
+                new ErrorMessage(ex.getMessage(),errorType.EXPIREDTOKEN,ex.getPayload()),
+                HttpStatus.GONE
         );
     }
 
@@ -48,10 +68,33 @@ public class ControllerAdvisor extends ResponseEntityExceptionHandler {
             WebRequest request
     ){
         return new ResponseEntity(
-                new ErrorMessage(ex.getMessage(),INVALIDPASSWORD, ex.getPayload()),
+                new ErrorMessage(ex.getMessage(),errorType.INVALIDPASSWORD, ex.getPayload()),
                 HttpStatus.UNAUTHORIZED
         );
     }
+
+    @ExceptionHandler(InvalidUserTokenException.class)
+    public ResponseEntity<Object> handleInvalidUserToken(
+            InvalidUserTokenException ex,
+            WebRequest request
+    ){
+        return new ResponseEntity<>(
+                new ErrorMessage(ex.getMessage(),errorType.INVALIDTOKEN,ex.getPayload()),
+                HttpStatus.UNAUTHORIZED
+        );
+    }
+
+    @ExceptionHandler(TokenNotFoundException.class)
+    public ResponseEntity<Object> handleTokenNotFound(
+            TokenNotFoundException ex,
+            WebRequest request
+    ){
+        return new ResponseEntity<>(
+                new ErrorMessage(ex.getMessage(),errorType.TOKENNOFOUND,ex.getPayload()),
+                HttpStatus.UNAUTHORIZED
+        );
+    }
+
 
     /**
      * This method handle when the user body is missing some arguments that
@@ -77,7 +120,7 @@ public class ControllerAdvisor extends ResponseEntityExceptionHandler {
         String errorMessage = "There is a problem with the fields format.";
 
         return new ResponseEntity<>(
-                new ErrorMessage(errorMessage,MISSINGFIELDS,payload),
+                new ErrorMessage(errorMessage,errorType.MISSINGFIELDS,payload),
                 HttpStatus.BAD_REQUEST);
     }
 
