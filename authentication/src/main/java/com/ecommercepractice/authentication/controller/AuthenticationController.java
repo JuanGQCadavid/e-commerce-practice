@@ -42,10 +42,6 @@ public class AuthenticationController {
     @Autowired
     MobileService mobileService;
 
-    @Autowired
-    TokenService tokenService;
-
-
     @PostMapping("/register")
     @ResponseStatus(code = HttpStatus.CREATED)
     @ResponseBody
@@ -90,10 +86,13 @@ public class AuthenticationController {
         authService.validateAuth(userEmail,tokenId);
     }
 
-    @DeleteMapping("/logout")
+    @DeleteMapping("/logout/{tokenId}")
     @ResponseStatus(code = HttpStatus.NO_CONTENT)
-    public void logOut(){
-
+    public void logOut(
+            @PathVariable String tokenId
+    ){
+        log.info(String.format("AUTH | LOGOUT | PAYLOAD { tokenId -> %s }",tokenId));
+        authService.logout(tokenId);
     }
 
 }

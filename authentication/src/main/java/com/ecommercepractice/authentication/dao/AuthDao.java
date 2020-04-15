@@ -24,4 +24,8 @@ public class AuthDao {
         return authenticationRepository.findById(userId);
     }
 
+    public Optional<AuthenticationModel> findByIdToken (String idToken){
+        return authenticationRepository.findByIdToken(idToken);
+    }
+
 }
