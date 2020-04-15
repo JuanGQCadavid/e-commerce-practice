@@ -15,4 +15,8 @@ public class TokenDao {
     public Optional<TokenModel> createToken( TokenModel token){
         return Optional.ofNullable(tokenRepository.save(token));
     }
+
+    public Optional<TokenModel> findToken(String tokenId){
+        return tokenRepository.findById(tokenId);
+    }
 }

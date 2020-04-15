@@ -20,5 +20,8 @@ public class AuthDao {
         return Optional.ofNullable(authenticationRepository.save(newAuth));
     }
 
+    public Optional<AuthenticationModel> findById(String userId){
+        return authenticationRepository.findById(userId);
+    }
 
 }
