@@ -16,15 +16,6 @@ import java.util.stream.Collectors;
 
 @ControllerAdvice
 public class ControllerAdvisor extends ResponseEntityExceptionHandler {
-    /*
-    final String EMAILALREADYUSED = "EmailAlreadyUsedException";
-    final String EMAILNOTFOUND = "EmailNotFoundException";
-    final String INVALIDPASSWORD = "InvalidUserPasswordException";
-    final String MISSINGFIELDS = "MissingFieldsBody";
-    final String EXPIREDTOKEN = "ExpiredUserTokenException";
-    final String INVALIDTOKEN = "InvalidUserTokenException";
-    final String TOKENNOFOUND = "TokenNotFoundException";
-     */
 
     ErrorType errorType;
 
@@ -34,7 +25,7 @@ public class ControllerAdvisor extends ResponseEntityExceptionHandler {
             WebRequest request
     ){
         return new ResponseEntity<>(
-            new ErrorMessage(ex.getMessage(),errorType.EMAILALREADYUSED,ex.getPayload()),
+            new ErrorMessage(ex.getMessage(),errorType.EMAIL_ALREADY_USED,ex.getPayload()),
                 HttpStatus.UNPROCESSABLE_ENTITY
         );
     }
@@ -47,7 +38,7 @@ public class ControllerAdvisor extends ResponseEntityExceptionHandler {
             WebRequest request
     ){
         return new ResponseEntity(
-                new ErrorMessage(ex.getMessage(),errorType.EMAILNOTFOUND, ex.getPayload()),
+                new ErrorMessage(ex.getMessage(),errorType.EMAIL_NOT_FOUND, ex.getPayload()),
                 HttpStatus.NOT_FOUND
         );
     }
@@ -57,7 +48,7 @@ public class ControllerAdvisor extends ResponseEntityExceptionHandler {
             WebRequest request
     ){
         return new ResponseEntity<>(
-                new ErrorMessage(ex.getMessage(),errorType.EXPIREDTOKEN,ex.getPayload()),
+                new ErrorMessage(ex.getMessage(),errorType.EXPIRED_TOKEN,ex.getPayload()),
                 HttpStatus.GONE
         );
     }
@@ -68,7 +59,7 @@ public class ControllerAdvisor extends ResponseEntityExceptionHandler {
             WebRequest request
     ){
         return new ResponseEntity(
-                new ErrorMessage(ex.getMessage(),errorType.INVALIDPASSWORD, ex.getPayload()),
+                new ErrorMessage(ex.getMessage(),errorType.INVALID_PASSWORD, ex.getPayload()),
                 HttpStatus.UNAUTHORIZED
         );
     }
@@ -79,7 +70,7 @@ public class ControllerAdvisor extends ResponseEntityExceptionHandler {
             WebRequest request
     ){
         return new ResponseEntity<>(
-                new ErrorMessage(ex.getMessage(),errorType.INVALIDTOKEN,ex.getPayload()),
+                new ErrorMessage(ex.getMessage(),errorType.INVALID_TOKEN,ex.getPayload()),
                 HttpStatus.UNAUTHORIZED
         );
     }
@@ -90,7 +81,7 @@ public class ControllerAdvisor extends ResponseEntityExceptionHandler {
             WebRequest request
     ){
         return new ResponseEntity<>(
-                new ErrorMessage(ex.getMessage(),errorType.TOKENNOFOUND,ex.getPayload()),
+                new ErrorMessage(ex.getMessage(),errorType.TOKEN_NO_FOUND,ex.getPayload()),
                 HttpStatus.UNAUTHORIZED
         );
     }
@@ -120,7 +111,7 @@ public class ControllerAdvisor extends ResponseEntityExceptionHandler {
         String errorMessage = "There is a problem with the fields format.";
 
         return new ResponseEntity<>(
-                new ErrorMessage(errorMessage,errorType.MISSINGFIELDS,payload),
+                new ErrorMessage(errorMessage,errorType.MISSING_FIELDS,payload),
                 HttpStatus.BAD_REQUEST);
     }
 

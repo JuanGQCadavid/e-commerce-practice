@@ -8,20 +8,22 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class AuthService {
+    final String DEFAULT_NOT_TOKEN= "NONE";
+
     @Autowired
     AuthDao authDao;
 
     @Autowired
     TokenService tokenService;
 
-    public AuthenticationModel login(AuthenticationModel authenticationModel){
+    public AuthenticationModel login(AuthenticationModel authenticationModel) {
         final String userEmail = authenticationModel.getUserEmail();
         final String userPassword = authenticationModel.getUserPassword();
 
         AuthenticationModel authUser = authDao.findByUserEmail(userEmail)
                 .orElseThrow(() -> new EmailNotFoundException(userEmail));
 
-        if ( authUser.getUserPassword().equals(userPassword) ){
+        if (authUser.getUserPassword().equals(userPassword)) {
             // Put a Token on it
             authUser.setIdToken(
                     tokenService.tokenFor3Months()
@@ -31,8 +33,19 @@ public class AuthService {
             return authDao.save(authUser)
                     .get();
         } else {
-            throw new InvalidUserPasswordException(userEmail,userPassword);
+            throw new InvalidUserPasswordException(userEmail, userPassword);
         }
+    }
+
+    public void logout(String tokenId){
+        AuthenticationModel authentication = authDao.findByIdToken(tokenId)
+                .orElseThrow(() ->  new TokenNotFoundException(tokenId));
+
+        authentication.setIdToken(DEFAULT_NOT_TOKEN);
+
+        authDao.save(authentication);
+        tokenService.removeToken(tokenId);
+
     }
 
     public AuthenticationModel register( AuthenticationModel newAuthentication){
@@ -40,7 +53,7 @@ public class AuthService {
                 .ifPresent( authenticationModel -> {throw new EmailAlreadyUsedException(newAuthentication.getUserEmail());});
 
         // Missing check if it is saved.
-        newAuthentication.setIdToken("NONE");
+        newAuthentication.setIdToken(DEFAULT_NOT_TOKEN);
 
         return authDao.save(newAuthentication)
                 .get();

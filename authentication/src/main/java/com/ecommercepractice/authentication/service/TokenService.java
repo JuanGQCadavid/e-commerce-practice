@@ -18,13 +18,17 @@ public class TokenService {
     @Autowired
     TokenDao tokenDao;
 
-    private final int THREEMONTHS = 3;
+    private final int THREE_MONTHS = 3;
+
+    public void removeToken(String tokenId){
+        tokenDao.deleteToken(tokenId);
+    }
 
     public TokenModel tokenFor3Months(){
         LocalDate now = LocalDate.now();
 
         // Missing error at creating
-        return  tokenDao.createToken(new TokenModel(now, now.plusMonths(THREEMONTHS)))
+        return  tokenDao.createToken(new TokenModel(now, now.plusMonths(THREE_MONTHS)))
                 .get();
     }
 

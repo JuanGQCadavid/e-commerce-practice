@@ -9,4 +9,5 @@ import java.util.Optional;
 @Repository
 public interface AuthenticationRepository extends CrudRepository<AuthenticationModel, String> {
     Optional<AuthenticationModel> findByUserEmail(String userEmail);
+    Optional<AuthenticationModel> findByIdToken (String idToken);
 }

@@ -1,13 +1,13 @@
 package com.ecommercepractice.authentication.exception;
 
 public enum ErrorType {
-    EMAILALREADYUSED    ("EmailAlreadyUsedException"),
-    EMAILNOTFOUND       ("EmailNotFoundException"),
-    INVALIDPASSWORD     ("InvalidUserPasswordException"),
-    MISSINGFIELDS       ("MissingFieldsBody"),
-    EXPIREDTOKEN        ("ExpiredUserTokenException"),
-    INVALIDTOKEN        ("InvalidUserTokenException"),
-    TOKENNOFOUND        ("TokenNotFoundException")
+    EMAIL_ALREADY_USED    ("EmailAlreadyUsedException"),
+    EMAIL_NOT_FOUND       ("EmailNotFoundException"),
+    INVALID_PASSWORD     ("InvalidUserPasswordException"),
+    MISSING_FIELDS       ("MissingFieldsBody"),
+    EXPIRED_TOKEN        ("ExpiredUserTokenException"),
+    INVALID_TOKEN        ("InvalidUserTokenException"),
+    TOKEN_NO_FOUND        ("TokenNotFoundException")
     ;
     private final String label;
 

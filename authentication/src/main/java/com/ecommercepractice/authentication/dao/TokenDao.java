@@ -19,4 +19,8 @@ public class TokenDao {
     public Optional<TokenModel> findToken(String tokenId){
         return tokenRepository.findById(tokenId);
     }
+
+    public void deleteToken(String tokenId){
+        tokenRepository.deleteById(tokenId);
+    }
 }
