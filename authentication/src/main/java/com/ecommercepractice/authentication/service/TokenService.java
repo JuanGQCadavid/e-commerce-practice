@@ -36,7 +36,7 @@ public class TokenService {
                 );
         LocalDate today = LocalDate.now();
 
-        if(actualToken.getExpiredDate().isBefore(today) || actualToken.getExpiredDate().isEqual(today)){
+        if(actualToken.getExpiredDate().isAfter(today) || actualToken.getExpiredDate().isEqual(today)){
             return true;
         }
         else{

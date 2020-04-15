@@ -11,9 +11,9 @@ public class ErrorMessage {
     private String errorType;
     private Object payload;
 
-    public ErrorMessage(String message,String errorType, Object payload){
+    public ErrorMessage(String message,ErrorType errorType, Object payload){
         this.message = message;
-        this.errorType = errorType;
+        this.errorType = errorType.getLabel();
         this.payload = payload;
         this. timeStamp = LocalDateTime.now();
     }
