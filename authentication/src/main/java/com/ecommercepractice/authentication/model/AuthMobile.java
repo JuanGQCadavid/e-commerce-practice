@@ -14,7 +14,7 @@ public class AuthMobile {
 
     @NotNull
     @Valid
-    protected AuthenticationModel userInfo;
+    private AuthenticationModel userInfo;
 
-    protected MobileInfoModel mobileInfo;
+    private MobileInfoModel mobileInfo;
 }

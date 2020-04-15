@@ -7,4 +7,4 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface TokenRepository extends CrudRepository<TokenModel, String> {
 
-}s
+}

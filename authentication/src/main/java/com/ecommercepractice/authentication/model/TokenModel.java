@@ -3,14 +3,12 @@ package com.ecommercepractice.authentication.model;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
-import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
-import java.sql.Date;
-import java.sql.Timestamp;
+
+import java.time.LocalDate;
 import java.util.UUID;
 
 @Getter
@@ -29,14 +27,14 @@ public class TokenModel {
     private String tokenId;
 
     @ApiModelProperty(value = "Indicated the time when the Token was generate")
-    private Timestamp generatedDate;
+    private LocalDate generatedDate;
 
     @ApiModelProperty("Indicates when the token becomes rottens")
-    private Timestamp expiredDate;
+    private LocalDate expiredDate;
 
-    public TokenModel(Date generatedDate, Date expiredDate ){
+    public TokenModel(LocalDate generatedDate, LocalDate expiredDate ){
         this.tokenId = UUID.randomUUID().toString();
-        this.generatedDate = new Timestamp(generatedDate.getTime());
-        this.expiredDate = new Timestamp(expiredDate.getTime());
+        this.generatedDate = generatedDate;
+        this.expiredDate = expiredDate;
     }
 }
