@@ -1,27 +1,24 @@
 package com.ecommercepractice.authentication.controller;
 
-
-import com.ecommercepractice.authentication.dao.AuthDao;
 import com.ecommercepractice.authentication.model.AuthMobile;
-
 import com.ecommercepractice.authentication.model.AuthenticationModel;
-import com.ecommercepractice.authentication.model.MobileInfoModel;
-import com.ecommercepractice.authentication.model.TokenModel;
-import com.ecommercepractice.authentication.repository.AuthenticationRepository;
 import com.ecommercepractice.authentication.service.AuthService;
 import com.ecommercepractice.authentication.service.MobileService;
-import com.ecommercepractice.authentication.service.TokenService;
+
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
+
 import lombok.extern.slf4j.Slf4j;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.hateoas.EntityModel;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-
 
 @Slf4j
 @Api(value = "Authentication user portal",
@@ -42,23 +39,25 @@ public class AuthenticationController {
     @Autowired
     MobileService mobileService;
 
+    @Autowired
+    AuthenticationModelAssembler authenticationModelAssembler;
+
     @PostMapping("/register")
-    @ResponseStatus(code = HttpStatus.CREATED)
     @ResponseBody
-    public String register(
+    public ResponseEntity<EntityModel<AuthenticationModel>> register(
             @Valid @RequestBody AuthenticationModel authentication
 
             ) {
 
         log.info(String.format("AUTH | REGISTER | Payload AUTH { %s }",authentication));
-        AuthenticationModel authCreated =  authService.register(authentication);
-
-        return "Created as " + authCreated ;
+         return new ResponseEntity<EntityModel<AuthenticationModel>> (
+                 authenticationModelAssembler.toModelRegister(authService.register(authentication)),
+                 HttpStatus.CREATED
+         );
     }
 
     @PostMapping("/login")
-    @ResponseStatus(code = HttpStatus.OK)
-    public String logIn(
+    public ResponseEntity<EntityModel<AuthenticationModel>> logIn(
             @Valid  @RequestBody AuthMobile authMobile
             ) {
 
@@ -70,29 +69,36 @@ public class AuthenticationController {
             log.info(String.format("AUTH | LOGIN | Payload AUTH { %s }",authMobile.getUserInfo()));
         }
 
-        AuthenticationModel userLogged = authService.login(authMobile.getUserInfo());
-        return "User founded as " + userLogged ;
+        return new ResponseEntity<EntityModel<AuthenticationModel>>(
+                authenticationModelAssembler.toModelRegister(authService.login(authMobile.getUserInfo())),
+                HttpStatus.OK
+        );
     }
 
 
     @GetMapping("/validate/{userEmail:.+}/{tokenId}")
     @ResponseStatus(code = HttpStatus.NO_CONTENT)
-    public void validateToken(
+    public ResponseEntity validateToken(
             @PathVariable String userEmail,
             @PathVariable String tokenId
             ){
 
         log.info(String.format("AUTH | VALIDATE | PAYLOAD { userEmail -> %s | tokenId -> %s }",userEmail,tokenId));
         authService.validateAuth(userEmail,tokenId);
+
+        return new ResponseEntity( HttpStatus.NO_CONTENT );
+
     }
 
     @DeleteMapping("/logout/{tokenId}")
     @ResponseStatus(code = HttpStatus.NO_CONTENT)
-    public void logOut(
+    public ResponseEntity logOut(
             @PathVariable String tokenId
     ){
         log.info(String.format("AUTH | LOGOUT | PAYLOAD { tokenId -> %s }",tokenId));
         authService.logout(tokenId);
+
+        return new ResponseEntity( HttpStatus.NO_CONTENT );
     }
 
 }
