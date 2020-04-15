@@ -16,5 +16,6 @@ public class AuthMobile {
     @Valid
     private AuthenticationModel userInfo;
 
+    @Valid
     private MobileInfoModel mobileInfo;
 }

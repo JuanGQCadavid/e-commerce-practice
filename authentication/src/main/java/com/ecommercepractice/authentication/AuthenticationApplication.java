@@ -13,8 +13,6 @@ public class AuthenticationApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(AuthenticationApplication.class, args);
 	}
-
-
 	@Bean
 	public CommandLineRunner test1(){
 		return (args) -> {
