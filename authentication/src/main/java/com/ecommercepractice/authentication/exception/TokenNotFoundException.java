@@ -4,6 +4,9 @@ import com.ecommercepractice.authentication.util.Pair;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 
+/**
+ * Token does not exist on the database.
+ */
 @Getter
 @Slf4j
 public class TokenNotFoundException extends RuntimeException {

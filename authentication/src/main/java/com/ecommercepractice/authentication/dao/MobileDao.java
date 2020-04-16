@@ -12,6 +12,12 @@ public class MobileDao {
     @Autowired
     MobileInfoRepository mobileInfoRepository;
 
+    /**
+     * Save on the platform the mobile information
+     * it's used when Ath proceeds to login.
+     * @param mobileInfo
+     * @return
+     */
     public Optional<MobileInfoModel> save(MobileInfoModel mobileInfo){
         return Optional.ofNullable(mobileInfoRepository.save(mobileInfo));
     }

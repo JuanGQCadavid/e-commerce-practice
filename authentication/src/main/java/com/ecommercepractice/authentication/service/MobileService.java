@@ -10,6 +10,11 @@ public class MobileService {
     @Autowired
     MobileDao mobileDao;
 
+    /**
+     * Store mobile info onto repository
+     * @param mobileInfo
+     * @return
+     */
     public MobileInfoModel register(MobileInfoModel mobileInfo){
         return mobileDao.save(mobileInfo)
                 .get();

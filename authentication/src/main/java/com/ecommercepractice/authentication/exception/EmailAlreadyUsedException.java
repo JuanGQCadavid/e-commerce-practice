@@ -3,6 +3,10 @@ package com.ecommercepractice.authentication.exception;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 
+/**
+ * The email that is attempting to save on the system
+ * is already in use by other Ath
+ */
 @Getter
 @Slf4j
 public class EmailAlreadyUsedException extends RuntimeException {

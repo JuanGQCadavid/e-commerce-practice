@@ -6,6 +6,9 @@ import lombok.extern.slf4j.Slf4j;
 
 import java.time.LocalDate;
 
+/**
+ * The token of Auth has is already expired
+ */
 @Getter
 @Slf4j
 public class ExpiredUserTokenException extends RuntimeException {

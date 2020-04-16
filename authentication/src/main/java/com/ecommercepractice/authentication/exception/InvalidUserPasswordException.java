@@ -4,6 +4,10 @@ import com.ecommercepractice.authentication.util.Pair;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 
+/**
+ * The User email exist, but the password associated to the email
+ * is wrong.
+ */
 @Getter
 @Slf4j
 public class InvalidUserPasswordException extends RuntimeException {

@@ -1,6 +1,8 @@
 package com.ecommercepractice.authentication.exception;
 
 import com.ecommercepractice.authentication.util.Pair;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -19,6 +21,13 @@ public class ControllerAdvisor extends ResponseEntityExceptionHandler {
 
     ErrorType errorType;
 
+    /**
+     * The email that is attempting to save on the system
+     * is already in use by other Ath
+     * @param ex
+     * @param request
+     * @return
+     */
     @ExceptionHandler(EmailAlreadyUsedException.class)
     public ResponseEntity<Object> handleEmailAlreadyUsedException(
             EmailAlreadyUsedException ex,
@@ -31,7 +40,12 @@ public class ControllerAdvisor extends ResponseEntityExceptionHandler {
     }
 
 
-
+    /**
+     * The email does not exist on the system register.
+     * @param ex
+     * @param request
+     * @return
+     */
     @ExceptionHandler(EmailNotFoundException.class)
     public ResponseEntity<Object> handleEmailNotFoundException(
             EmailNotFoundException ex,
@@ -42,6 +56,13 @@ public class ControllerAdvisor extends ResponseEntityExceptionHandler {
                 HttpStatus.NOT_FOUND
         );
     }
+
+    /**
+     * The token of Auth has is already expired
+     * @param ex
+     * @param request
+     * @return
+     */
     @ExceptionHandler(ExpiredUserTokenException.class)
     public ResponseEntity<Object> handleExpiredUserToken(
             ExpiredUserTokenException ex,
@@ -53,6 +74,13 @@ public class ControllerAdvisor extends ResponseEntityExceptionHandler {
         );
     }
 
+    /**
+     * The User email exist but the password associated to the email
+     * is wrong.
+     * @param ex
+     * @param request
+     * @return
+     */
     @ExceptionHandler(InvalidUserPasswordException.class)
     public ResponseEntity<ErrorMessage> handleInvalidUserPassword(
             InvalidUserPasswordException ex,
@@ -64,6 +92,12 @@ public class ControllerAdvisor extends ResponseEntityExceptionHandler {
         );
     }
 
+    /**
+     * The token exist, but it is not attached to the current email.
+     * @param ex
+     * @param request
+     * @return
+     */
     @ExceptionHandler(InvalidUserTokenException.class)
     public ResponseEntity<Object> handleInvalidUserToken(
             InvalidUserTokenException ex,
@@ -74,6 +108,13 @@ public class ControllerAdvisor extends ResponseEntityExceptionHandler {
                 HttpStatus.UNAUTHORIZED
         );
     }
+
+    /**
+     * Token does not exist on the database.
+     * @param ex
+     * @param request
+     * @return
+     */
 
     @ExceptionHandler(TokenNotFoundException.class)
     public ResponseEntity<Object> handleTokenNotFound(
