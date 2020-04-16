@@ -1,5 +1,8 @@
 package com.ecommercepractice.authentication.exception;
 
+/**
+ * Internal runtime exception flag.
+ */
 public enum ErrorType {
     EMAIL_ALREADY_USED    ("EmailAlreadyUsedException"),
     EMAIL_NOT_FOUND       ("EmailNotFoundException"),

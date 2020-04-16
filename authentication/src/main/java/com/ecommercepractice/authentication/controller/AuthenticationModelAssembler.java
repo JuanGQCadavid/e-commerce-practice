@@ -11,6 +11,13 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
 @Component
 public class AuthenticationModelAssembler {
+    /**
+     * Create links response pointing to the methods allowed
+     * by the api, indicating how can the request user proceed
+     * across the API after the user register itself on the platform.
+     * @param authentication
+     * @return
+     */
     public EntityModel<AuthenticationModel> toModelRegister(AuthenticationModel authentication){
         AuthMobile authMobile = new AuthMobile();
         authMobile.setUserInfo(authentication);
@@ -25,6 +32,14 @@ public class AuthenticationModelAssembler {
 
                 );
     }
+
+    /**
+     * Create links response pointing to the methods allowed
+     * by the api, indicating how can the request user proceed
+     * across the API after the user identify itself on the platform.
+     * @param authentication
+     * @return
+     */
 
     public EntityModel<AuthenticationModel> toModelLogIn(AuthenticationModel authentication){
         AuthMobile authMobile = new AuthMobile();

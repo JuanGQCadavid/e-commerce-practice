@@ -3,6 +3,9 @@ package com.ecommercepractice.authentication.exception;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 
+/**
+ * The email does not exist on the system register.
+ */
 @Getter
 @Slf4j
 public class EmailNotFoundException extends  RuntimeException{

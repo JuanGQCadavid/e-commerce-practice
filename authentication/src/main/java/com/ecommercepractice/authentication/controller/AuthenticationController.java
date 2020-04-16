@@ -6,6 +6,7 @@ import com.ecommercepractice.authentication.service.AuthService;
 import com.ecommercepractice.authentication.service.MobileService;
 
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 
@@ -27,7 +28,9 @@ import javax.validation.Valid;
 )
 @ApiResponses(
         value = {
-                @ApiResponse(code = 200, message = "Auth OK")
+                @ApiResponse(code = 200, message = "OK -> The information sent is correctly."),
+                @ApiResponse(code = 201, message = "CREATED -> The information sent is currently onto the database"),
+                @ApiResponse(code = 204, message = "NO_CONTENT -> The server do the action correctly and does not return a value")
         }
 )
 @RestController
@@ -42,11 +45,10 @@ public class AuthenticationController {
     @Autowired
     AuthenticationModelAssembler authenticationModelAssembler;
 
+    @ApiOperation(value = "CREATE Auth", response = AuthenticationModel.class, responseContainer = "ResponseEntity<EntityModel>")
     @PostMapping("/register")
-    @ResponseBody
     public ResponseEntity<EntityModel<AuthenticationModel>> register(
             @Valid @RequestBody AuthenticationModel authentication
-
             ) {
 
         log.info(String.format("AUTH | REGISTER | Payload AUTH { %s }",authentication));
@@ -55,7 +57,9 @@ public class AuthenticationController {
                  HttpStatus.CREATED
          );
     }
-
+    @ApiOperation(value = "LOGIN ",
+            response = AuthenticationModel.class,
+            notes = "-> User credential validator and token generator.")
     @PostMapping("/login")
     public ResponseEntity<EntityModel<AuthenticationModel>> logIn(
             @Valid  @RequestBody AuthMobile authMobile
@@ -75,7 +79,10 @@ public class AuthenticationController {
         );
     }
 
-
+    @ApiOperation(value = "VALIDATE -> tokenID for userEmail",
+            response = java.lang.Void.class,
+            notes = "Validate if the token exists and if it exists validate if it is" +
+                    "currently, attached to the userEmail")
     @GetMapping("/validate/{userEmail:.+}/{tokenId}")
     @ResponseStatus(code = HttpStatus.NO_CONTENT)
     public ResponseEntity validateToken(
@@ -89,7 +96,10 @@ public class AuthenticationController {
         return new ResponseEntity( HttpStatus.NO_CONTENT );
 
     }
-
+    @ApiOperation(value = "LOGOUT -> TokenId",
+            response = java.lang.Void.class,
+            notes = "Delete the current token from the userEmail associated"
+    )
     @DeleteMapping("/logout/{tokenId}")
     @ResponseStatus(code = HttpStatus.NO_CONTENT)
     public ResponseEntity logOut(
