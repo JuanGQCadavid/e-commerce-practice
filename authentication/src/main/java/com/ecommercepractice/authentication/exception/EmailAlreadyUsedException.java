@@ -8,14 +8,12 @@ import lombok.extern.slf4j.Slf4j;
  * is already in use by other Ath
  */
 @Getter
-@Slf4j
 public class EmailAlreadyUsedException extends RuntimeException {
     private String payload;
 
     public EmailAlreadyUsedException(String email){
         super(String.format("The email { %s } is already associated with an account.",email));
         this.payload = email;
-        log.error(this.getMessage());
     }
 
 }
