@@ -3,6 +3,7 @@ package com.ecommercepractice.authentication.exception;
 import com.ecommercepractice.authentication.util.Pair;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -17,6 +18,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @ControllerAdvice
+@Slf4j
 public class ControllerAdvisor extends ResponseEntityExceptionHandler {
 
     ErrorType errorType;
@@ -33,6 +35,7 @@ public class ControllerAdvisor extends ResponseEntityExceptionHandler {
             EmailAlreadyUsedException ex,
             WebRequest request
     ){
+        log.error(ex.getMessage());
         return new ResponseEntity<>(
             new ErrorMessage(ex.getMessage(),errorType.EMAIL_ALREADY_USED,ex.getPayload()),
                 HttpStatus.UNPROCESSABLE_ENTITY
@@ -51,6 +54,7 @@ public class ControllerAdvisor extends ResponseEntityExceptionHandler {
             EmailNotFoundException ex,
             WebRequest request
     ){
+        log.error(ex.getMessage());
         return new ResponseEntity(
                 new ErrorMessage(ex.getMessage(),errorType.EMAIL_NOT_FOUND, ex.getPayload()),
                 HttpStatus.NOT_FOUND
@@ -68,9 +72,10 @@ public class ControllerAdvisor extends ResponseEntityExceptionHandler {
             ExpiredUserTokenException ex,
             WebRequest request
     ){
+        log.error(ex.getMessage());
         return new ResponseEntity<>(
                 new ErrorMessage(ex.getMessage(),errorType.EXPIRED_TOKEN,ex.getPayload()),
-                HttpStatus.GONE
+                HttpStatus.FORBIDDEN
         );
     }
 
@@ -86,6 +91,7 @@ public class ControllerAdvisor extends ResponseEntityExceptionHandler {
             InvalidUserPasswordException ex,
             WebRequest request
     ){
+        log.error(ex.getMessage());
         return new ResponseEntity(
                 new ErrorMessage(ex.getMessage(),errorType.INVALID_PASSWORD, ex.getPayload()),
                 HttpStatus.UNAUTHORIZED
@@ -103,8 +109,21 @@ public class ControllerAdvisor extends ResponseEntityExceptionHandler {
             InvalidUserTokenException ex,
             WebRequest request
     ){
+        log.error(ex.getMessage());
         return new ResponseEntity<>(
                 new ErrorMessage(ex.getMessage(),errorType.INVALID_TOKEN,ex.getPayload()),
+                HttpStatus.UNAUTHORIZED
+        );
+    }
+
+    @ExceptionHandler(MissingAuthenticationHeaderException.class)
+    public ResponseEntity<Object> handleMissingAuthenticationHeader(
+            MissingAuthenticationHeaderException ex,
+            WebRequest request
+    ){
+        log.error(ex.getMessage());
+        return new ResponseEntity<>(
+                new ErrorMessage(ex.getMessage(),errorType.MISSING_AUTH_HEADER,ex.getPayload()),
                 HttpStatus.UNAUTHORIZED
         );
     }
@@ -121,6 +140,7 @@ public class ControllerAdvisor extends ResponseEntityExceptionHandler {
             TokenNotFoundException ex,
             WebRequest request
     ){
+        log.error(ex.getMessage());
         return new ResponseEntity<>(
                 new ErrorMessage(ex.getMessage(),errorType.TOKEN_NO_FOUND,ex.getPayload()),
                 HttpStatus.UNAUTHORIZED
@@ -142,6 +162,8 @@ public class ControllerAdvisor extends ResponseEntityExceptionHandler {
                                                                   HttpHeaders headers,
                                                                   HttpStatus status,
                                                                   WebRequest request) {
+
+
         List payload = ex.getBindingResult()
                 .getFieldErrors()
                 .stream()
@@ -150,6 +172,8 @@ public class ControllerAdvisor extends ResponseEntityExceptionHandler {
                 })
                 .collect(Collectors.toList());
         String errorMessage = "There is a problem with the fields format.";
+
+        log.error(payload.toString());
 
         return new ResponseEntity<>(
                 new ErrorMessage(errorMessage,errorType.MISSING_FIELDS,payload),

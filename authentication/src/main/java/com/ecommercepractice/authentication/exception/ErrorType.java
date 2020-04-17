@@ -10,7 +10,8 @@ public enum ErrorType {
     MISSING_FIELDS       ("MissingFieldsBody"),
     EXPIRED_TOKEN        ("ExpiredUserTokenException"),
     INVALID_TOKEN        ("InvalidUserTokenException"),
-    TOKEN_NO_FOUND        ("TokenNotFoundException")
+    TOKEN_NO_FOUND        ("TokenNotFoundException"),
+    MISSING_AUTH_HEADER  ("MissingAuthenticationHeaderException")
     ;
     private final String label;
 

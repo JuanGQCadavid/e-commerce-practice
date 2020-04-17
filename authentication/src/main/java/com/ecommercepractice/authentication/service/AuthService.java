@@ -3,6 +3,7 @@ package com.ecommercepractice.authentication.service;
 import com.ecommercepractice.authentication.dao.AuthDao;
 import com.ecommercepractice.authentication.exception.*;
 import com.ecommercepractice.authentication.model.AuthenticationModel;
+import com.ecommercepractice.authentication.model.TokenModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -21,25 +22,22 @@ public class AuthService {
      * @param authenticationModel
      * @return
      */
-    public AuthenticationModel login(AuthenticationModel authenticationModel) {
+    public TokenModel login(AuthenticationModel authenticationModel) {
         final String userEmail = authenticationModel.getUserEmail();
         final String userPassword = authenticationModel.getUserPassword();
 
         AuthenticationModel authUser = authDao.findByUserEmail(userEmail)
                 .orElseThrow(() -> new EmailNotFoundException(userEmail));
 
-        if (authUser.getUserPassword().equals(userPassword)) {
-            // Put a Token on it
-            authUser.setIdToken(
-                    tokenService.tokenFor3Months()
-                            .getTokenId()
-            );
-
-            return authDao.save(authUser)
-                    .get();
-        } else {
+        if (!authUser.getUserPassword().equals(userPassword)) {
             throw new InvalidUserPasswordException(userEmail, userPassword);
         }
+
+        TokenModel newToken =  tokenService.tokenFor3Months();
+        authUser.setIdToken(newToken.getTokenId());
+        authDao.save(authUser).get();
+
+        return newToken;
     }
 
     /**

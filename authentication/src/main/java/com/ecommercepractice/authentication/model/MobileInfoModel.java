@@ -36,6 +36,4 @@ public class MobileInfoModel {
     @NotEmpty
     @ApiModelProperty("Operating System version.")
     private String systemVersion;
-
-
 }

@@ -1,7 +1,10 @@
 package com.ecommercepractice.authentication.controller;
 
+import com.ecommercepractice.authentication.exception.MissingAuthenticationHeaderException;
+import com.ecommercepractice.authentication.exception.TokenNotFoundException;
 import com.ecommercepractice.authentication.model.AuthMobile;
 import com.ecommercepractice.authentication.model.AuthenticationModel;
+import com.ecommercepractice.authentication.model.TokenModel;
 import com.ecommercepractice.authentication.service.AuthService;
 import com.ecommercepractice.authentication.service.MobileService;
 
@@ -14,12 +17,15 @@ import lombok.extern.slf4j.Slf4j;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.EntityModel;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.Map;
+import java.util.Optional;
 
 @Slf4j
 @Api(value = "Authentication user portal",
@@ -61,7 +67,7 @@ public class AuthenticationController {
             response = AuthenticationModel.class,
             notes = "-> User credential validator and token generator.")
     @PostMapping("/login")
-    public ResponseEntity<EntityModel<AuthenticationModel>> logIn(
+    public ResponseEntity<EntityModel<TokenModel>> logIn(
             @Valid  @RequestBody AuthMobile authMobile
             ) {
 
@@ -73,8 +79,9 @@ public class AuthenticationController {
             log.info(String.format("AUTH | LOGIN | Payload AUTH { %s }",authMobile.getUserInfo()));
         }
 
-        return new ResponseEntity<EntityModel<AuthenticationModel>>(
-                authenticationModelAssembler.toModelRegister(authService.login(authMobile.getUserInfo())),
+        return new ResponseEntity<EntityModel<TokenModel>>(
+                authenticationModelAssembler.toModelLogIn(authMobile.getUserInfo(),
+                        authService.login(authMobile.getUserInfo())),
                 HttpStatus.OK
         );
     }
@@ -83,13 +90,15 @@ public class AuthenticationController {
             response = java.lang.Void.class,
             notes = "Validate if the token exists and if it exists validate if it is" +
                     "currently, attached to the userEmail")
-    @GetMapping("/validate/{userEmail:.+}/{tokenId}")
+    @GetMapping("/validate/{userEmail:.+}")
     @ResponseStatus(code = HttpStatus.NO_CONTENT)
     public ResponseEntity validateToken(
-            @PathVariable String userEmail,
-            @PathVariable String tokenId
+             @RequestHeader Map<String,String> headers,
+             @PathVariable String userEmail
             ){
 
+        String tokenId = Optional.ofNullable(headers.get("authorization"))
+                .orElseThrow( () -> new MissingAuthenticationHeaderException() );
         log.info(String.format("AUTH | VALIDATE | PAYLOAD { userEmail -> %s | tokenId -> %s }",userEmail,tokenId));
         authService.validateAuth(userEmail,tokenId);
 
@@ -100,11 +109,14 @@ public class AuthenticationController {
             response = java.lang.Void.class,
             notes = "Delete the current token from the userEmail associated"
     )
-    @DeleteMapping("/logout/{tokenId}")
+    @DeleteMapping("/logout")
     @ResponseStatus(code = HttpStatus.NO_CONTENT)
     public ResponseEntity logOut(
-            @PathVariable String tokenId
+            @RequestHeader Map<String,String> headers
     ){
+        String tokenId = Optional.ofNullable(headers.get("authorization"))
+                .orElseThrow( () -> new MissingAuthenticationHeaderException() );
+
         log.info(String.format("AUTH | LOGOUT | PAYLOAD { tokenId -> %s }",tokenId));
         authService.logout(tokenId);
 

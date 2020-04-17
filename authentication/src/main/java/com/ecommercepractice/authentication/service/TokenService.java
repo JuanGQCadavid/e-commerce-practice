@@ -40,6 +40,11 @@ public class TokenService {
                 .get();
     }
 
+    public boolean isValid(LocalDate expiredDate){
+        LocalDate today = LocalDate.now();
+        return expiredDate.isAfter(today) || expiredDate.isEqual(today);
+    }
+
     /**
      * Checks if the token exists, then it validates its time alive.
      * @param tokenId
