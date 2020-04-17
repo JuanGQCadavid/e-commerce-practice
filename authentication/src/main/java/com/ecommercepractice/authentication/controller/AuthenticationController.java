@@ -90,6 +90,8 @@ public class AuthenticationController {
             @PathVariable String tokenId
             ){
 
+
+
         log.info(String.format("AUTH | VALIDATE | PAYLOAD { userEmail -> %s | tokenId -> %s }",userEmail,tokenId));
         authService.validateAuth(userEmail,tokenId);
 

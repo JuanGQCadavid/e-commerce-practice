@@ -70,7 +70,7 @@ public class ControllerAdvisor extends ResponseEntityExceptionHandler {
     ){
         return new ResponseEntity<>(
                 new ErrorMessage(ex.getMessage(),errorType.EXPIRED_TOKEN,ex.getPayload()),
-                HttpStatus.GONE
+                HttpStatus.FORBIDDEN
         );
     }
 
