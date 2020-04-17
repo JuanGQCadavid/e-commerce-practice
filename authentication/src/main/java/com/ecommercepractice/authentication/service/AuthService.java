@@ -29,17 +29,15 @@ public class AuthService {
         AuthenticationModel authUser = authDao.findByUserEmail(userEmail)
                 .orElseThrow(() -> new EmailNotFoundException(userEmail));
 
-        if (authUser.getUserPassword().equals(userPassword)) {
-            // Put a Token on it
-
-            TokenModel newToken =  tokenService.tokenFor3Months();
-            authUser.setIdToken(newToken.getTokenId());
-            authDao.save(authUser).get();
-
-            return newToken;
-        } else {
+        if (!authUser.getUserPassword().equals(userPassword)) {
             throw new InvalidUserPasswordException(userEmail, userPassword);
         }
+
+        TokenModel newToken =  tokenService.tokenFor3Months();
+        authUser.setIdToken(newToken.getTokenId());
+        authDao.save(authUser).get();
+
+        return newToken;
     }
 
     /**
