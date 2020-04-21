@@ -16,7 +16,6 @@ public class AuthService {
 
     @Autowired
     TokenService tokenService;
-
     /**
      * Validate the email, then check the user credentials.
      * @param authenticationModel
@@ -32,7 +31,6 @@ public class AuthService {
         if (!authUser.getUserPassword().equals(userPassword)) {
             throw new InvalidUserPasswordException(userEmail, userPassword);
         }
-
         TokenModel newToken =  tokenService.tokenFor3Months();
         authUser.setIdToken(newToken.getTokenId());
         authDao.save(authUser).get();
@@ -48,14 +46,10 @@ public class AuthService {
     public void logout(String tokenId){
         AuthenticationModel authentication = authDao.findByIdToken(tokenId)
                 .orElseThrow(() ->  new TokenNotFoundException(tokenId));
-
         authentication.setIdToken(DEFAULT_NOT_TOKEN);
-
         authDao.save(authentication);
         tokenService.removeToken(tokenId);
-
     }
-
     /**
      * Store the authentication on the repository
      * and assign a NONE token.
@@ -65,14 +59,10 @@ public class AuthService {
     public AuthenticationModel register( AuthenticationModel newAuthentication){
         authDao.findByUserEmail(newAuthentication.getUserEmail())
                 .ifPresent( authenticationModel -> {throw new EmailAlreadyUsedException(newAuthentication.getUserEmail());});
-
-        // Missing check if it is saved.
         newAuthentication.setIdToken(DEFAULT_NOT_TOKEN);
-
         return authDao.save(newAuthentication)
                 .get();
     }
-
     /**
      * Validate first the userEmail, then validates that the token
      * is arsing to the email.
@@ -87,7 +77,6 @@ public class AuthService {
                 .orElseThrow(() -> {
                     return new EmailNotFoundException(userEmail);
                 });
-
         if (authentication.getIdToken().equals(tokenId)){
             return tokenService.validateToken(tokenId);
         }else{

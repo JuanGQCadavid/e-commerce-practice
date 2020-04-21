@@ -35,6 +35,4 @@ public class AuthenticationModel {
     @Size(min= 6, max = 24)
     @ApiModelProperty(value = "User's password")
     private String userPassword;
-
-
 }
