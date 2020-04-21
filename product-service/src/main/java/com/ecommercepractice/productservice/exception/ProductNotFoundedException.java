@@ -1,13 +1,11 @@
 package com.ecommercepractice.productservice.exception;
 
 import lombok.Getter;
-import lombok.Setter;
 
-@Getter
-public class ProductNotFoundedException extends RuntimeException{
-    private long payload;
+public class ProductNotFoundedException extends ProductException{
     public ProductNotFoundedException(long productId){
-        super(String.format("The product with id { %s } does not exist", productId));
-        this.payload = productId;
+        super(String.format("The product with id { %s } does not exist", productId),
+                productId,
+                ErrorType.PRODUCT_NOT_FOUNDED);
     }
 }
