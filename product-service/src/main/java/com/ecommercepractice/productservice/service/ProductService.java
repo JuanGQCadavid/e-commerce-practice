@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class ProductService {
@@ -55,6 +56,15 @@ public class ProductService {
                 productRepository.fetchProductsByPrice(price.get()) :
                 productRepository.fetchAllProducts();
 
-        return productsToFilter;
+        return name.isPresent() ? filterByName(name.get(),productsToFilter ) : productsToFilter;
+    }
+
+    public List<Product> filterByName(String name, List<Product> products){
+        return products
+                .stream()
+                .filter(product -> {
+                    return product.getName().contains(name);
+                })
+                .collect(Collectors.toList());
     }
 }

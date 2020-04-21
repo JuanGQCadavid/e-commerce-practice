@@ -21,8 +21,6 @@ public class ProductServiceController {
     @Autowired
     ProductService productService;
 
-
-
     @PostMapping()
     public ResponseEntity<Product> createProduct(
            @Valid @RequestBody Product product
@@ -31,15 +29,14 @@ public class ProductServiceController {
         return new ResponseEntity<Product>(productService.createProduct(product), HttpStatus.CREATED);
     }
 
-
     @GetMapping()
     public ResponseEntity<List<Product>> fetchProduct(
             @RequestParam(required = false) String name,
             @RequestParam(required = false) Double price
     ){
-
-        System.out.println(name);
-        System.out.println(price);
+        log.info(String.format("PRODUCT | FETCH | Product NAME -> { %s } PRICE -> { %s }",
+                name==null ? "NO_NAME" : name ,
+                price == null ?  "NO_PRICE" : price.toString()));
 
         return new ResponseEntity<List<Product>>(
                 productService.filterProducts(
@@ -50,9 +47,6 @@ public class ProductServiceController {
                 );
     }
 
-
-
-
     //:ProductId
     @GetMapping("/{productId}")
     public ResponseEntity<Product> fetchProductById(
@@ -61,7 +55,6 @@ public class ProductServiceController {
         log.info(String.format("PRODUCT | FETCH_BY_ID | ProductId payload { %d }", productId));
         return new ResponseEntity<Product>(productService.fetchById(productId), HttpStatus.OK);
     }
-    //--- Under construction
 
     @DeleteMapping("/{productId}")
     public ResponseEntity deleteProductById(
@@ -72,13 +65,11 @@ public class ProductServiceController {
 
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
-    //--- Under construction
-
     // Talk with Carlos
     @PutMapping("/{productId}")
     public ResponseEntity<Product> updateProductById(
             @PathVariable long productId,
-            @RequestBody Product product
+            @Valid @RequestBody Product product
     ){
         log.info(String.format("PRODUCT | PUT_BY_ID | ProductId { %d } Product dat { %s} ", productId,product));
         return new ResponseEntity<Product>(productService.updateProduct(productId,product), HttpStatus.OK);
