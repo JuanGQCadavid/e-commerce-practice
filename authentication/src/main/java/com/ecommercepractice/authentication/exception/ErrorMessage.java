@@ -17,7 +17,6 @@ public class ErrorMessage {
     private String message;
     private String errorType;
     private Object payload;
-
     /**
      *Error representation.
      *
@@ -31,7 +30,4 @@ public class ErrorMessage {
         this.payload = payload;
         this. timeStamp = LocalDateTime.now();
     }
-
-
-
 }

@@ -20,7 +20,6 @@ public class AuthenticationModelAssembler {
      * @return
      */
     public EntityModel<AuthenticationModel> toModelRegister(AuthenticationModel authentication){
-
         return new EntityModel<AuthenticationModel>(authentication,
                 linkTo(methodOn(AuthenticationController.class)
                         .logIn(null)).withRel("LOG_IN"),
@@ -28,10 +27,8 @@ public class AuthenticationModelAssembler {
                         .logOut(null)).withRel("LOG_OUT"),
                 linkTo(methodOn(AuthenticationController.class)
                         .validateToken(null,authentication.getUserEmail())).withRel("VALIDATE_TOKEN")
-
                 );
     }
-
     /**
      * Create links response pointing to the methods allowed
      * by the api, indicating how can the request user proceed
@@ -42,7 +39,6 @@ public class AuthenticationModelAssembler {
 
     public EntityModel<TokenModel> toModelLogIn(AuthenticationModel authentication,
                                                          TokenModel token){
-
         return new EntityModel<TokenModel>(token,
                 linkTo(methodOn(AuthenticationController.class)
                         .logOut(null)).withRel("LOG_OUT"),

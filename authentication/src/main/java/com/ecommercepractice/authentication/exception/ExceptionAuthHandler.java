@@ -19,10 +19,9 @@ import java.util.stream.Collectors;
 
 @ControllerAdvice
 @Slf4j
-public class ControllerAdvisor extends ResponseEntityExceptionHandler {
+public class ExceptionAuthHandler extends ResponseEntityExceptionHandler {
 
     ErrorType errorType;
-
     /**
      * The email that is attempting to save on the system
      * is already in use by other Ath
@@ -60,7 +59,6 @@ public class ControllerAdvisor extends ResponseEntityExceptionHandler {
                 HttpStatus.NOT_FOUND
         );
     }
-
     /**
      * The token of Auth has is already expired
      * @param ex
@@ -78,7 +76,6 @@ public class ControllerAdvisor extends ResponseEntityExceptionHandler {
                 HttpStatus.FORBIDDEN
         );
     }
-
     /**
      * The User email exist but the password associated to the email
      * is wrong.
@@ -97,7 +94,6 @@ public class ControllerAdvisor extends ResponseEntityExceptionHandler {
                 HttpStatus.UNAUTHORIZED
         );
     }
-
     /**
      * The token exist, but it is not attached to the current email.
      * @param ex
@@ -127,7 +123,6 @@ public class ControllerAdvisor extends ResponseEntityExceptionHandler {
                 HttpStatus.UNAUTHORIZED
         );
     }
-
     /**
      * Token does not exist on the database.
      * @param ex
@@ -146,8 +141,6 @@ public class ControllerAdvisor extends ResponseEntityExceptionHandler {
                 HttpStatus.UNAUTHORIZED
         );
     }
-
-
     /**
      * This method handle when the user body is missing some arguments that
      * are required by the actual contract of the API
@@ -162,8 +155,6 @@ public class ControllerAdvisor extends ResponseEntityExceptionHandler {
                                                                   HttpHeaders headers,
                                                                   HttpStatus status,
                                                                   WebRequest request) {
-
-
         List payload = ex.getBindingResult()
                 .getFieldErrors()
                 .stream()
@@ -172,12 +163,9 @@ public class ControllerAdvisor extends ResponseEntityExceptionHandler {
                 })
                 .collect(Collectors.toList());
         String errorMessage = "There is a problem with the fields format.";
-
         log.error(payload.toString());
-
         return new ResponseEntity<>(
                 new ErrorMessage(errorMessage,errorType.MISSING_FIELDS,payload),
                 HttpStatus.BAD_REQUEST);
     }
-
 }
