@@ -18,7 +18,6 @@ public class ProductService {
     ProductRepository productRepository;
 
     private final String DEFAULT_PHOTO = "http://imgs.com/default.png";
-
     /**
      * used the repository to create a new product,
      * if there is no image then it would assign a
@@ -30,7 +29,6 @@ public class ProductService {
         if (productToCreate.getPhotoUrl() == null){
             productToCreate.setPhotoUrl(DEFAULT_PHOTO);
         }
-
         Optional<Product> optionalProduct =
                 Optional.ofNullable(productRepository.save(productToCreate));
         return optionalProduct
@@ -65,31 +63,24 @@ public class ProductService {
      * @param productId
      */
     public Product updateProduct(long productId, Product product){
-        Product checkedProduct = fetchById(productId);
-        // Talk with carlos
-        checkedProduct.setName(product.getName());
-        checkedProduct.setDescription(product.getDescription());
-        checkedProduct.setPhotoUrl(product.getPhotoUrl());
-        checkedProduct.setPrice(product.getPrice());
-
-        return createProduct(checkedProduct);
+        fetchById(productId);
+        return createProduct(product);
     }
 
     /**
      * Filter products by a given price
      *  (All of them if price is no specified) and then filter them by name
      *  (If name is no specified, then it returns all products after the first filter step).
-     * @param name
-     * @param price
+     * @param productName
+     * @param productPrice
      * @return
      */
-    public List<Product> filterProducts (Optional<String> name,
-                                         Optional<Double> price){
-
+    public List<Product> filterProducts (String productName, Double productPrice){
+        Optional<String> name = Optional.ofNullable(productName);
+        Optional<Double> price = Optional.ofNullable(productPrice);
         List<Product> productsToFilter = price.isPresent() ?
                 productRepository.fetchProductsByPrice(price.get()) :
                 productRepository.fetchAllProducts();
-
         return name.isPresent() ? filterByName(name.get(),productsToFilter ) : productsToFilter;
     }
 

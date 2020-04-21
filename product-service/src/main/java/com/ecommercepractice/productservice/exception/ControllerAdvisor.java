@@ -36,10 +36,29 @@ public class ControllerAdvisor extends ResponseEntityExceptionHandler {
     public ResponseEntity<Object> handleProductException(
             ProductException ex,WebRequest request
     ){
+        HttpStatus status = getExceptionStatus(ex.getErrorType());
         return new ResponseEntity<>(
                 new ErrorMessage(ex.getMessage(),ex.getErrorType(),ex.getPayload()),
-                HttpStatus.BAD_REQUEST
+                status
         );
+    }
+
+
+    public HttpStatus getExceptionStatus(ErrorType errorType){
+        HttpStatus status;
+        switch (errorType){
+            case PRODUCT_NOT_FOUNDED:
+                status = HttpStatus.NOT_FOUND;
+                break;
+            case PRODUCT_NOT_CREATED:
+                status = HttpStatus.BAD_REQUEST;
+                break;
+            default:
+                status = HttpStatus.BAD_REQUEST;
+                break;
+
+        }
+        return status;
     }
 
 
