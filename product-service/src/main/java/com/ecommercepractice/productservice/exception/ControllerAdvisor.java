@@ -13,10 +13,22 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 import java.util.List;
 import java.util.stream.Collectors;
 
+/**
+ * Handle all errors relate to products Exceptions
+ * returning a Entity response with a ErrorMessage Entity as body
+ * Appending the corresponding http failure status
+ */
 @ControllerAdvice
 public class ControllerAdvisor extends ResponseEntityExceptionHandler {
     ErrorType errorType;
 
+    /**
+     * This method handler all errors that extends from
+     * ProductException errors family
+     * @param ex
+     * @param request
+     * @return
+     */
     @ExceptionHandler({
             ProductNotFoundedException.class,
             ProductNotCreatedException.class

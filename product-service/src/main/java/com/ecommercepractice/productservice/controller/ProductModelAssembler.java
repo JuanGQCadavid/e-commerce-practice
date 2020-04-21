@@ -13,7 +13,12 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
 @Component
 public class ProductModelAssembler {
-
+    /**
+     * Creates links to methods that user could use
+     * after the calling of a created nor fetch function
+     * @param productCreated
+     * @return
+     */
     public EntityModel<Product> toModel(Product productCreated){
         return new EntityModel<>(productCreated,
                 linkTo(methodOn(ProductController.class)

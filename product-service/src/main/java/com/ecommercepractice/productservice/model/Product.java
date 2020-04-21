@@ -1,5 +1,6 @@
 package com.ecommercepractice.productservice.model;
 
+import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
 import org.springframework.boot.context.properties.bind.DefaultValue;
 
@@ -25,15 +26,20 @@ public class Product {
 
     @NotEmpty
     @Size(min = 0, max= 45)
+    @ApiModelProperty(value = "Product's name")
     private String name;
 
     @NotEmpty
     @Size(min = 0, max = 45)
+    @ApiModelProperty(value = "Product's description")
     private String description;
 
     @NotNull
+    @ApiModelProperty(value = "Product's price")
     private Double price;
 
+    @ApiModelProperty(value = "Product's photo, if there is missing a default photo" +
+            " is going to be used instead")
     private String photoUrl;
 
     public Product(String name, String description, Double price, String photoUrl){
