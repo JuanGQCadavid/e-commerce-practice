@@ -44,7 +44,4 @@ public class ErrorMessage {
         this.payload = payload;
         this. timeStamp = LocalDateTime.now();
     }
-
-
-
 }

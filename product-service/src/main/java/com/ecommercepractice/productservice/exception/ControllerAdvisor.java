@@ -26,21 +26,15 @@ public class ControllerAdvisor extends ResponseEntityExceptionHandler {
      * This method handler all errors that extends from
      * ProductException errors family
      * @param ex
-     * @param request
      * @return
      */
     @ExceptionHandler({
             ProductNotFoundedException.class,
             ProductNotCreatedException.class
     })
-    public ResponseEntity<Object> handleProductException(
-            ProductException ex,WebRequest request
-    ){
+    public ResponseEntity<Object> handleProductException(ProductException ex){
         HttpStatus status = getExceptionStatus(ex.getErrorType());
-        return new ResponseEntity<>(
-                new ErrorMessage(ex.getMessage(),ex.getErrorType(),ex.getPayload()),
-                status
-        );
+        return new ResponseEntity<>(new ErrorMessage(ex.getMessage(),ex.getErrorType(),ex.getPayload()),status);
     }
 
 
@@ -85,8 +79,6 @@ public class ControllerAdvisor extends ResponseEntityExceptionHandler {
                 .collect(Collectors.toList());
         String errorMessage = "There is a problem with the fields format.";
 
-        return new ResponseEntity<>(
-                new ErrorMessage(errorMessage,errorType.MISSING_FIELDS,payload),
-                HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>(new ErrorMessage(errorMessage,errorType.MISSING_FIELDS,payload),HttpStatus.BAD_REQUEST);
     }
 }

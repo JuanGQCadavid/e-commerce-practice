@@ -1,13 +1,7 @@
 package com.ecommercepractice.productservice.controller;
-
-
 import com.ecommercepractice.productservice.model.Product;
-import org.hibernate.EntityMode;
 import org.springframework.hateoas.EntityModel;
 import org.springframework.stereotype.Component;
-
-import javax.swing.text.html.parser.Entity;
-
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
