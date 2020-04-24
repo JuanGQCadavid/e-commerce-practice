@@ -1,25 +1,25 @@
 package com.ecommercepractice.authentication.exceptions;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import org.springframework.http.HttpStatus;
+
 /**
  * Internal runtime exception flag.
  */
+@AllArgsConstructor
+@Getter
 public enum ErrorType {
-    EMAIL_ALREADY_USED    ("EmailAlreadyUsedException"),
-    EMAIL_NOT_FOUND       ("EmailNotFoundException"),
-    INVALID_PASSWORD     ("InvalidUserPasswordException"),
-    MISSING_FIELDS       ("MissingFieldsBody"),
-    EXPIRED_TOKEN        ("ExpiredUserTokenException"),
-    INVALID_TOKEN        ("InvalidUserTokenException"),
-    TOKEN_NO_FOUND        ("TokenNotFoundException"),
-    MISSING_AUTH_HEADER  ("MissingAuthenticationHeaderException")
+    EMAIL_ALREADY_USED    ("EmailAlreadyUsedException", HttpStatus.UNPROCESSABLE_ENTITY),
+    EMAIL_NOT_FOUND       ("EmailNotFoundException", HttpStatus.NOT_FOUND),
+    INVALID_PASSWORD     ("InvalidUserPasswordException",HttpStatus.UNAUTHORIZED),
+    MISSING_FIELDS       ("MissingFieldsBody",HttpStatus.BAD_REQUEST),
+    EXPIRED_TOKEN        ("ExpiredUserTokenException",HttpStatus.FORBIDDEN),
+    INVALID_TOKEN        ("InvalidUserTokenException",HttpStatus.UNAUTHORIZED),
+    TOKEN_NO_FOUND        ("TokenNotFoundException",HttpStatus.UNAUTHORIZED),
+    MISSING_AUTH_HEADER  ("MissingAuthenticationHeaderException",HttpStatus.UNAUTHORIZED)
     ;
+
     private final String label;
-
-    ErrorType(String label){
-        this.label = label;
-    }
-
-    public String getLabel(){
-        return this.label;
-    }
+    private HttpStatus status;
 }

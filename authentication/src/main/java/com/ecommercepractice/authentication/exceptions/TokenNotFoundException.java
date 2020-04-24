@@ -1,13 +1,9 @@
 package com.ecommercepractice.authentication.exceptions;
-import lombok.Getter;
 /**
  * Token does not exist on the database.
  */
-@Getter
-public class TokenNotFoundException extends RuntimeException {
-    String payload;
+public class TokenNotFoundException extends AuthException {
     public TokenNotFoundException(String token){
-        super(String.format("Token { %s } does not exist.", token));
-        payload = token;
+        super(String.format("Token { %s } does not exist.", token),token,ErrorType.TOKEN_NO_FOUND);
     }
 }

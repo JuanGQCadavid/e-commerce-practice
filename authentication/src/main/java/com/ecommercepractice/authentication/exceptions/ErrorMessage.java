@@ -28,6 +28,6 @@ public class ErrorMessage {
         this.message = message;
         this.errorType = errorType.getLabel();
         this.payload = payload;
-        this. timeStamp = LocalDateTime.now();
+        this.timeStamp = LocalDateTime.now();
     }
 }

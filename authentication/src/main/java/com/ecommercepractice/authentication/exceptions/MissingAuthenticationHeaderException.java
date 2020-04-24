@@ -4,10 +4,8 @@ import lombok.Getter;
 import lombok.ToString;
 @Getter
 @ToString
-public class MissingAuthenticationHeaderException extends RuntimeException {
-    private Pair<String,String> payload;
+public class MissingAuthenticationHeaderException extends AuthException {
     public MissingAuthenticationHeaderException(){
-        super("Missing Token Header");
-        payload = new Pair<>("header","authorization");
+        super("Missing Token Header",  new Pair<>("header","authorization"), ErrorType.MISSING_AUTH_HEADER);
     }
 }
