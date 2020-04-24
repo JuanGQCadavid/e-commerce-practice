@@ -5,7 +5,6 @@ import lombok.Getter;
 /**
  * Internal runtime exception flag.
  */
-
 @Getter
 public enum ErrorType {
     PRODUCT_NOT_CREATED("ProductNotCreated"),

@@ -10,12 +10,18 @@ import org.springframework.hateoas.EntityModel;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.function.EntityResponse;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 @Api(value = "Products handler endpoints",
         consumes = MediaType.APPLICATION_JSON_VALUE,
@@ -32,8 +38,7 @@ public class ProductController {
     @Autowired
     ProductModelAssembler productModelAssembler;
 
-    @ApiOperation(value="CREATED PRODUCT", notes = "Receive product Object and store it on" +
-            "the repository, it does not validate name repeated or any other field")
+    @ApiOperation(value="CREATED PRODUCT", notes = "Receive product Object and store it on the repository, it does not validate name repeated or any other field")
     @PostMapping()
     public ResponseEntity<EntityModel<Product>> createProduct(@Valid @RequestBody Product product){
         log.info(String.format("PRODUCT | CREATE | Product payload { %s }", product));
@@ -71,12 +76,10 @@ public class ProductController {
     public ResponseEntity deleteProductById(@PathVariable long productId){
         log.info(String.format("PRODUCT |DELETE_BY_ID | ProductId payload { %d }", productId));
         productService.deleteById(productId);
-
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
-    @ApiOperation(value ="PUT BY ID", notes = "Update products by their id, Product is need" +
-            " on body request.")
+    @ApiOperation(value ="PUT BY ID", notes = "Update products by their id, Product is need on body request.")
     @PutMapping("/{productId}")
     public ResponseEntity<EntityModel<Product>>  updateProductById(@PathVariable long productId,@Valid @RequestBody Product product){
         log.info(String.format("PRODUCT | PUT_BY_ID | ProductId { %d } Product dat { %s} ", productId,product));

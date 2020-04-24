@@ -1,5 +1,4 @@
 package com.ecommercepractice.productservice.exception;
-
 import com.ecommercepractice.productservice.util.Pair;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -9,7 +8,6 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
-
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -20,7 +18,6 @@ import java.util.stream.Collectors;
  */
 @ControllerAdvice
 public class ControllerAdvisor extends ResponseEntityExceptionHandler {
-    ErrorType errorType;
 
     /**
      * This method handler all errors that extends from
@@ -37,7 +34,6 @@ public class ControllerAdvisor extends ResponseEntityExceptionHandler {
         return new ResponseEntity<>(new ErrorMessage(ex.getMessage(),ex.getErrorType(),ex.getPayload()),status);
     }
 
-
     public HttpStatus getExceptionStatus(ErrorType errorType){
         HttpStatus status;
         switch (errorType){
@@ -50,11 +46,9 @@ public class ControllerAdvisor extends ResponseEntityExceptionHandler {
             default:
                 status = HttpStatus.BAD_REQUEST;
                 break;
-
         }
         return status;
     }
-
 
     /**
      * This method handle when the user body is missing some arguments that
@@ -79,6 +73,6 @@ public class ControllerAdvisor extends ResponseEntityExceptionHandler {
                 .collect(Collectors.toList());
         String errorMessage = "There is a problem with the fields format.";
 
-        return new ResponseEntity<>(new ErrorMessage(errorMessage,errorType.MISSING_FIELDS,payload),HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>(new ErrorMessage(errorMessage,ErrorType.MISSING_FIELDS,payload),HttpStatus.BAD_REQUEST);
     }
 }

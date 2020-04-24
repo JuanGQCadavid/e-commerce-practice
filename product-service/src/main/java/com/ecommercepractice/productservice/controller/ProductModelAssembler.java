@@ -15,13 +15,9 @@ public class ProductModelAssembler {
      */
     public EntityModel<Product> toModel(Product productCreated){
         return new EntityModel<>(productCreated,
-                linkTo(methodOn(ProductController.class)
-                        .fetchProductById(productCreated.getIdProduct())).withRel("FETCH"),
-                linkTo(methodOn(ProductController.class)
-                        .deleteProductById(productCreated.getIdProduct())).withRel("DELETE"),
-                linkTo(methodOn(ProductController.class).updateProductById(
-                        productCreated.getIdProduct(),
-                        productCreated)).withRel("UPDATE")
+                linkTo(methodOn(ProductController.class).fetchProductById(productCreated.getIdProduct())).withRel("FETCH"),
+                linkTo(methodOn(ProductController.class).deleteProductById(productCreated.getIdProduct())).withRel("DELETE"),
+                linkTo(methodOn(ProductController.class).updateProductById(productCreated.getIdProduct(),productCreated)).withRel("UPDATE")
                 );
     }
 

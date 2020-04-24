@@ -28,7 +28,6 @@ public class SwaggerConfiguration {
         plugins.add(new CollectionJsonLinkDiscoverer());
         return new LinkDiscoverers(SimplePluginRegistry.create(plugins));
     }
-
     @Bean
     public Docket athApi(){
         return new Docket(DocumentationType.SWAGGER_2)
@@ -40,7 +39,6 @@ public class SwaggerConfiguration {
                 .build()
                 .apiInfo(apiInfo());
     }
-
     @Bean
     public ApiInfo apiInfo(){
         return new ApiInfoBuilder()
@@ -53,6 +51,4 @@ public class SwaggerConfiguration {
                 .version("1.0")
                 .build();
     }
-
-
 }
