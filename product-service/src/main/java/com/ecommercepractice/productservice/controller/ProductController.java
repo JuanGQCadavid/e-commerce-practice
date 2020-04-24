@@ -31,7 +31,6 @@ import java.util.stream.Collectors;
 @RestController
 @RequestMapping("/api/v1/products")
 public class ProductController {
-
     @Autowired
     ProductService productService;
 

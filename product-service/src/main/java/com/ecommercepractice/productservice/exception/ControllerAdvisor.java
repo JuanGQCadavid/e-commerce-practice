@@ -30,24 +30,7 @@ public class ControllerAdvisor extends ResponseEntityExceptionHandler {
             ProductNotCreatedException.class
     })
     public ResponseEntity<Object> handleProductException(ProductException ex){
-        HttpStatus status = getExceptionStatus(ex.getErrorType());
-        return new ResponseEntity<>(new ErrorMessage(ex.getMessage(),ex.getErrorType(),ex.getPayload()),status);
-    }
-
-    public HttpStatus getExceptionStatus(ErrorType errorType){
-        HttpStatus status;
-        switch (errorType){
-            case PRODUCT_NOT_FOUNDED:
-                status = HttpStatus.NOT_FOUND;
-                break;
-            case PRODUCT_NOT_CREATED:
-                status = HttpStatus.BAD_REQUEST;
-                break;
-            default:
-                status = HttpStatus.BAD_REQUEST;
-                break;
-        }
-        return status;
+        return new ResponseEntity<>(new ErrorMessage(ex.getMessage(),ex.getErrorType(),ex.getPayload()),ex.getErrorType().getStatus());
     }
 
     /**
@@ -73,6 +56,6 @@ public class ControllerAdvisor extends ResponseEntityExceptionHandler {
                 .collect(Collectors.toList());
         String errorMessage = "There is a problem with the fields format.";
 
-        return new ResponseEntity<>(new ErrorMessage(errorMessage,ErrorType.MISSING_FIELDS,payload),HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>(new ErrorMessage(errorMessage,ErrorType.MISSING_FIELDS,payload),ErrorType.MISSING_FIELDS.getStatus());
     }
 }
