@@ -1,12 +1,8 @@
 package com.ecommercepractice.authentication.controller;
-
-
-import com.ecommercepractice.authentication.model.AuthMobile;
 import com.ecommercepractice.authentication.model.AuthenticationModel;
 import com.ecommercepractice.authentication.model.TokenModel;
 import org.springframework.hateoas.EntityModel;
 import org.springframework.stereotype.Component;
-
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
@@ -21,12 +17,9 @@ public class AuthenticationModelAssembler {
      */
     public EntityModel<AuthenticationModel> toModelRegister(AuthenticationModel authentication){
         return new EntityModel<AuthenticationModel>(authentication,
-                linkTo(methodOn(AuthenticationController.class)
-                        .logIn(null)).withRel("LOG_IN"),
-                linkTo(methodOn(AuthenticationController.class)
-                        .logOut(null)).withRel("LOG_OUT"),
-                linkTo(methodOn(AuthenticationController.class)
-                        .validateToken(null,authentication.getUserEmail())).withRel("VALIDATE_TOKEN")
+                linkTo(methodOn(AuthenticationController.class).logIn(null)).withRel("LOG_IN"),
+                linkTo(methodOn(AuthenticationController.class).logOut(null)).withRel("LOG_OUT"),
+                linkTo(methodOn(AuthenticationController.class).validateToken(null,authentication.getUserEmail())).withRel("VALIDATE_TOKEN")
                 );
     }
     /**
@@ -40,11 +33,8 @@ public class AuthenticationModelAssembler {
     public EntityModel<TokenModel> toModelLogIn(AuthenticationModel authentication,
                                                          TokenModel token){
         return new EntityModel<TokenModel>(token,
-                linkTo(methodOn(AuthenticationController.class)
-                        .logOut(null)).withRel("LOG_OUT"),
-                linkTo(methodOn(AuthenticationController.class)
-                        .validateToken(null, authentication.getUserEmail())).withRel("VALIDATE_TOKEN")
-
+                linkTo(methodOn(AuthenticationController.class).logOut(null)).withRel("LOG_OUT"),
+                linkTo(methodOn(AuthenticationController.class).validateToken(null, authentication.getUserEmail())).withRel("VALIDATE_TOKEN")
         );
     }
 }

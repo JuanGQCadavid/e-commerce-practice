@@ -1,6 +1,6 @@
 package com.ecommercepractice.authentication.controller;
 
-import com.ecommercepractice.authentication.exception.MissingAuthenticationHeaderException;
+import com.ecommercepractice.authentication.exceptions.MissingAuthenticationHeaderException;
 import com.ecommercepractice.authentication.model.AuthMobile;
 import com.ecommercepractice.authentication.model.AuthenticationModel;
 import com.ecommercepractice.authentication.model.TokenModel;
@@ -46,9 +46,7 @@ public class AuthenticationController {
     @Autowired
     AuthenticationModelAssembler authenticationModelAssembler;
 
-    @ApiOperation(value = "CREATE Auth",
-            response = AuthenticationModel.class,
-            responseContainer = "ResponseEntity<EntityModel>")
+    @ApiOperation(value = "CREATE Auth",response = AuthenticationModel.class,responseContainer = "ResponseEntity<EntityModel>")
     @PostMapping("/register")
     public ResponseEntity<EntityModel<AuthenticationModel>> register(@Valid @RequestBody AuthenticationModel authentication) {
         log.info(String.format("AUTH | REGISTER | Payload AUTH { %s }", authentication));
@@ -58,9 +56,7 @@ public class AuthenticationController {
         );
     }
 
-    @ApiOperation(value = "LOGIN ",
-            response = AuthenticationModel.class,
-            notes = "-> User credential validator and token generator.")
+    @ApiOperation(value = "LOGIN ",response = AuthenticationModel.class,notes = "-> User credential validator and token generator.")
     @PostMapping("/login")
     public ResponseEntity<EntityModel<TokenModel>> logIn(@Valid @RequestBody AuthMobile authMobile) {
 
@@ -73,8 +69,7 @@ public class AuthenticationController {
         }
 
         return new ResponseEntity<EntityModel<TokenModel>>(
-                authenticationModelAssembler.toModelLogIn(authMobile.getUserInfo(),
-                        authService.login(authMobile.getUserInfo())),
+                authenticationModelAssembler.toModelLogIn(authMobile.getUserInfo(),authService.login(authMobile.getUserInfo())),
                 HttpStatus.OK
         );
     }
@@ -86,20 +81,14 @@ public class AuthenticationController {
     @GetMapping("/validate/{userEmail:.+}")
     @ResponseStatus(code = HttpStatus.NO_CONTENT)
     public ResponseEntity validateToken(@RequestHeader Map<String, String> headers,@PathVariable String userEmail) {
-
         String tokenId = Optional.ofNullable(headers.get("authorization"))
                 .orElseThrow(() -> new MissingAuthenticationHeaderException());
         log.info(String.format("AUTH | VALIDATE | PAYLOAD { userEmail -> %s | tokenId -> %s }", userEmail, tokenId));
         authService.validateAuth(userEmail, tokenId);
-
         return new ResponseEntity(HttpStatus.NO_CONTENT);
-
     }
 
-    @ApiOperation(value = "LOGOUT -> TokenId",
-            response = java.lang.Void.class,
-            notes = "Delete the current token from the userEmail associated"
-    )
+    @ApiOperation(value = "LOGOUT -> TokenId",response = java.lang.Void.class,notes = "Delete the current token from the userEmail associated")
     @DeleteMapping("/logout")
     @ResponseStatus(code = HttpStatus.NO_CONTENT)
     public ResponseEntity logOut(@RequestHeader Map<String, String> headers) {
@@ -109,5 +98,4 @@ public class AuthenticationController {
         authService.logout(tokenId);
         return new ResponseEntity(HttpStatus.NO_CONTENT);
     }
-
 }

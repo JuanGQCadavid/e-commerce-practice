@@ -1,4 +1,4 @@
-package com.ecommercepractice.authentication.exception;
+package com.ecommercepractice.authentication.exceptions;
 
 /**
  * Internal runtime exception flag.

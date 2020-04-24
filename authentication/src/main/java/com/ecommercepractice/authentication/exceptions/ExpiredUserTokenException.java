@@ -1,9 +1,7 @@
-package com.ecommercepractice.authentication.exception;
+package com.ecommercepractice.authentication.exceptions;
 
 import com.ecommercepractice.authentication.util.Pair;
 import lombok.Getter;
-import lombok.extern.slf4j.Slf4j;
-
 import java.time.LocalDate;
 
 /**
@@ -12,7 +10,6 @@ import java.time.LocalDate;
 @Getter
 public class ExpiredUserTokenException extends RuntimeException {
     Pair<String, LocalDate> payload;
-
     public ExpiredUserTokenException(String tokenId, LocalDate tokenDate){
         super(String.format("Token has expired { %s } since { %s } ", tokenId,tokenDate));
         payload = new Pair<>(tokenId,tokenDate);

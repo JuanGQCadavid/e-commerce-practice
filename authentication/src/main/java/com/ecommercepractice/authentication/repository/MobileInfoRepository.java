@@ -1,5 +1,4 @@
 package com.ecommercepractice.authentication.repository;
-
 import com.ecommercepractice.authentication.model.MobileInfoModel;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;

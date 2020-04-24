@@ -1,10 +1,7 @@
-package com.ecommercepractice.authentication.exception;
+package com.ecommercepractice.authentication.exceptions;
 
 import com.ecommercepractice.authentication.util.Pair;
-import io.swagger.annotations.ApiResponse;
-import io.swagger.annotations.ApiResponses;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -26,14 +23,10 @@ public class ExceptionAuthHandler extends ResponseEntityExceptionHandler {
      * The email that is attempting to save on the system
      * is already in use by other Ath
      * @param ex
-     * @param request
      * @return
      */
     @ExceptionHandler(EmailAlreadyUsedException.class)
-    public ResponseEntity<Object> handleEmailAlreadyUsedException(
-            EmailAlreadyUsedException ex,
-            WebRequest request
-    ){
+    public ResponseEntity<Object> handleEmailAlreadyUsedException(EmailAlreadyUsedException ex){
         log.error(ex.getMessage());
         return new ResponseEntity<>(
             new ErrorMessage(ex.getMessage(),errorType.EMAIL_ALREADY_USED,ex.getPayload()),
@@ -41,18 +34,13 @@ public class ExceptionAuthHandler extends ResponseEntityExceptionHandler {
         );
     }
 
-
     /**
      * The email does not exist on the system register.
      * @param ex
-     * @param request
      * @return
      */
     @ExceptionHandler(EmailNotFoundException.class)
-    public ResponseEntity<Object> handleEmailNotFoundException(
-            EmailNotFoundException ex,
-            WebRequest request
-    ){
+    public ResponseEntity<Object> handleEmailNotFoundException(EmailNotFoundException ex){
         log.error(ex.getMessage());
         return new ResponseEntity(
                 new ErrorMessage(ex.getMessage(),errorType.EMAIL_NOT_FOUND, ex.getPayload()),
@@ -80,14 +68,10 @@ public class ExceptionAuthHandler extends ResponseEntityExceptionHandler {
      * The User email exist but the password associated to the email
      * is wrong.
      * @param ex
-     * @param request
      * @return
      */
     @ExceptionHandler(InvalidUserPasswordException.class)
-    public ResponseEntity<ErrorMessage> handleInvalidUserPassword(
-            InvalidUserPasswordException ex,
-            WebRequest request
-    ){
+    public ResponseEntity<ErrorMessage> handleInvalidUserPassword(InvalidUserPasswordException ex){
         log.error(ex.getMessage());
         return new ResponseEntity(
                 new ErrorMessage(ex.getMessage(),errorType.INVALID_PASSWORD, ex.getPayload()),
@@ -97,14 +81,10 @@ public class ExceptionAuthHandler extends ResponseEntityExceptionHandler {
     /**
      * The token exist, but it is not attached to the current email.
      * @param ex
-     * @param request
      * @return
      */
     @ExceptionHandler(InvalidUserTokenException.class)
-    public ResponseEntity<Object> handleInvalidUserToken(
-            InvalidUserTokenException ex,
-            WebRequest request
-    ){
+    public ResponseEntity<Object> handleInvalidUserToken(InvalidUserTokenException ex){
         log.error(ex.getMessage());
         return new ResponseEntity<>(
                 new ErrorMessage(ex.getMessage(),errorType.INVALID_TOKEN,ex.getPayload()),
@@ -113,10 +93,7 @@ public class ExceptionAuthHandler extends ResponseEntityExceptionHandler {
     }
 
     @ExceptionHandler(MissingAuthenticationHeaderException.class)
-    public ResponseEntity<Object> handleMissingAuthenticationHeader(
-            MissingAuthenticationHeaderException ex,
-            WebRequest request
-    ){
+    public ResponseEntity<Object> handleMissingAuthenticationHeader(MissingAuthenticationHeaderException ex){
         log.error(ex.getMessage());
         return new ResponseEntity<>(
                 new ErrorMessage(ex.getMessage(),errorType.MISSING_AUTH_HEADER,ex.getPayload()),
@@ -126,15 +103,11 @@ public class ExceptionAuthHandler extends ResponseEntityExceptionHandler {
     /**
      * Token does not exist on the database.
      * @param ex
-     * @param request
      * @return
      */
 
     @ExceptionHandler(TokenNotFoundException.class)
-    public ResponseEntity<Object> handleTokenNotFound(
-            TokenNotFoundException ex,
-            WebRequest request
-    ){
+    public ResponseEntity<Object> handleTokenNotFound(TokenNotFoundException ex){
         log.error(ex.getMessage());
         return new ResponseEntity<>(
                 new ErrorMessage(ex.getMessage(),errorType.TOKEN_NO_FOUND,ex.getPayload()),

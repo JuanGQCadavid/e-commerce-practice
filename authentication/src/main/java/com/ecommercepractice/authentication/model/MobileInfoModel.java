@@ -1,13 +1,18 @@
 package com.ecommercepractice.authentication.model;
-
-
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
 import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
 
 @Getter
 @Setter
@@ -16,9 +21,7 @@ import javax.validation.constraints.NotNull;
 @AllArgsConstructor
 @Entity
 @Table(name = "MobileInfo")
-@ApiModel(value = "Authentication",
-        description = "All info related user's device would be represented by Authentication model."
-)
+@ApiModel(value = "Authentication", description = "All info related user's device would be represented by Authentication model.")
 public class MobileInfoModel {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)

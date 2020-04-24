@@ -1,11 +1,18 @@
 package com.ecommercepractice.authentication.service;
 
 import com.ecommercepractice.authentication.dao.AuthDao;
-import com.ecommercepractice.authentication.exception.*;
+
+import com.ecommercepractice.authentication.exceptions.EmailNotFoundException;
+import com.ecommercepractice.authentication.exceptions.InvalidUserPasswordException;
+import com.ecommercepractice.authentication.exceptions.TokenNotFoundException;
+import com.ecommercepractice.authentication.exceptions.InvalidUserTokenException;
+import com.ecommercepractice.authentication.exceptions.EmailAlreadyUsedException;
+
 import com.ecommercepractice.authentication.model.AuthenticationModel;
 import com.ecommercepractice.authentication.model.TokenModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
 
 @Service
 public class AuthService {
@@ -60,8 +67,7 @@ public class AuthService {
         authDao.findByUserEmail(newAuthentication.getUserEmail())
                 .ifPresent( authenticationModel -> {throw new EmailAlreadyUsedException(newAuthentication.getUserEmail());});
         newAuthentication.setIdToken(DEFAULT_NOT_TOKEN);
-        return authDao.save(newAuthentication)
-                .get();
+        return authDao.save(newAuthentication).get();
     }
     /**
      * Validate first the userEmail, then validates that the token

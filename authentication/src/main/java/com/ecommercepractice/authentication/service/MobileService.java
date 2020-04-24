@@ -16,7 +16,6 @@ public class MobileService {
      * @return
      */
     public MobileInfoModel register(MobileInfoModel mobileInfo){
-        return mobileDao.save(mobileInfo)
-                .get();
+        return mobileDao.save(mobileInfo).get();
     }
 }

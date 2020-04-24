@@ -1,16 +1,13 @@
 package com.ecommercepractice.authentication.service;
 
 import com.ecommercepractice.authentication.dao.TokenDao;
-import com.ecommercepractice.authentication.exception.ExpiredUserTokenException;
-import com.ecommercepractice.authentication.exception.InvalidUserTokenException;
-import com.ecommercepractice.authentication.exception.TokenNotFoundException;
+import com.ecommercepractice.authentication.exceptions.ExpiredUserTokenException;
+import com.ecommercepractice.authentication.exceptions.TokenNotFoundException;
 import com.ecommercepractice.authentication.model.TokenModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.util.Date;
 
 
 @Service
@@ -52,10 +49,7 @@ public class TokenService {
      */
     public boolean validateToken(String tokenId){
         TokenModel actualToken = tokenDao.findToken(tokenId)
-                .orElseThrow(() ->{
-                            return new TokenNotFoundException(tokenId);
-                        }
-                );
+                .orElseThrow(() -> new TokenNotFoundException(tokenId));
         LocalDate today = LocalDate.now();
 
         if(actualToken.getExpiredDate().isAfter(today) || actualToken.getExpiredDate().isEqual(today)){
