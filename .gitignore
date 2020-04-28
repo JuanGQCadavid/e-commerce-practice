@@ -1,4 +1,5 @@
 */target/*
 *.class
 *.idea
-*./mvn
+*.mvn
+mvnw*
