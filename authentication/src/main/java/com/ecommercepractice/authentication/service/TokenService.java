@@ -1,22 +1,18 @@
 package com.ecommercepractice.authentication.service;
 
-import com.ecommercepractice.authentication.dao.TokenDao;
-import com.ecommercepractice.authentication.exception.ExpiredUserTokenException;
-import com.ecommercepractice.authentication.exception.InvalidUserTokenException;
-import com.ecommercepractice.authentication.exception.TokenNotFoundException;
+import com.ecommercepractice.authentication.exceptions.ExpiredUserTokenException;
+import com.ecommercepractice.authentication.exceptions.TokenNotFoundException;
 import com.ecommercepractice.authentication.model.TokenModel;
+import com.ecommercepractice.authentication.repository.TokenRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.util.Date;
-
 
 @Service
 public class TokenService {
     @Autowired
-    TokenDao tokenDao;
+    TokenRepository tokenRepository;
 
     private final int THREE_MONTHS = 3;
 
@@ -25,7 +21,7 @@ public class TokenService {
      * @param tokenId
      */
     public void removeToken(String tokenId){
-        tokenDao.deleteToken(tokenId);
+        tokenRepository.deleteById(tokenId);
     }
 
     /**
@@ -34,10 +30,8 @@ public class TokenService {
      */
     public TokenModel tokenFor3Months(){
         LocalDate now = LocalDate.now();
-
         // Missing error at creating
-        return  tokenDao.createToken(new TokenModel(now, now.plusMonths(THREE_MONTHS)))
-                .get();
+        return  tokenRepository.save(new TokenModel(now, now.plusMonths(THREE_MONTHS)));
     }
 
     public boolean isValid(LocalDate expiredDate){
@@ -51,13 +45,9 @@ public class TokenService {
      * @return
      */
     public boolean validateToken(String tokenId){
-        TokenModel actualToken = tokenDao.findToken(tokenId)
-                .orElseThrow(() ->{
-                            return new TokenNotFoundException(tokenId);
-                        }
-                );
+        TokenModel actualToken = tokenRepository.findById(tokenId)
+                .orElseThrow(() -> new TokenNotFoundException(tokenId));
         LocalDate today = LocalDate.now();
-
         if(actualToken.getExpiredDate().isAfter(today) || actualToken.getExpiredDate().isEqual(today)){
             return true;
         }

@@ -1,7 +1,7 @@
-package com.ecommercepractice.authentication.exception;
+package com.ecommercepractice.authentication.exceptions;
 
+import com.ecommercepractice.authentication.exceptions.ErrorType;
 import lombok.Getter;
-
 import java.time.LocalDateTime;
 /**
  * Error class that represents the error itself
@@ -24,10 +24,10 @@ public class ErrorMessage {
      * @param errorType -> Internal runtime exception flag.
      * @param payload -> Pointing to the data that cause the problem.
      */
-    public ErrorMessage(String message,ErrorType errorType, Object payload){
+    public ErrorMessage(String message, ErrorType errorType, Object payload){
         this.message = message;
         this.errorType = errorType.getLabel();
         this.payload = payload;
-        this. timeStamp = LocalDateTime.now();
+        this.timeStamp = LocalDateTime.now();
     }
 }

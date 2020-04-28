@@ -1,5 +1,4 @@
 package com.ecommercepractice.authentication.model;
-
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
@@ -7,7 +6,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
-
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
@@ -21,7 +19,6 @@ import javax.validation.constraints.NotNull;
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
-
 public class AuthMobile {
 
     @NotNull
