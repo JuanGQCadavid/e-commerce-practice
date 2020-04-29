@@ -1,5 +1,4 @@
 package com.ecommercepractice.productservice.exception;
-
 import com.ecommercepractice.productservice.util.Pair;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -9,7 +8,6 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
-
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -20,47 +18,20 @@ import java.util.stream.Collectors;
  */
 @ControllerAdvice
 public class ControllerAdvisor extends ResponseEntityExceptionHandler {
-    ErrorType errorType;
 
     /**
      * This method handler all errors that extends from
      * ProductException errors family
      * @param ex
-     * @param request
      * @return
      */
     @ExceptionHandler({
             ProductNotFoundedException.class,
             ProductNotCreatedException.class
     })
-    public ResponseEntity<Object> handleProductException(
-            ProductException ex,WebRequest request
-    ){
-        HttpStatus status = getExceptionStatus(ex.getErrorType());
-        return new ResponseEntity<>(
-                new ErrorMessage(ex.getMessage(),ex.getErrorType(),ex.getPayload()),
-                status
-        );
+    public ResponseEntity<Object> handleProductException(ProductException ex){
+        return new ResponseEntity<>(new ErrorMessage(ex.getMessage(),ex.getErrorType(),ex.getPayload()),ex.getErrorType().getStatus());
     }
-
-
-    public HttpStatus getExceptionStatus(ErrorType errorType){
-        HttpStatus status;
-        switch (errorType){
-            case PRODUCT_NOT_FOUNDED:
-                status = HttpStatus.NOT_FOUND;
-                break;
-            case PRODUCT_NOT_CREATED:
-                status = HttpStatus.BAD_REQUEST;
-                break;
-            default:
-                status = HttpStatus.BAD_REQUEST;
-                break;
-
-        }
-        return status;
-    }
-
 
     /**
      * This method handle when the user body is missing some arguments that
@@ -85,8 +56,6 @@ public class ControllerAdvisor extends ResponseEntityExceptionHandler {
                 .collect(Collectors.toList());
         String errorMessage = "There is a problem with the fields format.";
 
-        return new ResponseEntity<>(
-                new ErrorMessage(errorMessage,errorType.MISSING_FIELDS,payload),
-                HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>(new ErrorMessage(errorMessage,ErrorType.MISSING_FIELDS,payload),ErrorType.MISSING_FIELDS.getStatus());
     }
 }

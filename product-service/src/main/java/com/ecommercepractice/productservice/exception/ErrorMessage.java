@@ -2,10 +2,7 @@ package com.ecommercepractice.productservice.exception;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import io.swagger.annotations.SwaggerDefinition;
 import lombok.Getter;
-
-import javax.persistence.Entity;
 import java.time.LocalDateTime;
 /**
  * Error class that represents the error itself
@@ -44,7 +41,4 @@ public class ErrorMessage {
         this.payload = payload;
         this. timeStamp = LocalDateTime.now();
     }
-
-
-
 }

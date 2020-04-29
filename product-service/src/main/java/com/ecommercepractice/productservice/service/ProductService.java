@@ -6,8 +6,6 @@ import com.ecommercepractice.productservice.model.Product;
 import com.ecommercepractice.productservice.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -29,8 +27,8 @@ public class ProductService {
         if (productToCreate.getPhotoUrl() == null){
             productToCreate.setPhotoUrl(DEFAULT_PHOTO);
         }
-        Optional<Product> optionalProduct =
-                Optional.ofNullable(productRepository.save(productToCreate));
+        Optional<Product> optionalProduct = Optional.ofNullable(productRepository.save(productToCreate));
+
         return optionalProduct
                 .orElseThrow( () -> new  ProductNotCreatedException(productToCreate));
     }
@@ -78,9 +76,7 @@ public class ProductService {
     public List<Product> filterProducts (String productName, Double productPrice){
         Optional<String> name = Optional.ofNullable(productName);
         Optional<Double> price = Optional.ofNullable(productPrice);
-        List<Product> productsToFilter = price.isPresent() ?
-                productRepository.fetchProductsByPrice(price.get()) :
-                productRepository.fetchAllProducts();
+        List<Product> productsToFilter = price.isPresent() ? productRepository.fetchProductsByPrice(price.get()):productRepository.fetchAllProducts();
         return name.isPresent() ? filterByName(name.get(),productsToFilter ) : productsToFilter;
     }
 

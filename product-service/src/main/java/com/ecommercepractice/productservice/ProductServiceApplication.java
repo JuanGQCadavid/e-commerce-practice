@@ -20,41 +20,11 @@ public class ProductServiceApplication {
 	@Bean
 	CommandLineRunner createInitialProducts(){
 		return args -> {
-			productService.createProduct(
-					new Product("Tapabocas Delux",
-							"Tapabocas",
-							56.7,
-							null)
-			);
-
-			productService.createProduct(
-					new Product("Higienico Delux",
-							"Higienico",
-							57.7,
-							null)
-			);
-
-			productService.createProduct(
-					new Product("Desodorante Rexona",
-							"Higienico",
-							58.7,
-							null)
-			);
-
-			productService.createProduct(
-					new Product("Talco Rexona Delux",
-							"Talco",
-							60.7,
-							null)
-			);
-
-			productService.createProduct(
-					new Product("toballasDelux Ultra",
-							"Talco",
-							57.7,
-							null)
-			);
-
+			productService.createProduct(new Product("Tapabocas Delux","Tapabocas",56.7,null));
+			productService.createProduct(new Product("Higienico Delux","Higienico",57.7,null));
+			productService.createProduct(new Product("Desodorante Rexona","Higienico",58.7,null));
+			productService.createProduct(new Product("Talco Rexona Delux","Talco",60.7,null));
+			productService.createProduct(new Product("toballasDelux Ultra","Talco",57.7,null));
 		};
 	}
 }
