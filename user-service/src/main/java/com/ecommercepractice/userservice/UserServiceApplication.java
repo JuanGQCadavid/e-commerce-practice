@@ -1,13 +1,12 @@
 package com.ecommercepractice.userservice;
 
-import com.ecommercepractice.userservice.repository.UserRepository;
 import com.ecommercepractice.userservice.models.User;
+import com.ecommercepractice.userservice.repository.UserRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
-import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 @SpringBootApplication
 @Slf4j
@@ -16,7 +15,6 @@ public class UserServiceApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(UserServiceApplication.class, args);
 	}
-
 
 	@Bean
 	public CommandLineRunner populateDataBase(UserRepository repository) {
@@ -34,8 +32,6 @@ public class UserServiceApplication {
 				log.info(user.toString());
 			}
 			log.info("");
-
-
 		};
 	}
 

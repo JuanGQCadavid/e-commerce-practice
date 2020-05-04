@@ -24,33 +24,23 @@ public class ControllerAdvisor extends ResponseEntityExceptionHandler {
     /**
      * The user already exist exception.
      * @param ex
-     * @param request
      * @return
      */
     @ExceptionHandler(UserAlreadyCreatedException.class)
-    public ResponseEntity<Object> handleUserAlreadyCreatedException(
-            UserAlreadyCreatedException ex, WebRequest request){
-        return new ResponseEntity<>(
-                new ErrorMessage(ex.getMessage(),ex.getPayload()),
-                HttpStatus.CONFLICT
-        );
+    public ResponseEntity<Object> handleUserAlreadyCreatedException(UserAlreadyCreatedException ex){
+        return new ResponseEntity<>(new ErrorMessage(ex.getMessage(),ex.getPayload()),HttpStatus.CONFLICT);
     }
 
     /**
      * user doesn't exists exception.
      * It is throwed when performing Update, delete or get
      * @param ex
-     * @param request
      * @return
      */
 
     @ExceptionHandler(UserNotFoundException.class)
-    public ResponseEntity handleUserNotFound(
-            UserNotFoundException ex, WebRequest request
-    ){
-        return new ResponseEntity<>(
-                new ErrorMessage(ex.getMessage(),ex.getPayload()),
-                HttpStatus.NOT_FOUND);
+    public ResponseEntity handleUserNotFound(UserNotFoundException ex){
+        return new ResponseEntity<>(new ErrorMessage(ex.getMessage(),ex.getPayload()), HttpStatus.NOT_FOUND);
     }
 
     /**

@@ -2,7 +2,6 @@ package com.ecommercepractice.userservice.dao;
 
 import com.ecommercepractice.userservice.models.User;
 import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,13 +13,10 @@ public class FakeUserDataAccess implements IUserDao {
 
     @Override
     public Optional<User> insertUser(User user) {
-        System.out.println("Desde inser -> " + user);
         Optional<User> checkedUser = selectUserByUserId(user.getUserId());
-
         if (checkedUser.isPresent()){
             return Optional.empty();
         }
-
         DB.add(user);
         return Optional.of(user);
     }
@@ -32,9 +28,7 @@ public class FakeUserDataAccess implements IUserDao {
 
     @Override
     public Optional<User> selectUserByUserId(Long userId) {
-        return DB.stream()
-                .filter(user -> user.getUserId().equals(userId))
-                .findFirst();
+        return DB.stream().filter(user -> user.getUserId().equals(userId)).findFirst();
     }
 
     @Override
