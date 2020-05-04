@@ -2,16 +2,27 @@ package com.ecommercepractice.userservice.controller;
 
 import com.ecommercepractice.userservice.models.User;
 import com.ecommercepractice.userservice.service.UserService;
-import io.swagger.annotations.*;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.CollectionModel;
 import org.springframework.hateoas.EntityModel;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
 import java.util.stream.Collectors;
@@ -36,39 +47,26 @@ public class UserController {
     @Autowired
     private UserModelAssembler userModelAssembler;
 
-    public HttpHeaders connectionWithOtherService(){
-        HttpHeaders headers = new HttpHeaders();
-        headers.add("Custom-Header", "foo");
-        return headers;
-    }
-
     @ApiOperation(value = "CREATE a user.", response = User.class, responseContainer = "EntityModel")
     @PostMapping
     public ResponseEntity<EntityModel<User>> addUser(
-            @ApiParam(name="User",
-                    value = "Required user personal information",
-                    required = true) @Valid @RequestBody User user){
-
+            @ApiParam(name="User",value = "Required user personal information", required = true) @Valid @RequestBody User user){
         log.info(String.format("USER | POST {%s}", user.toString()));
         EntityModel<User> entityModel =  userModelAssembler.toModel(userService.addUser(user));
-
-        return new ResponseEntity<EntityModel<User>>(entityModel, HttpStatus.CREATED);
+        return new ResponseEntity(entityModel, HttpStatus.CREATED);
     }
 
     @ApiOperation(value = "FETCH all the users on the system")
     @GetMapping
     public ResponseEntity<CollectionModel<EntityModel<User>>> getAllUser(){
         log.info("USER | GET ALL");
-
-        CollectionModel<EntityModel<User>> collectionModel =
-                new CollectionModel<EntityModel<User>>(
-                        userService.getAllusers()
+        CollectionModel<EntityModel<User>> collectionModel = new CollectionModel<EntityModel<User>>(userService.getAllusers()
                             .stream()
                             .map(user -> {
                                     return userModelAssembler.toModel(user);
                             })
                             .collect(Collectors.toList()));
-        return new ResponseEntity<CollectionModel<EntityModel<User>>>(collectionModel, HttpStatus.OK);
+        return new ResponseEntity(collectionModel, HttpStatus.OK);
     }
 
     //api/v1/user/:user_name
@@ -77,11 +75,9 @@ public class UserController {
 
     public ResponseEntity<EntityModel<User>> getUserByUserName(
             @ApiParam(name = "User id", value = "The user id associated to the user requested", required = true) @PathVariable("userId") Long userId){
-
         log.info(String.format("USER | GET | USER_ID {%s}",userId));
         EntityModel<User> entityModel = userModelAssembler.toModel(userService.getUserbyUserName(userId));
-
-        return new ResponseEntity<EntityModel<User>>(entityModel,HttpStatus.OK);
+        return new ResponseEntity(entityModel,HttpStatus.OK);
     }
 
     @ApiOperation(value = "DELETE a user by its userId", response = java.lang.Void.class)
@@ -89,10 +85,8 @@ public class UserController {
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public ResponseEntity deleteUser(
             @ApiParam(name = "User id", value = "The user id associated to the user requested" , required = true) @PathVariable("userId") Long userId){
-
         log.info(String.format("USER | DELETE | USER_ID  {%s}",userId));
-        EntityModel<User> entityModel = userModelAssembler.toModel(userService.deleteUser(userId));
-
+        userModelAssembler.toModel(userService.deleteUser(userId));
         return new ResponseEntity(HttpStatus.NO_CONTENT);
     }
 
@@ -101,10 +95,8 @@ public class UserController {
     public ResponseEntity<EntityModel<User>> updateUser(
             @ApiParam(name = "User id", value = "The user id associated to the user requested" , required = true) @PathVariable("userId") Long userId,
             @ApiParam(name = "User", value ="User info that are gonna be update" , required = true)@Valid @RequestBody User user){
-
         log.info(String.format("USER | PUT | USER_ID {%s -USER{ %s }}",userId, user.toString()));
         EntityModel<User> entityModel = userModelAssembler.toModel(userService.updateUser(userId,user));
-
-        return new ResponseEntity<EntityModel<User>>(entityModel,HttpStatus.ACCEPTED);
+        return new ResponseEntity(entityModel,HttpStatus.ACCEPTED);
     }
 }
