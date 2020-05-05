@@ -1,5 +1,6 @@
 package com.ecommercepractice.stockservice.controller;
 
+import com.ecommercepractice.stockservice.model.FilterDTO;
 import com.ecommercepractice.stockservice.model.Stock;
 import com.ecommercepractice.stockservice.service.StockService;
 import io.swagger.annotations.ApiOperation;
@@ -19,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.validation.Valid;
+import javax.ws.rs.BeanParam;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -33,25 +35,24 @@ public class StockController {
     StockModelAssembler stockModelAssembler;
 
     @ApiOperation(value = "APPEND_TO_STOCK", notes = "Append a product to stock")
-    @PostMapping()
+    @PostMapping("/products")
     public ResponseEntity<EntityModel<Stock>> appendToInventory(@Valid @RequestBody Stock productStock) {
         log.info(String.format("STOCK | APPEND | PAYLOAD { Stock -> %s } ", productStock));
-        return new ResponseEntity(stockModelAssembler.toModel(stockService.appendToInventory(productStock)), HttpStatus.CREATED);
+        Stock stockAppended = stockService.appendToInventory(productStock);
+        return new ResponseEntity(stockModelAssembler.toModel(stockAppended), HttpStatus.CREATED);
     }
 
     @ApiOperation(value ="FILTER", notes = "Fetch products by filtering them by price, stockQuantity and soldQuiantity" +
             "Also, you can specify whether you want to list not onlyProducts also")
-    @GetMapping()
-    public ResponseEntity<List<EntityModel<Stock>>>fetchByFiltering(@RequestParam(required = false) Float price,
-                                                        @RequestParam(required = false) Long stockQuantity,
-                                                        @RequestParam(required = false) Long soldQuantity,
-                                                        @RequestParam(required = false, defaultValue = "true") Boolean onlyActive) {
+    @GetMapping("/products/filter")
+    public ResponseEntity<List<EntityModel<Stock>>> fetchByFiltering(@BeanParam FilterDTO filterDTO) {
         log.info(String.format("STOCK | FETCH | STOCK NAME -> { %s } PRICE -> { %s }  ",
-                price == null ? "NO_PRICE" : price.toString(),
-                stockQuantity == null ? "NO_stockQuantity" : stockQuantity.toString(),
-                soldQuantity == null ? "NO_soldQuantity" : soldQuantity.toString()));
+                filterDTO.getPrice() == null ? "NO_PRICE" : filterDTO.getPrice().toString(),
+                filterDTO.getStockQuantity() == null ? "NO_stockQuantity" : filterDTO.getStockQuantity().toString(),
+                filterDTO.getSoldQuantity() == null ? "NO_soldQuantity" : filterDTO.getSoldQuantity().toString()));
 
-        List<EntityModel<Stock>> stockList = stockService.fetchByFiltering(price, stockQuantity, soldQuantity, onlyActive)
+        List<EntityModel<Stock>> stockList = stockService.fetchByFiltering(filterDTO.getPrice(), filterDTO.getStockQuantity(),
+                filterDTO.getSoldQuantity(), filterDTO.getOnlyActive())
                 .stream()
                 .map(stockModelAssembler::toModel)
                 .collect(Collectors.toList());
@@ -60,14 +61,14 @@ public class StockController {
     }
 
     @ApiOperation(value ="FETCH BY ID", notes = "Get a product on stock by their id.")
-    @GetMapping("/{stockId}")
+    @GetMapping("/products/{stockId}")
     public ResponseEntity<EntityModel<Stock>> fetchByStockId(@PathVariable(required = true) Long stockId) {
         log.info(String.format("STOCK | FETCH | PAYLOAD { StockId -> %s } ", stockId));
         return new ResponseEntity(stockModelAssembler.toModel(stockService.fetchByStockId(stockId)), HttpStatus.OK);
     }
 
     @ApiOperation(value ="UPDATE BY ID", notes = "Update stockQuantity and/or salePrice on stock by their id.")
-    @PutMapping("/{stockId}")
+    @PutMapping("products/{stockId}")
     public ResponseEntity<EntityModel<Stock>> updateByStockId(@PathVariable(required = true) Long stockId,
                                                  @RequestParam(required = false) Long stockQuantity,
                                                  @RequestParam(required = false) Float salePrice
@@ -79,7 +80,7 @@ public class StockController {
         return new ResponseEntity(stockModelAssembler.toModel(stockService.updateByStockId(stockId, stockQuantity, salePrice)), HttpStatus.OK);
     }
     @ApiOperation(value ="DELETE BY ID", notes = "DELETE a product on stock by their id.")
-    @DeleteMapping("/{stockId}")
+    @DeleteMapping("products/{stockId}")
     public ResponseEntity deleteByStockId(@PathVariable(required = true) Long stockId) {
         log.info(String.format("STOCK | DELETE | PAYLOAD { StockId -> %s } ", stockId));
         stockService.deleteByStockId(stockId);
@@ -88,8 +89,8 @@ public class StockController {
 
     @ApiOperation(value ="FREEZE BY ID", notes = "FREEZE a product on stock by their id. When a product is freezed means" +
             "that is inside a car.")
-    @PostMapping("/freeze/{stockId}")
-    public ResponseEntity freezeStockItem(@PathVariable(required = true) Long stockId, @RequestParam(required = true) Long freezeQuantities) {
+    @PostMapping("products/{stockId}/freeze/{freezeQuantities}")
+    public ResponseEntity freezeStockItem(@PathVariable(required = true) Long stockId, @PathVariable(required = true) Long freezeQuantities) {
         log.info(String.format("STOCK | FREEZE | PAYLOAD { StockId -> %s} ", stockId));
         stockService.freezeStockItem(stockId, freezeQuantities);
         return new ResponseEntity(HttpStatus.NO_CONTENT);
@@ -97,10 +98,10 @@ public class StockController {
 
     @ApiOperation(value ="BOUGHT BY ID", notes = "BOUGHT a product on stock by their id. That means, the product is" +
             "already paid, and it is not available for being purchased")
-    @PostMapping("/bought/{stockId}")
-    public ResponseEntity boughtStockItem(@PathVariable(required = true) Long stockId, @RequestParam Long boughtQuantity) {
+    @PostMapping("products/{stockId}/buy/{QuantityToBuy}")
+    public ResponseEntity boughtStockItem(@PathVariable(required = true) Long stockId, @PathVariable Long QuantityToBuy) {
         log.info(String.format("STOCK | BOUGHT | PAYLOAD { StockId -> %s } ", stockId));
-        stockService.boughtStockItem(stockId, boughtQuantity);
+        stockService.boughtStockItem(stockId, QuantityToBuy);
         return new ResponseEntity(HttpStatus.NO_CONTENT);
     }
 }

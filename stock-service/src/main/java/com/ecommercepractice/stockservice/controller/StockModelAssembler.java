@@ -1,5 +1,6 @@
 package com.ecommercepractice.stockservice.controller;
 
+import com.ecommercepractice.stockservice.model.FilterDTO;
 import com.ecommercepractice.stockservice.model.Stock;
 import org.springframework.hateoas.EntityModel;
 import org.springframework.stereotype.Component;
@@ -16,7 +17,7 @@ public class StockModelAssembler {
     public EntityModel<Stock> toModel (Stock stock){
         return new EntityModel<Stock>(stock,
                 linkTo(methodOn(StockController.class)
-                        .fetchByFiltering(stock.getSalePrice(),stock.getStockQuantity(),stock.getSoldQuantity(), true)).withRel("FILTER"),
+                        .fetchByFiltering(new FilterDTO(stock.getSalePrice(),stock.getStockQuantity(),stock.getSoldQuantity(), true))).withRel("FILTER"),
                 linkTo(methodOn(StockController.class)
                         .fetchByStockId(stock.getIdInventory())).withRel("FETCH_BY_ID"),
                 linkTo((methodOn(StockController.class)

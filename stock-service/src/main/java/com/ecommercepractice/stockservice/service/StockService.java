@@ -170,7 +170,8 @@ public class StockService {
      * @return
      */
     public List<Stock> fetchByFiltering(Float price, Long stockQuantity, Long soldQuantity, Boolean onlyActive){
-        List<Stock> filterList = onlyActive ? stockRepository.fetchAllActiveStockProducts() :
+        onlyActive = Optional.ofNullable(onlyActive).orElseGet(() -> true);
+        List<Stock> filterList = onlyActive  ? stockRepository.fetchAllActiveStockProducts() :
                 stockRepository.fetchAllStockProducts();
 
         return filterList
