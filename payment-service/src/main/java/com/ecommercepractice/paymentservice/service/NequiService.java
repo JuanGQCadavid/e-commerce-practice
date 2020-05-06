@@ -2,7 +2,7 @@ package com.ecommercepractice.paymentservice.service;
 
 import com.amazonaws.auth.AWSCredentialsProvider;
 import com.amazonaws.mobileconnectors.apigateway.ApiClientFactory;
-import com.ecommercepractice.paymentservice.models.RequestedBuilder;
+import com.ecommercepractice.paymentservice.models.nequiMessage.RequestedBuilder;
 import com.google.gson.JsonObject;
 import com.nequi.api.client.NequiGatewayClient;
 import com.nequi.api.provider.BasicAWSCredentialsProvider;
@@ -32,7 +32,7 @@ public class NequiService {
 
     public void checkUser(String phoneNumber, String value){
         System.out.println(requestedBuilder.validationClient(phoneNumber, value));
-        JsonObject response = apiClient.servicesClientserviceValidateclientPost(requestedBuilder.validationClient(phoneNumber, value));
-        System.out.println(response);
+           JsonObject response = apiClient.servicesClientserviceValidateclientPost(requestedBuilder.validationClient(phoneNumber, value));
+//        System.out.println(response);
     }
 }

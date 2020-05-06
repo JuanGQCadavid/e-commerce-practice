@@ -1,21 +1,18 @@
-package com.ecommercepractice.paymentservice.models;
+package com.ecommercepractice.paymentservice.models.nequiMessage;
 
-import com.ecommercepractice.paymentservice.models.body.Any;
-import com.ecommercepractice.paymentservice.models.body.RequestBody;
-import com.ecommercepractice.paymentservice.models.body.ValidateClientRQ;
-import com.ecommercepractice.paymentservice.models.header.Address;
-import com.ecommercepractice.paymentservice.models.header.Destination;
-import com.ecommercepractice.paymentservice.models.header.RequestHeader;
+import com.ecommercepractice.paymentservice.models.nequiMessage.body.Any;
+import com.ecommercepractice.paymentservice.models.nequiMessage.body.RequestBody;
+import com.ecommercepractice.paymentservice.models.nequiMessage.body.ValidateClientRQ;
+import com.ecommercepractice.paymentservice.models.nequiMessage.header.Address;
+import com.ecommercepractice.paymentservice.models.nequiMessage.header.Destination;
+import com.ecommercepractice.paymentservice.models.nequiMessage.header.RequestHeader;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
-import net.minidev.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
-
-import java.util.Map;
 
 @Component
 public class RequestedBuilder {

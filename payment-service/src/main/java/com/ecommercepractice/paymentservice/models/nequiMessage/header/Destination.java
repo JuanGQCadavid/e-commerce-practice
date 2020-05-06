@@ -1,4 +1,4 @@
-package com.ecommercepractice.paymentservice.models.header;
+package com.ecommercepractice.paymentservice.models.nequiMessage.header;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;

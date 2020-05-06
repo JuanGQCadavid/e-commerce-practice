@@ -1,6 +1,5 @@
-package com.ecommercepractice.paymentservice.models.header;
+package com.ecommercepractice.paymentservice.models.nequiMessage.header;
 
-import com.ecommercepractice.paymentservice.models.header.Destination;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 

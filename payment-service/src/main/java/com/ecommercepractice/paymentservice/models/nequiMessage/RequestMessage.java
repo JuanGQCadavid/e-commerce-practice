@@ -1,10 +1,8 @@
-package com.ecommercepractice.paymentservice.models;
+package com.ecommercepractice.paymentservice.models.nequiMessage;
 
-import com.ecommercepractice.paymentservice.models.body.RequestBody;
-import com.ecommercepractice.paymentservice.models.header.RequestHeader;
+import com.ecommercepractice.paymentservice.models.nequiMessage.body.RequestBody;
+import com.ecommercepractice.paymentservice.models.nequiMessage.header.RequestHeader;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonRootName;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
