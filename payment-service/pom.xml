@@ -32,6 +32,13 @@
 			<artifactId>spring-boot-starter-web</artifactId>
 		</dependency>
 
+		<!-- https://mvnrepository.com/artifact/com.nequi/nequi-api-client-qa -->
+		<dependency>
+			<groupId>com.nequi</groupId>
+			<artifactId>nequi-api-client-qa</artifactId>
+			<version>1.0.3</version>
+		</dependency>
+
 		<dependency>
 			<groupId>com.h2database</groupId>
 			<artifactId>h2</artifactId>
