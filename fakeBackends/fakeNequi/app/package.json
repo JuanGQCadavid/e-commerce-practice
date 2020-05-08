@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "json-server -p 5000 -w db.json"
+    "start": "json-server -p 5000 -H 0.0.0.0 -w db.json"
   },
   "author": "JuanGQCadavid",
   "license": "ISC",
