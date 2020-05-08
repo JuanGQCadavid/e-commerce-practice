@@ -9,7 +9,8 @@ import org.springframework.http.HttpStatus;
 public enum ErrorType {
     MISSING_FIELDS       ("MissingFieldsBody", HttpStatus.BAD_REQUEST),
     CARD_NOT_FOUND ("CardNotFoundException", HttpStatus.NOT_FOUND),
-    WRONG_CREDENTIALS ("CardCredentialsWrongException", HttpStatus.UNAUTHORIZED)
+    WRONG_CREDENTIALS ("CardCredentialsWrongException", HttpStatus.UNAUTHORIZED),
+    GENERAL_ERROR("PaymentCouldNotBeProcessedException", HttpStatus.FORBIDDEN)
     ;
     private String label;
     private HttpStatus status;
