@@ -1,0 +1,24 @@
+{
+    "nequiUsers":[
+        {
+            "id":1,
+            "userPhone":"3137590102",
+            "userMoney": 1000000
+        },
+        {
+            "id":2,
+            "userPhone":"3013475995",
+            "userMoney": 1000000
+        },
+        {
+            "id":3,
+            "userPhone":"3233518426",
+            "userMoney": 1000000
+        },
+        {
+            "id":4,
+            "userPhone":"5820263",
+            "userMoney": 1000000
+        }
+    ]
+}
