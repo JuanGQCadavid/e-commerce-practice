@@ -36,7 +36,7 @@ public class CartController {
     public ResponseEntity disableCart(@PathVariable Integer idCart){
         log.info(String.format("CART | DELETE | DISABLE_CART | PATH VARIABLE idCart -> %d",idCart));
         cartService.disableCart(idCart);
-        return new ResponseEntity(HttpStatus.OK);
+        return new ResponseEntity(HttpStatus.NO_CONTENT);
     }
 
     @ApiOperation(value = "FETCH CART BY idCart",notes = "Fetches Cart's info containing all products")
@@ -65,7 +65,7 @@ public class CartController {
                                                                     @RequestParam(required = true) Integer quantity){
         log.info(String.format("CART | POST | APPEND_TO_CART | PATH VARIABLE idCart -> %d QUERY PARAMS productId-> %d quantity-> %d",idCart, idProductStock, quantity));
         cartService.appendProductToCart(idCart, idProductStock, quantity);
-        return new ResponseEntity(HttpStatus.OK);
+        return new ResponseEntity(HttpStatus.NO_CONTENT);
     }
 
     @ApiOperation(value = "UPDATE A PRODUCT", notes = "Update an existing product in the product's cart's list")
@@ -75,7 +75,7 @@ public class CartController {
                                               @RequestParam(required = true) Integer quantity){
         log.info(String.format("CART | PUT | CHANGE | PATH VARIABLE idCart -> %d QUERY PARAMS productId-> %d quantity-> %d",idCart, idProductStock, quantity));
         cartService.updateProductToCart(idCart, idProductStock, quantity);
-        return new ResponseEntity(HttpStatus.OK);
+        return new ResponseEntity(HttpStatus.NO_CONTENT);
     }
 
     @ApiOperation(value = "REMOVE PRODUCT", notes = "Delete a product from the product's cart's list")
@@ -83,7 +83,7 @@ public class CartController {
     public ResponseEntity removeProduct(@PathVariable(required = true) Integer idCart, @RequestParam(required = true)Integer idProductStock){
         log.info(String.format("CART | DELETE | REMOVE | PATH VARIABLE idCart -> %d QUERY PARAMS productId-> %d ",idCart, idProductStock));
         cartService.removeProduct(idCart,idProductStock);
-        return new ResponseEntity(HttpStatus.OK);
+        return new ResponseEntity(HttpStatus.NO_CONTENT);
     }
 
     @ApiOperation(value = "SAVE CART", notes = "Save the actual's cart.")
@@ -91,7 +91,7 @@ public class CartController {
     public ResponseEntity saveCart(@PathVariable Integer idCart){
         log.info(String.format("CART | POST | SAVE_CART | PATH VARIABLE idCart -> %d",idCart));
         cartService.saveCart(idCart);
-        return new ResponseEntity(HttpStatus.OK);
+        return new ResponseEntity(HttpStatus.NO_CONTENT);
     }
 
     @ApiOperation(value="UNSAVED CART", notes = "Remove the cart from the saved carts")
@@ -99,7 +99,7 @@ public class CartController {
     public ResponseEntity removeSavedCart(@PathVariable Integer idCart){
         log.info(String.format("CART | DELETE | REMOVE_SAVED_CART | PATH VARIABLE idCart -> %d",idCart));
         cartService.removeSaveCart(idCart);
-        return new ResponseEntity(HttpStatus.OK);
+        return new ResponseEntity(HttpStatus.NO_CONTENT);
     }
 
     @ApiOperation(value = "GET ALL", notes = "FETCH ALL CARTS ACTIVE OR NOT ACTIVE.")
