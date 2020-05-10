@@ -18,16 +18,8 @@ import javax.validation.Valid;
 @RequestMapping("/api/v1/payment")
 @Slf4j
 public class PaymentController {
-
     @Autowired
     PaymentService paymentService;
-
-
-    @PostMapping("/nequi/{userPhoneNumber}/cashout/{quantity}")
-    public void performNequiPayment(@PathVariable Integer userPhoneNumber, @PathVariable Integer quantity){
-        log.info(String.format("PAYMENT | NEQUI | CASHOUT { QUANTITY -> %d} ", quantity));
-        paymentService.performNequiPayment(userPhoneNumber,quantity);
-    }
 
     @PostMapping("/card/{amount}")
     public void performCardPayment(@PathVariable Double amount, @Valid @RequestBody PaymentTypeInfo paymentTypeInfo){
@@ -46,6 +38,5 @@ public class PaymentController {
         log.info(String.format("PAYMENT | FETCH BILL { %d }", idPayment));
         paymentService.fetchPaymentById(idPayment);
     }
-
 }
 

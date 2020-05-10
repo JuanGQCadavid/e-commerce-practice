@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDate;
+import java.util.UUID;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -16,4 +17,5 @@ public class Bill {
     private LocalDate date;
     private Double amount;
     private String paymentMethod;
+    private UUID billNumber;
 }

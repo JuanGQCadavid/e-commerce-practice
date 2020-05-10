@@ -9,14 +9,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class PaymentService {
     @Autowired
-    NequiService nequiService;
-
-    @Autowired
     CardService cardService;
-
-
-    public void performNequiPayment(Integer userPhoneNumber, Integer quantity) {
-    }
 
     public void performCardPayment(Double amount, PaymentTypeInfo paymentTypeInfo) {
     }

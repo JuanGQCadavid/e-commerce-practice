@@ -11,6 +11,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
+import java.util.UUID;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -29,13 +30,10 @@ public class Payment {
     private Double amount;
 
     @NotNull
-    private Boolean isNequi;
-
-    private Integer idNequi;
-
-    @NotNull
     private Boolean isCard;
 
     private Integer idCard;
+
+    private UUID billNumber;
 
 }
