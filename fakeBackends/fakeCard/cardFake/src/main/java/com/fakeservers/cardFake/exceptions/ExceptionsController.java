@@ -1,6 +1,6 @@
-package com.ecommercepractice.userservice.exception;
+package com.fakeservers.cardFake.exceptions;
 
-import com.ecommercepractice.userservice.util.Pair;
+import com.fakeservers.cardFake.util.Pair;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -13,34 +13,14 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 import java.util.List;
 import java.util.stream.Collectors;
 
-/**
- * Intercepts the erros occurred during the ejection time and map them
- * to be send it to the user that perform the call indicating the problem
- * itself
- */
 @ControllerAdvice
-public class ControllerAdvisor extends ResponseEntityExceptionHandler {
+public class ExceptionsController  extends ResponseEntityExceptionHandler {
 
-    /**
-     * The user already exist exception.
-     * @param ex
-     * @return
-     */
-    @ExceptionHandler(UserAlreadyCreatedException.class)
-    public ResponseEntity<Object> handleUserAlreadyCreatedException(UserAlreadyCreatedException ex){
-        return new ResponseEntity<>(new ErrorMessage(ex.getMessage(),ex.getPayload()),HttpStatus.CONFLICT);
-    }
 
-    /**
-     * user doesn't exists exception.
-     * It is throwed when performing Update, delete or get
-     * @param ex
-     * @return
-     */
-
-    @ExceptionHandler(UserNotFoundException.class)
-    public ResponseEntity handleUserNotFound(UserNotFoundException ex){
-        return new ResponseEntity<>(new ErrorMessage(ex.getMessage(),ex.getPayload()), HttpStatus.NOT_FOUND);
+    @ExceptionHandler(CardException.class)
+    public ResponseEntity<ErrorMessage> handleCardExceptionsFamily(CardException ex) {
+        return new ResponseEntity(new ErrorMessage(ex.getMessage(), ex.getErrorType(), ex.getPayload()),
+                ex.getErrorType().getStatus());
     }
 
     /**
@@ -61,13 +41,11 @@ public class ControllerAdvisor extends ResponseEntityExceptionHandler {
                 .getFieldErrors()
                 .stream()
                 .map(x -> {
-                    return new  Pair(x.getField(),x.getDefaultMessage());
+                    return new Pair(x.getField(),x.getDefaultMessage());
                 })
                 .collect(Collectors.toList());
         String errorMessage = "There is a problem with the fields format.";
 
-        return new ResponseEntity<>(
-                new ErrorMessage(errorMessage,payload),
-                HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>(new ErrorMessage(errorMessage,ErrorType.MISSING_FIELDS,payload),ErrorType.MISSING_FIELDS.getStatus());
     }
 }

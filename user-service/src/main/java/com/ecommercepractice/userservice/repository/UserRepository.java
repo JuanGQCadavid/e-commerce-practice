@@ -1,6 +1,5 @@
 package com.ecommercepractice.userservice.repository;
 
-
 import com.ecommercepractice.userservice.models.User;
 import org.springframework.data.repository.CrudRepository;
 

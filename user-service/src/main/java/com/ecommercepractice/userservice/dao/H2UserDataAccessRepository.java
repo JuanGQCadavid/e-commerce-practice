@@ -4,7 +4,6 @@ package com.ecommercepractice.userservice.dao;
 import com.ecommercepractice.userservice.models.User;
 import com.ecommercepractice.userservice.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -33,27 +32,21 @@ public class H2UserDataAccessRepository implements IUserDao {
     @Override
     public Optional<User> updateUserByUserId(Long userId, User user) {
         Optional<User> oldUserOptional = repository.findById(userId);
-
         if(!oldUserOptional.isPresent()){
             return Optional.empty();
         }
-
         user.setUserId(userId);
-
         return Optional.of(repository.save(user));
     }
 
     @Override
     public Optional<User> deleteUserByUserId(Long userId) {
         Optional<User> oldUserOptional = repository.findById(userId);
-
         if(!oldUserOptional.isPresent()){
             return Optional.empty();
         }
-
         User newUser = oldUserOptional.get();
         newUser.setActive(false);
-
         return Optional.of(repository.save(newUser));
 
     }
