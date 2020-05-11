@@ -22,8 +22,8 @@ public class PaymentController {
     PaymentService paymentService;
 
     @PostMapping("/card/{amount}")
-    public void performCardPayment(@PathVariable Double amount, @Valid @RequestBody PaymentTypeInfo paymentTypeInfo){
-        log.info(String.format("PAYMENT | CARD | DEBIT { QUANTITY -> %d} ", amount));
+    public void performCardPayment(@PathVariable String amount, @Valid @RequestBody PaymentTypeInfo paymentTypeInfo){
+        log.info(String.format("PAYMENT | CARD | DEBIT { QUANTITY -> %s} ", amount));
         paymentService.performCardPayment(amount,paymentTypeInfo);
     }
 

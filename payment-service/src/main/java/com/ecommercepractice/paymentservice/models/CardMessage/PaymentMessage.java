@@ -2,8 +2,18 @@ package com.ecommercepractice.paymentservice.models.CardMessage;
 
 import com.ecommercepractice.paymentservice.models.CardMessage.body.PaymentInfo;
 import com.ecommercepractice.paymentservice.models.CardMessage.body.PaymentTypeInfo;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
 
-public class paymentMessage {
+@Getter
+@Setter
+@ToString
+@AllArgsConstructor
+@NoArgsConstructor
+public class PaymentMessage {
     private PaymentTypeInfo paymentTypeInfo;
     private PaymentInfo paymentInfo;
 }

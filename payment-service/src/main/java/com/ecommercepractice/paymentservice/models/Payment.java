@@ -30,9 +30,10 @@ public class Payment {
     private Double amount;
 
     @NotNull
-    private Boolean isCard;
+    private String ownerFirstName;
 
-    private Integer idCard;
+    @NotNull
+    private String ownerLastName;
 
     private UUID billNumber;
 
