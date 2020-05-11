@@ -1,6 +1,6 @@
-package com.fakeservers.cardFake.exceptions;
+package com.ecommercepractice.paymentservice.exceptions;
 
-import com.fakeservers.cardFake.util.Pair;
+import com.ecommercepractice.paymentservice.util.Pair;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -14,16 +14,14 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 import java.util.List;
 import java.util.stream.Collectors;
 
-@ControllerAdvice
 @Slf4j
-public class ExceptionsController  extends ResponseEntityExceptionHandler {
+@ControllerAdvice
+public class ExceptionsController extends ResponseEntityExceptionHandler {
 
-
-    @ExceptionHandler(CardException.class)
-    public ResponseEntity<ErrorMessage> handleCardExceptionsFamily(CardException ex) {
+    @ExceptionHandler( PaymentException.class)
+    public ResponseEntity<ErrorMessage> generalExceptionHandler (PaymentException ex){
         log.error(ex.getMessage());
-        return new ResponseEntity(new ErrorMessage(ex.getMessage(), ex.getErrorType(), null),
-                ex.getErrorType().getStatus());
+        return new ResponseEntity<>(new ErrorMessage(ex), ex.getErrorType().getStatus());
     }
 
     /**
