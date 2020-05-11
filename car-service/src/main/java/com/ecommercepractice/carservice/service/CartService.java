@@ -56,10 +56,14 @@ public class CartService {
      * Makes a cart not active by toggling its isActive flag.
      * @param idCart
      */
-    public void disableCart(Integer idCart){
+    public void disableCart(Integer idCart, Boolean permanently){
         Cart cart =  cartRepository.findById(idCart).orElseThrow(() -> new CartNotFoundedException(idCart));
-        cart.setIsActive(false);
-        cartRepository.save(cart);
+        if(permanently){
+            cartRepository.delete(cart);
+        }else{
+            cart.setIsActive(false);
+            cartRepository.save(cart);
+        }
     }
 
     /**

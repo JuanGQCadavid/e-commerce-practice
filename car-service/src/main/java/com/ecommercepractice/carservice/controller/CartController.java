@@ -33,9 +33,9 @@ public class CartController {
 
     @ApiOperation(value = "DISABLE CART",notes = "Disable a cart, making its isActive flag becoming false")
     @DeleteMapping("/{idCart}")
-    public ResponseEntity disableCart(@PathVariable Integer idCart){
+    public ResponseEntity disableCart(@PathVariable Integer idCart, @RequestParam(defaultValue = "false") Boolean permanently){
         log.info(String.format("CART | DELETE | DISABLE_CART | PATH VARIABLE idCart -> %d",idCart));
-        cartService.disableCart(idCart);
+        cartService.disableCart(idCart,permanently);
         return new ResponseEntity(HttpStatus.NO_CONTENT);
     }
 

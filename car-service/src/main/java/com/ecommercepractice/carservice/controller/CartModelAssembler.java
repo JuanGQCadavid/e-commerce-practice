@@ -14,13 +14,12 @@ public class CartModelAssembler {
     /**
      * Creates links to methods that user could use
      * after the calling of a created nor fetch function
-     * @param Cart
      * @return
      */
     public static EntityModel<Cart> toModelCart(Cart cart){
         return new EntityModel<>(cart,
                 linkTo(methodOn(CartController.class)
-                        .disableCart(cart.getIdCart())).withRel("DISABLE CART"),
+                        .disableCart(cart.getIdCart(),false)).withRel("DISABLE CART"),
                 linkTo(methodOn(CartController.class)
                         .fetchByIdCart(cart.getIdCart())).withRel("FETCH CART BY ID"),
                 linkTo(methodOn(CartController.class)
