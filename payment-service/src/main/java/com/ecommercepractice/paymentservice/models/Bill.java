@@ -15,7 +15,15 @@ import java.util.UUID;
 public class Bill {
     private Integer idPayment;
     private LocalDate date;
-    private Double amount;
+    private String amount;
     private String paymentMethod;
-    private UUID billNumber;
+    private String billNumber;
+
+    public Bill(Payment payment){
+        this.idPayment = payment.getIdPayment();
+        this.date = payment.getDate();
+        this.amount = payment.getAmount();
+        this.paymentMethod = "CARD";
+        this.billNumber = payment.getBillNumber();
+    }
 }

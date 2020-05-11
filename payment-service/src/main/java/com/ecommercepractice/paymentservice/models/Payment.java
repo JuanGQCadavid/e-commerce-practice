@@ -1,5 +1,8 @@
 package com.ecommercepractice.paymentservice.models;
 
+import com.ecommercepractice.paymentservice.models.CardMessage.PaymentMessage;
+import com.ecommercepractice.paymentservice.models.CardMessage.body.PaymentTypeInfo;
+import com.ecommercepractice.paymentservice.models.responses.CardResponse;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -27,7 +30,7 @@ public class Payment {
     private LocalDate date;
 
     @NotNull
-    private Double amount;
+    private String amount;
 
     @NotNull
     private String ownerFirstName;
@@ -35,6 +38,14 @@ public class Payment {
     @NotNull
     private String ownerLastName;
 
-    private UUID billNumber;
+    @NotNull
+    private String billNumber;
 
+    public Payment(PaymentMessage paymentMessage, CardResponse billNumber){
+        this.date = LocalDate.now();
+        this.amount = paymentMessage.getPaymentInfo().getAmount();
+        this.ownerFirstName = paymentMessage.getPaymentTypeInfo().getOwner().getFirstName();
+        this.ownerLastName = paymentMessage.getPaymentTypeInfo().getOwner().getLastName();
+        this.billNumber = billNumber.getBill();
+    }
 }
