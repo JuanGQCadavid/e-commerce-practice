@@ -1,7 +1,6 @@
 package com.ecommercepractice.paymentservice.models;
 
 import com.ecommercepractice.paymentservice.models.CardMessage.PaymentMessage;
-import com.ecommercepractice.paymentservice.models.CardMessage.body.PaymentTypeInfo;
 import com.ecommercepractice.paymentservice.models.responses.CardResponse;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -14,7 +13,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
-import java.util.UUID;
 
 @AllArgsConstructor
 @NoArgsConstructor

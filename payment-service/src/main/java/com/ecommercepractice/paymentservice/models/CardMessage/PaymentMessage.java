@@ -13,6 +13,10 @@ import lombok.ToString;
 @ToString
 @AllArgsConstructor
 @NoArgsConstructor
+/**
+ * DTO for Card service communication.
+ * Represents the contract at Card services.
+ */
 public class PaymentMessage {
     private PaymentTypeInfo paymentTypeInfo;
     private PaymentInfo paymentInfo;

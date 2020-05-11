@@ -2,7 +2,6 @@ package com.ecommercepractice.paymentservice.service;
 
 import com.ecommercepractice.paymentservice.exceptions.BillNotFoundException;
 import com.ecommercepractice.paymentservice.exceptions.CardServiceException;
-import com.ecommercepractice.paymentservice.exceptions.ErrorMessage;
 import com.ecommercepractice.paymentservice.models.Bill;
 import com.ecommercepractice.paymentservice.models.CardMessage.PaymentMessage;
 import com.ecommercepractice.paymentservice.models.CardMessage.body.PaymentInfo;
@@ -14,7 +13,6 @@ import com.ecommercepractice.paymentservice.repository.PaymentRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.PayloadApplicationEvent;
 import org.springframework.stereotype.Service;
 import retrofit2.Response;
 
@@ -33,44 +31,77 @@ public class PaymentService {
     @Autowired
     PaymentRepository paymentRepository;
 
+    /**
+     * This method builds and send the information needed to use
+     * card's service withdraw.
+     * @param amount
+     * @param paymentTypeInfo
+     * @return
+     */
     public Bill performCardPayment(String amount, PaymentTypeInfo paymentTypeInfo) {
         PaymentMessage paymentMessage = new PaymentMessage(paymentTypeInfo,new PaymentInfo(LocalDate.now().toString(),amount));
-
         try {
-            return executePayment(paymentMessage);
+            CardResponse cardResponse =  executePayment(paymentMessage);
+            return savePayment(paymentMessage,cardResponse);
         } catch (IOException e) {
             e.printStackTrace();
         }
         return null;
     }
 
-    private Bill executePayment(PaymentMessage paymentMessage) throws IOException {
+    /**
+     * Perform the Card's service call and return its response, if cards fail to process
+     * the request then throws an exception.
+     * @param paymentMessage
+     * @return
+     * @throws IOException
+     */
+    private CardResponse executePayment(PaymentMessage paymentMessage) throws IOException {
         Response<CardResponse> responseCall = cardService.cardWithdraw(paymentMessage).execute();
-
         if(!responseCall.isSuccessful()){
             CardFail errorMessage = generateErrorMessage(responseCall);
             throw new CardServiceException(errorMessage);
         }
-
-        return savePayment(paymentMessage,responseCall.body());
+        return responseCall.body();
     }
+
+    /**
+     * Maps Card error to CardServiceException.
+     * @param responseCall
+     * @return
+     * @throws IOException
+     */
     private CardFail generateErrorMessage( Response responseCall) throws IOException {
         ObjectMapper objectMapper = new ObjectMapper();
         return objectMapper.readValue(responseCall.errorBody().string(), CardFail.class);
     }
 
+    /**
+     * Save the payment onto the server and return the bill of the payment.
+     * @param paymentMessage
+     * @param bill
+     * @return
+     */
     private Bill savePayment(PaymentMessage paymentMessage, CardResponse bill) {
         Payment payment = paymentRepository.save(new Payment(paymentMessage,bill));
         return new Bill(payment);
     }
 
+    /**
+     * Fetch a bill by its identifier.
+     * @param billNumber
+     * @return
+     */
     public Bill fetchPaymentByBillNumber(String billNumber) {
-        // Missing this exception.
         Payment payment = paymentRepository.findByBillNumber(billNumber)
                 .orElseThrow( () -> new BillNotFoundException(billNumber));
         return new Bill(payment);
     }
 
+    /**
+     * Fetches all bills.
+     * @return
+     */
     public List<Bill> fetchAllBills() {
         List<Bill> bills = paymentRepository.findAll()
                 .stream()

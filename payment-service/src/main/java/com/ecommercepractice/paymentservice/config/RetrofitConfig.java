@@ -1,6 +1,5 @@
 package com.ecommercepractice.paymentservice.config;
 
-
 import com.ecommercepractice.paymentservice.service.CardService;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -31,5 +30,4 @@ public class RetrofitConfig {
         objectMapper.configure(DeserializationFeature.ACCEPT_SINGLE_VALUE_AS_ARRAY, true);
         return objectMapper;
     }
-
 }

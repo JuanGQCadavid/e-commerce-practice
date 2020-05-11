@@ -11,6 +11,9 @@ import lombok.ToString;
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
+/**
+ * DTO use at card response.
+ */
 public class CardResponse {
     private String bill;
 }

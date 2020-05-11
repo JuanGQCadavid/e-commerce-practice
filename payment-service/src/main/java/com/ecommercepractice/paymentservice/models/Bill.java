@@ -12,6 +12,9 @@ import java.time.LocalDate;
 @NoArgsConstructor
 @Setter
 @Getter
+/**
+ * DTO of payment information used to respond to the client.
+ */
 public class Bill {
     @ApiModelProperty(value = "Internal id")
     private Integer idPayment;

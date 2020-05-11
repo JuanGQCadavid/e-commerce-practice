@@ -12,5 +12,4 @@ public class PaymentException extends RuntimeException {
         this.errorType = errorType;
         this.payload = payload;
     }
-
 }

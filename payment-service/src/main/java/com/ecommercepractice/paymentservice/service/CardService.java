@@ -7,6 +7,11 @@ import retrofit2.http.Body;
 import retrofit2.http.POST;
 
 public interface CardService {
+    /**
+     * Bridge that communicate with Card service.
+     * @param paymentMessage -> Card Service contract.
+     * @return
+     */
     @POST("card/withdraw")
     Call<CardResponse> cardWithdraw(@Body PaymentMessage paymentMessage);
 }

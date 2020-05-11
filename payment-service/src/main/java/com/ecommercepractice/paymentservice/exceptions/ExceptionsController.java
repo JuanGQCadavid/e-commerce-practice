@@ -18,6 +18,11 @@ import java.util.stream.Collectors;
 @ControllerAdvice
 public class ExceptionsController extends ResponseEntityExceptionHandler {
 
+    /**
+     * General handler for all the Payment exception family
+     * @param ex
+     * @return
+     */
     @ExceptionHandler( PaymentException.class)
     public ResponseEntity<ErrorMessage> generalExceptionHandler (PaymentException ex){
         log.error(ex.getMessage());
