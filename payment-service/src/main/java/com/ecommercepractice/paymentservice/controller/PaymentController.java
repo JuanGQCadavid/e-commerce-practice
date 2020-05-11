@@ -3,6 +3,7 @@ package com.ecommercepractice.paymentservice.controller;
 import com.ecommercepractice.paymentservice.models.Bill;
 import com.ecommercepractice.paymentservice.models.CardMessage.body.PaymentTypeInfo;
 import com.ecommercepractice.paymentservice.service.PaymentService;
+import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -24,18 +25,19 @@ public class PaymentController {
     @Autowired
     PaymentService paymentService;
 
+    @ApiOperation(value = "WITHDRAW FROM CARD", notes = "Withdraw an explicit amount from a card account against Card server.")
     @PostMapping("/card/{amount}")
     public ResponseEntity<Bill> performCardPayment(@PathVariable String amount, @Valid @RequestBody PaymentTypeInfo paymentTypeInfo){
         log.info(String.format("PAYMENT | CARD | DEBIT { QUANTITY -> %s} ", amount));
         return new ResponseEntity(paymentService.performCardPayment(amount,paymentTypeInfo), HttpStatus.CREATED);
     }
-
+    @ApiOperation(value = "FETCH ALL BILLS", notes = "Fetch all bills that were successfully performed.")
     @GetMapping("/bills")
     public ResponseEntity<List<Bill>> fetchAllBills(){
         log.info(String.format("PAYMENT | BILLS"));
         return new ResponseEntity(paymentService.fetchAllBills(), HttpStatus.OK);
     }
-
+    @ApiOperation(value = "FETCH BY BILL NUMBER", notes = "Fetch a bill by its bill number.")
     @GetMapping("/bills/{billNumber}")
     public ResponseEntity<Bill> fetchPaymentByBillNumber(@PathVariable String billNumber){
         log.info(String.format("PAYMENT | FETCH BILL { %s }", billNumber));
