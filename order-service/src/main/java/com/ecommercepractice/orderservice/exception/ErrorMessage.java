@@ -4,6 +4,7 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 /**
@@ -14,8 +15,7 @@ import java.time.LocalDateTime;
  * Also, it has a variable that represents the internal
  * error for the user.
  */
-@ApiModel(value = "ErrorMessage",description = "When a error happen, the server response with" +
-        " a ErrorMessage Entity")
+@ApiModel(value = "ErrorMessage",description = "When an error happen, the server response with a ErrorMessage Entity")
 @Getter
 public class ErrorMessage {
     @ApiModelProperty("Time when the error occurred (Server time)")
@@ -41,6 +41,13 @@ public class ErrorMessage {
         this.message = message;
         this.errorType = errorType.getLabel();
         this.payload = payload;
-        this. timeStamp = LocalDateTime.now();
+        this.timeStamp = LocalDateTime.now();
+    }
+
+    public ErrorMessage(OrderException ex){
+        this.message = ex.getMessage();
+        this.errorType = ex.getErrorType().getLabel();
+        this.payload = ex.getPayload();
+        this.timeStamp = LocalDateTime.now();
     }
 }

@@ -5,6 +5,10 @@ import lombok.Data;
 import java.time.LocalDate;
 import java.util.List;
 
+/**
+ * This model is use to the client's request responses.
+ * This defines the fields of the response.
+ */
 @Data
 public class OrderDTO {
     private Integer orderId;
@@ -19,12 +23,12 @@ public class OrderDTO {
 
     private String paymentBill;
 
-    public OrderDTO(Order order, List<OrderProductList> products){
-        this.orderId = order.getOrderId();
-        this.userId = order.getUserId();
-        this.date = order.getDate();
-        this.amount = order.getAmount();
-        this.paymentBill = order.getPaymentBill();
+    public OrderDTO(Orders orders, List<OrderProductList> products){
+        this.orderId = orders.getOrderId();
+        this.userId = orders.getUserId();
+        this.date = orders.getDate();
+        this.amount = orders.getAmount();
+        this.paymentBill = orders.getPaymentBill();
         this.products = products;
     }
 }

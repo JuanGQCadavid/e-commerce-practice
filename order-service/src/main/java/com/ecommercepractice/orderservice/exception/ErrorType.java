@@ -10,7 +10,8 @@ import org.springframework.http.HttpStatus;
 @Getter
 @AllArgsConstructor
 public enum ErrorType {
-    MISSING_FIELDS       ("MissingFieldsBody",HttpStatus.BAD_REQUEST);
+    MISSING_FIELDS       ("MissingFieldsBody",HttpStatus.BAD_REQUEST),
+    ORDER_BY_ID_NOT_FOUND    ("OrderByIdNotFoundException", HttpStatus.NOT_FOUND);
 
     private String label;
     private HttpStatus status;
