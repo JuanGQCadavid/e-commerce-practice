@@ -16,4 +16,6 @@ public class OrderProductList {
     private OrderProductListId orderProductListId;
 
     private Integer quantity;
+
+    private Integer salePrice;
 }
