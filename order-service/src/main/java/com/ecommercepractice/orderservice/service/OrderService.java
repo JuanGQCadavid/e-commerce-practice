@@ -20,10 +20,20 @@ public class OrderService {
     @Autowired
     private OrderProductsListService orderProductsListService;
 
+    /**
+     * Transform an Order object to a OderDTO object
+     * @param orders
+     * @return
+     */
     public OrderDTO orderToDTO(Orders orders){
         return new OrderDTO(orders,orderProductsListService.getProducts(orders.getOrderProductListUniqueId()));
     }
 
+    /**
+     * Transform a list of Orders objects to a List of OrderDTO's
+     * @param ordersList
+     * @return
+     */
     public List<OrderDTO> orderListToDTOList(List<Orders> ordersList){
         List<OrderDTO> orderDTOS = ordersList
                 .stream()
@@ -32,20 +42,41 @@ public class OrderService {
         return orderDTOS;
     }
 
+    /**
+     * Find all orders.
+     * @return
+     */
+
     public List<OrderDTO> fetchAll() {
         return orderListToDTOList(orderRepository.findAll());
     }
 
+    /**
+     * Fetch the Order which orderId
+     * @param orderId
+     * @return
+     */
     public OrderDTO fetchByOrderId(Integer orderId) {
         Orders orders = orderRepository.findById(orderId)
                 .orElseThrow(() -> new OrderByIdNotFoundException(orderId));
         return orderToDTO(orders);
     }
 
+    /**
+     * Fetch all the orders that a given user by its id made.
+     * @param userId
+     * @return
+     */
     public List<OrderDTO> fetchByUserId(Integer userId) {
         return orderListToDTOList(orderRepository.findAllByUserId(userId));
     }
 
+    /**
+     * Create a new Confirmation order to a given user.
+     * @param userId
+     * @param confirmModel
+     * @return
+     */
     public Orders confirm(Integer userId, ConfirmationModel confirmModel) {
         Integer uniqueID = orderProductsListService.createListProducts(confirmModel.getProductList());
 

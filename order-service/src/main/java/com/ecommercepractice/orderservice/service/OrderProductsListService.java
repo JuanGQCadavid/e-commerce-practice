@@ -15,10 +15,21 @@ public class OrderProductsListService {
     @Autowired
     OrderProductListRepository orderProductListRepository;
 
+    /**
+     * Gives the next unique id for the
+     * products list.
+     * @return
+     */
     public Integer getNextOrderProductListUniqueId(){
         return orderProductListRepository.nextUniqueId();
     }
 
+    /**
+     * Given a list of products, creates a OrderProductsList
+     * for them
+     * @param productList
+     * @return
+     */
     public Integer createListProducts(List<Product> productList) {
         Integer uniqueID = getNextOrderProductListUniqueId();
 
@@ -34,6 +45,11 @@ public class OrderProductsListService {
         return uniqueID;
     }
 
+    /**
+     * get All products related to a unique Id
+     * @param orderProductListUniqueId
+     * @return
+     */
     public List<OrderProductList> getProducts(Integer orderProductListUniqueId) {
         return orderProductListRepository.findAllByOrderProductListUniqueId(orderProductListUniqueId);
     }
