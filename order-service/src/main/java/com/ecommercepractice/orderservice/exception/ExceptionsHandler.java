@@ -1,6 +1,6 @@
 package com.ecommercepractice.orderservice.exception;
 
-import com.ecommercepractice.orderservice.util.Pair;
+import com.ecommercepractice.utilities.util.Pair;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
