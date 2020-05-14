@@ -1,6 +1,6 @@
 package com.ecommercepractice.orderservice.exception;
 
-import com.ecommercepractice.orderservice.util.Pair;
+import com.ecommercepractice.utilities.util.Pair;
 
 /**
  * When an order could not be fetched by its orderId

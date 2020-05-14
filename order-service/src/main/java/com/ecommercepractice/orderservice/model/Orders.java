@@ -30,7 +30,7 @@ public class Orders {
     private Integer orderId;
 
     @ApiModelProperty(value = "UserId of User owner of the order.")
-    @NotEmpty
+    @NotNull
     private Integer userId;
 
     @ApiModelProperty(value = "UniqueId that maps the products list.")
@@ -38,7 +38,7 @@ public class Orders {
     private Integer orderProductListUniqueId;
 
     @ApiModelProperty(value = "Order's date of creation")
-    @NotEmpty
+    @NotNull
     private LocalDate date;
 
     @ApiModelProperty(value = "Order's total amount")

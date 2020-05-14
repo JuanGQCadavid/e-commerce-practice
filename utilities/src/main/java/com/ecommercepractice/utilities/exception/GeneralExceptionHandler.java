@@ -16,7 +16,7 @@ import java.util.stream.Collectors;
 
 @Slf4j
 @ControllerAdvice
-public class ExceptionsHandler extends ResponseEntityExceptionHandler {
+public class GeneralExceptionHandler extends ResponseEntityExceptionHandler {
 
     /**
      * General error handler for all the Order exceptions family.
@@ -26,7 +26,7 @@ public class ExceptionsHandler extends ResponseEntityExceptionHandler {
     @ExceptionHandler(GeneralException.class)
     public ResponseEntity<ErrorMessage> orderExceptionsHandler(GeneralException ex){
         log.error(ex.getMessage());
-        return new ResponseEntity( new ErrorMessage(ex), ex.getErrorType().getStatus());
+        return new ResponseEntity( new ErrorMessage(ex), ex.getGeneralErrorType().getStatus());
     }
 
     /**
@@ -52,6 +52,6 @@ public class ExceptionsHandler extends ResponseEntityExceptionHandler {
                 .collect(Collectors.toList());
         String errorMessage = "There is a problem with the fields format.";
 
-        return new ResponseEntity<>(new ErrorMessage(errorMessage,ErrorType.MISSING_FIELDS,payload),ErrorType.MISSING_FIELDS.getStatus());
+        return new ResponseEntity<>(new ErrorMessage(errorMessage, GeneralErrorType.MISSING_FIELDS,payload), GeneralErrorType.MISSING_FIELDS.getStatus());
     }
 }

@@ -3,6 +3,7 @@ package com.ecommercepractice.orderservice.model.confirm;
 import lombok.Data;
 
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 
 /**
  * Part of client contract for confirmation endpoint.
@@ -10,12 +11,12 @@ import javax.validation.constraints.NotEmpty;
  */
 @Data
 public class Product {
-    @NotEmpty
+    @NotNull
     private Integer productId;
 
-    @NotEmpty
+    @NotNull
     private Integer quantity;
 
-    @NotEmpty
+    @NotNull
     private Integer price;
 }

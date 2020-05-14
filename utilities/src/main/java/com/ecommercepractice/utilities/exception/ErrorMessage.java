@@ -31,19 +31,19 @@ public class ErrorMessage {
      *Error representation.
      *
      * @param message -> Short description of the problem
-     * @param errorType -> Internal runtime exception flag.
+     * @param generalErrorType -> Internal runtime exception flag.
      * @param payload -> Pointing to the data that cause the problem.
      */
-    public ErrorMessage(String message, ErrorType errorType, Object payload){
+    public ErrorMessage(String message, GeneralErrorType generalErrorType, Object payload){
         this.message = message;
-        this.errorType = errorType.getLabel();
+        this.errorType = generalErrorType.getLabel();
         this.payload = payload;
         this.timeStamp = LocalDateTime.now();
     }
 
     public ErrorMessage(GeneralException ex){
         this.message = ex.getMessage();
-        this.errorType = ex.getErrorType().getLabel();
+        this.errorType = ex.getGeneralErrorType().getLabel();
         this.payload = ex.getPayload();
         this.timeStamp = LocalDateTime.now();
     }

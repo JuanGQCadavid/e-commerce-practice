@@ -4,12 +4,12 @@ import lombok.Getter;
 
 @Getter
 public class GeneralException extends RuntimeException {
-    private ErrorType errorType;
+    private GeneralErrorType generalErrorType;
     private Object Payload;
 
-    public GeneralException(String msg,ErrorType errorType, Object Payload){
+    public GeneralException(String msg,GeneralErrorType generalErrorType, Object Payload){
         super(msg);
-        this.errorType = errorType;
+        this.generalErrorType = generalErrorType;
         this.Payload = Payload;
     }
 }
