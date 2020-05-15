@@ -1,5 +1,6 @@
 package com.ecommercepractice.utilities.exception;
 
+import lombok.Builder;
 import lombok.Getter;
 
 import java.time.LocalDateTime;
@@ -12,7 +13,7 @@ import java.time.LocalDateTime;
  * Also, it has a variable that represents the internal
  * error for the user.
  */
-
+@Builder
 @Getter
 public class ErrorMessage {
     // Time when the error occurred (Server time)
@@ -27,24 +28,4 @@ public class ErrorMessage {
     //Portion of the data that cause the error
     private Object payload;
 
-    /**
-     *Error representation.
-     *
-     * @param message -> Short description of the problem
-     * @param generalErrorType -> Internal runtime exception flag.
-     * @param payload -> Pointing to the data that cause the problem.
-     */
-    public ErrorMessage(String message, GeneralErrorType generalErrorType, Object payload){
-        this.message = message;
-        this.errorType = generalErrorType.getLabel();
-        this.payload = payload;
-        this.timeStamp = LocalDateTime.now();
-    }
-
-    public ErrorMessage(GeneralException ex){
-        this.message = ex.getMessage();
-        this.errorType = ex.getGeneralErrorType().getLabel();
-        this.payload = ex.getPayload();
-        this.timeStamp = LocalDateTime.now();
-    }
 }
