@@ -52,6 +52,6 @@ public class GeneralExceptionHandler extends ResponseEntityExceptionHandler {
                 .collect(Collectors.toList());
         String errorMessage = "There is a problem with the fields format.";
 
-        return new ResponseEntity<>(new ErrorMessage(errorMessage, GeneralErrorType.MISSING_FIELDS,payload), GeneralErrorType.MISSING_FIELDS.getStatus());
+        return new ResponseEntity<>(new ErrorMessage(errorMessage, new GeneralErrorType("MissingFieldsBody",HttpStatus.BAD_REQUEST),payload),HttpStatus.BAD_REQUEST);
     }
 }

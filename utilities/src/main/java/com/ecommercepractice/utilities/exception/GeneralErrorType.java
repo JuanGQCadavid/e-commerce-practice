@@ -5,9 +5,7 @@ import org.springframework.http.HttpStatus;
 
 @AllArgsConstructor
 @Getter
-public enum GeneralErrorType {
-    MISSING_FIELDS       ("MissingFieldsBody",HttpStatus.BAD_REQUEST)
-    ;
+public class GeneralErrorType {
     private String label;
     private HttpStatus status;
 }
