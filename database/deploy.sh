@@ -9,20 +9,6 @@ else
     echo 'Docker is installed'
 fi
 
-
-if ! [ -z "$(command docker volume inspect mysql-db-data)" ]; then
-    echo "Creating volumne"
-    docker volume create mysql-db-data
-else
-    echo "Database volume already created"
-fi
-
-if  [ -z "$(command docker inspect mysql-db)" ]; then
-    echo "Removing old mysl-db"
-    docker rm -f mysql-db
-fi
-
+docker rm -f mysql-db
 
 docker run -d -p 3306:3306 --name mysql-db -e MYSQL_ROOT_PASSWORD=secret -v mysql-db-data:/var/lib/mysql mysql
-
-
