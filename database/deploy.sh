@@ -10,4 +10,4 @@ else
 fi
 
 docker volume create mysql-db-data
-docker run -d -p 3306:3306 --name mysql-db -e MYSQL_ROOT_PASSWORD=secret -v mysql-data:/var/lib/mysql mysql
+docker run -d -p 3306:3306 --name mysql-db -e MYSQL_ROOT_PASSWORD=secret -v mysql-db-data:/var/lib/mysql mysql
