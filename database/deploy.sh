@@ -10,14 +10,14 @@ else
 fi
 
 
-if ! [ -z "$(docker volume inspect mysql-db-data)" ]; then
+if ! [ -z "$(command docker volume inspect mysql-db-data)" ]; then
     echo "Creating volumne"
     docker volume create mysql-db-data
 else
     echo "Database volume already created"
 fi
 
-if  [ -z "$(docker inspect mysql-db)" ]; then
+if  [ -z "$(command docker inspect mysql-db)" ]; then
     echo "Removing old mysl-db"
     docker rm -f mysql-db
 fi
