@@ -9,5 +9,11 @@ else
     echo 'Docker is installed'
 fi
 
-docker volume create mysql-db-data
+
+if ![ -x "$(docker volume inspect mysql-db-data)"]; then
+    echo "Creating volumne"
+    docker volume create mysql-db-data
+fi
+
+docker rm -f mysql-db
 docker run -d -p 3306:3306 --name mysql-db -e MYSQL_ROOT_PASSWORD=secret -v mysql-db-data:/var/lib/mysql mysql
