@@ -10,7 +10,7 @@ else
 fi
 
 
-if ! [ -x "$(docker volume inspect mysql-db-data)"]; then
+if ! [ -x "$(docker volume inspect mysql-db-data)" ]; then
     echo "Creating volumne"
     docker volume create mysql-db-data
 fi
