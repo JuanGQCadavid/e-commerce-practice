@@ -1,6 +1,10 @@
 package com.ecommercepractice.authentication.exceptions;
-public class EmailAlreadyUsedException extends AuthException {
+
+import com.ecommercepractice.utilities.exception.GeneralException;
+
+public class EmailAlreadyUsedException extends GeneralException {
     public EmailAlreadyUsedException(String email){
-        super(String.format("The email { %s } is already associated with an account.",email), email, ErrorType.EMAIL_ALREADY_USED);
+        super(String.format("The email { %s } is already associated with an account.",email),
+                ErrorType.EMAIL_ALREADY_USED.generateGeneral(), email);
     }
 }
