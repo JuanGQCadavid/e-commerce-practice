@@ -11,7 +11,6 @@ import com.ecommercepractice.authentication.repository.AuthenticationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-
 @Service
 public class AuthService {
     final String DEFAULT_NOT_TOKEN= "NONE";
