@@ -40,11 +40,6 @@ public class User {
     private  Long userId;
 
     @NotNull
-    @Size(min= 6, max = 24)
-    @ApiModelProperty(value = "User's password")
-    private String password;
-
-    @NotNull
     @Size(max = 24)
     @ApiModelProperty(value = "User's firstName")
     private  String firstName;
@@ -64,7 +59,6 @@ public class User {
     private  String email;
 
     public User(String password, String firstName, String lastName, boolean isActive, String email){
-        this.password = password;
         this.firstName = firstName;
         this.lastName = lastName;
         this.isActive = isActive;
