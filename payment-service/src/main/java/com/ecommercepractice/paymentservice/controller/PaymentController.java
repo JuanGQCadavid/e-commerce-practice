@@ -26,10 +26,10 @@ public class PaymentController {
     PaymentService paymentService;
 
     @ApiOperation(value = "WITHDRAW FROM CARD", notes = "Withdraw an explicit amount from a card account against Card server.")
-    @PostMapping("/card/{amount}")
-    public ResponseEntity<Bill> performCardPayment(@PathVariable String amount, @Valid @RequestBody PaymentTypeInfo paymentTypeInfo){
-        log.info(String.format("PAYMENT | CARD | DEBIT { QUANTITY -> %s} ", amount));
-        return new ResponseEntity(paymentService.performCardPayment(amount,paymentTypeInfo), HttpStatus.CREATED);
+    @PostMapping("/card/withdraw")
+    public ResponseEntity<Bill> performCardPayment(@Valid @RequestBody PaymentTypeInfo paymentTypeInfo){
+        log.info(String.format("PAYMENT | CARD | DEBIT { QUANTITY -> %s} ", paymentTypeInfo.getAmount()));
+        return new ResponseEntity(paymentService.performCardPayment(paymentTypeInfo), HttpStatus.CREATED);
     }
     @ApiOperation(value = "FETCH ALL BILLS", notes = "Fetch all bills that were successfully performed.")
     @GetMapping("/bills")

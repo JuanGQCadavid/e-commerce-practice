@@ -34,12 +34,11 @@ public class PaymentService {
     /**
      * This method builds and send the information needed to use
      * card's service withdraw.
-     * @param amount
      * @param paymentTypeInfo
      * @return
      */
-    public Bill performCardPayment(String amount, PaymentTypeInfo paymentTypeInfo) {
-        PaymentMessage paymentMessage = new PaymentMessage(paymentTypeInfo,new PaymentInfo(LocalDate.now().toString(),amount));
+    public Bill performCardPayment(PaymentTypeInfo paymentTypeInfo) {
+        PaymentMessage paymentMessage = new PaymentMessage(paymentTypeInfo,new PaymentInfo(LocalDate.now().toString(),paymentTypeInfo.getAmount()));
         try {
             CardResponse cardResponse =  executePayment(paymentMessage);
             return savePayment(paymentMessage,cardResponse);

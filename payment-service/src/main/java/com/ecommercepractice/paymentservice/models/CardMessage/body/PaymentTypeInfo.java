@@ -17,6 +17,9 @@ import lombok.ToString;
 @NoArgsConstructor
 public class PaymentTypeInfo {
     @NotEmpty
+    private String amount;
+
+    @NotEmpty
     private String tccNumber;
 
     @NotEmpty
@@ -28,4 +31,5 @@ public class PaymentTypeInfo {
     @NotNull
     @Valid
     private Owner owner;
+
 }
