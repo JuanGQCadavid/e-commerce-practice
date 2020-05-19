@@ -10,7 +10,7 @@ if ! [ -x "$(command -v docker)" ]; then
 
     chmod +x /usr/local/bin/docker-compose
 
-    docker-compose --version
+    yum install tmux -y 
 else
     echo 'Docker is installed'
 fi
