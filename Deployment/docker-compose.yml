@@ -1,0 +1,30 @@
+version: '3'
+services:
+    orders:
+        image: jquiro12/orders-service
+        ports:
+          - 8081:8080
+    user:
+        image: jquiro12/user-service
+        ports:
+          - 8082:8080
+    auth:
+        image: jquiro12/auth-service
+        ports:
+          - 8083:8080
+    product:
+        image: jquiro12/product-service
+        ports:
+          - 8084:8080
+    stock:
+        image: jquiro12/stock-service
+        ports:
+          - 8085:8080
+    cart:
+        image: jquiro12/cart-service
+        ports:
+          - 8086:8080
+    payment:
+      image: jquiro12/payment-service
+      ports:
+        - 8087:8080
