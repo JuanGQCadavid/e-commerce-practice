@@ -1,7 +1,6 @@
 package com.fakeservers.cardFake.service;
 
-import com.fakeservers.cardFake.exceptions.CardCredentialsWrongException;
-import com.fakeservers.cardFake.exceptions.CardNotFoundException;
+import com.fakeservers.cardFake.exceptions.GeneralCardException;
 import com.fakeservers.cardFake.models.Card;
 import com.fakeservers.cardFake.models.PaymentMessage;
 import com.fakeservers.cardFake.repository.CardRepository;
@@ -21,7 +20,7 @@ public class CardService {
     public HashMap<String,String> withdraw(PaymentMessage paymentMessage) {
         String tccNumber = paymentMessage.getPaymentTypeInfo().getTccNumber();
         Card actualCard = Optional.ofNullable(cardRepository.findByTccNumber(tccNumber))
-                .orElseThrow(() -> new CardNotFoundException(tccNumber));
+                .orElseThrow(() -> new GeneralCardException(tccNumber));
 
         return validateCardCredentials(paymentMessage, actualCard);
     }
@@ -36,7 +35,7 @@ public class CardService {
             response.put("bill", UUID.randomUUID().toString());
             return response;
         }else{
-            throw new CardCredentialsWrongException(paymentMessage.getPaymentTypeInfo().getTccNumber());
+            throw new GeneralCardException(paymentMessage.getPaymentTypeInfo().getTccNumber());
         }
     }
 

@@ -1,4 +1,4 @@
-package com.fakeservers.cardFake.models.body;
+package com.ecommercepractice.paymentservice.models.responses;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -8,10 +8,12 @@ import lombok.ToString;
 
 @Getter
 @Setter
-@AllArgsConstructor
 @NoArgsConstructor
+@AllArgsConstructor
 @ToString
-public class PaymentInfo {
-    private String paymentDate;
-    private String amount;
+/**
+ * DTO use at card response.
+ */
+public class CardResponse {
+    private String bill;
 }

@@ -1,5 +1,7 @@
-package com.fakeservers.cardFake.models.body;
+package com.ecommercepractice.paymentservice.models.CardMessage.body;
+
 import javax.validation.constraints.NotEmpty;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -8,9 +10,9 @@ import lombok.ToString;
 
 @Getter
 @Setter
+@ToString
 @AllArgsConstructor
 @NoArgsConstructor
-@ToString
 public class Owner {
     @NotEmpty
     private String lastName;
