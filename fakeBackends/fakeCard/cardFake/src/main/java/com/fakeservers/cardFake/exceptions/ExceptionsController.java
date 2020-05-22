@@ -1,6 +1,7 @@
 package com.fakeservers.cardFake.exceptions;
 
 import com.fakeservers.cardFake.util.Pair;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,12 +15,14 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @ControllerAdvice
+@Slf4j
 public class ExceptionsController  extends ResponseEntityExceptionHandler {
 
 
     @ExceptionHandler(CardException.class)
     public ResponseEntity<ErrorMessage> handleCardExceptionsFamily(CardException ex) {
-        return new ResponseEntity(new ErrorMessage(ex.getMessage(), ex.getErrorType(), ex.getPayload()),
+        log.error(ex.getMessage());
+        return new ResponseEntity(new ErrorMessage(ex.getMessage(), ex.getErrorType(), null),
                 ex.getErrorType().getStatus());
     }
 

@@ -1,4 +1,4 @@
-package com.fakeservers.cardFake.models.body;
+package com.ecommercepractice.paymentservice.models.CardMessage.body;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotEmpty;
@@ -12,10 +12,13 @@ import lombok.ToString;
 
 @Getter
 @Setter
+@ToString
 @AllArgsConstructor
 @NoArgsConstructor
-@ToString
 public class PaymentTypeInfo {
+    @NotEmpty
+    private String amount;
+
     @NotEmpty
     private String tccNumber;
 
@@ -28,4 +31,5 @@ public class PaymentTypeInfo {
     @NotNull
     @Valid
     private Owner owner;
+
 }

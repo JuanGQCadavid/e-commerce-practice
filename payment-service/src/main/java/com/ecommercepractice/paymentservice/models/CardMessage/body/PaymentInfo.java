@@ -1,5 +1,4 @@
-package com.fakeservers.cardFake.models.body;
-
+package com.ecommercepractice.paymentservice.models.CardMessage.body;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -8,9 +7,9 @@ import lombok.ToString;
 
 @Getter
 @Setter
+@ToString
 @AllArgsConstructor
 @NoArgsConstructor
-@ToString
 public class PaymentInfo {
     private String paymentDate;
     private String amount;

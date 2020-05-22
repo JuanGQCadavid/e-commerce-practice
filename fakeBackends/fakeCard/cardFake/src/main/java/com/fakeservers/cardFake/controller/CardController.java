@@ -26,7 +26,7 @@ public class CardController {
 
     @PostMapping("/withdraw")
     public ResponseEntity<HashMap<String,Object>> withdraw(@Valid @RequestBody PaymentMessage paymentMessage){
-        log.info(String.format("CARD | WITHDRAW | {%s}", paymentMessage));
+        log.info(String.format("CARD | WITHDRAW | {%s}", paymentMessage.getPaymentTypeInfo().getOwner().getFirstName()));
         return new ResponseEntity(cardService.withdraw(paymentMessage), HttpStatus.OK);
     }
 
