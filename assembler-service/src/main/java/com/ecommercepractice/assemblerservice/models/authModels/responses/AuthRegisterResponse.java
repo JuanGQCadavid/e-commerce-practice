@@ -1,4 +1,4 @@
-package com.ecommercepractice.assemblerservice.models.authModels;
+package com.ecommercepractice.assemblerservice.models.authModels.responses;
 
 import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;

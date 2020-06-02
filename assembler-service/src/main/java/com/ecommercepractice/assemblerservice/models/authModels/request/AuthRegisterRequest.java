@@ -1,4 +1,4 @@
-package com.ecommercepractice.assemblerservice.models.authModels;
+package com.ecommercepractice.assemblerservice.models.authModels.request;
 
 import com.ecommercepractice.assemblerservice.models.assemblerModels.UserRegister;
 import io.swagger.annotations.ApiModelProperty;
