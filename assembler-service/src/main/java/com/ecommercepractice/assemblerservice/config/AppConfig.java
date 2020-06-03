@@ -52,7 +52,8 @@ public class AppConfig {
 
     private OkHttpClient customOkHttpClient(){
         OkHttpClient okHttpClient = new OkHttpClient.Builder()
-                .addNetworkInterceptor(new ResponseCodeCheckInterceptor())
+                //.addNetworkInterceptor(new ResponseCodeCheckInterceptor())
+                .addInterceptor(new ResponseCodeCheckInterceptor())
                 .build();
         return okHttpClient;
     }

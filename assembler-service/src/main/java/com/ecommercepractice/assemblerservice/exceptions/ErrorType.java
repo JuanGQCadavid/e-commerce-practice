@@ -9,7 +9,8 @@ import org.springframework.http.HttpStatus;
 @AllArgsConstructor
 public enum ErrorType {
     SERVICE_FAIL_RESPONSE("ServiceFailException", HttpStatus.CONFLICT),
-    AUTH_HEADER_MISSING("MissingAuthenticationHeaderException", HttpStatus.UNAUTHORIZED);
+    AUTH_HEADER_MISSING("MissingAuthenticationHeaderException", HttpStatus.UNAUTHORIZED),
+    SERVICE_UNAVAILABLE("ServiceUnavailableException", HttpStatus.INTERNAL_SERVER_ERROR);
 
     private String label;
     private HttpStatus status;

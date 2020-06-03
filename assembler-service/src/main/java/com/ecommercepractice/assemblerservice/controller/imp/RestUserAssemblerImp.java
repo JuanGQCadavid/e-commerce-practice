@@ -36,14 +36,14 @@ public class RestUserAssemblerImp implements RestUserAssembler {
     @Override
     public ResponseEntity<UserDetails> userLogIn(@Valid AuthLoginModelRequest authMobile) {
         log.info(String.format(" %s | USER | LOG IN", appName));
-        return new ResponseEntity(userAssemblerService.userLogIn(authMobile),HttpStatus.NOT_IMPLEMENTED);
+        return new ResponseEntity(userAssemblerService.userLogIn(authMobile),HttpStatus.OK);
     }
 
     @Override
     public ResponseEntity userLogOut(Map<String, String> headers) {
         log.info(String.format(" %s | USER | LOG OUT", appName));
         userAssemblerService.userLogOut(headers);
-        return new ResponseEntity(HttpStatus.NO_CONTENT);
+        return new ResponseEntity(HttpStatus.OK);
     }
 
 }

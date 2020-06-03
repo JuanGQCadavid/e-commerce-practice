@@ -1,23 +1,31 @@
 package com.ecommercepractice.assemblerservice.config;
 
 import com.ecommercepractice.assemblerservice.exceptions.ServiceFailException;
+import com.ecommercepractice.assemblerservice.exceptions.ServiceUnavailableException;
 import com.ecommercepractice.assemblerservice.models.ServiceFail;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import okhttp3.Interceptor;
 import okhttp3.Response;
 
 import java.io.IOException;
+import java.net.ConnectException;
 
 public class ResponseCodeCheckInterceptor implements Interceptor {
 
     @Override
     public Response intercept(Chain chain) throws IOException {
-        Response response = chain .proceed(chain.request());
-        if (response.isSuccessful()){
-            return response;
-        }
 
-        throw new ServiceFailException(castError(response));
+        try{
+            Response response = chain.proceed(chain.request());
+
+            if (response.isSuccessful()){
+                return response;
+            }
+            throw new ServiceFailException(castError(response));
+
+        } catch(ConnectException connectException){
+            throw new ServiceUnavailableException();
+        }
     }
 
     public ServiceFail castError(Response responseCall) throws IOException {
