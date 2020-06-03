@@ -1,5 +1,6 @@
 package com.ecommercepractice.assemblerservice.services;
 
+import com.ecommercepractice.assemblerservice.exceptions.MissingAuthenticationHeaderException;
 import com.ecommercepractice.assemblerservice.models.assemblerModels.UserDetails;
 import com.ecommercepractice.assemblerservice.models.assemblerModels.UserInfo;
 import com.ecommercepractice.assemblerservice.models.assemblerModels.UserRegister;
@@ -17,6 +18,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 
 @Service
 public class UserAssemblerService {
@@ -84,6 +86,12 @@ public class UserAssemblerService {
     }
 
     public void userLogOut(Map<String, String> headers) {
+        String tokenHeader = checkAuthHeader(headers);
+        authServices.logOutAuth(tokenHeader).blockingFirst();
+    }
 
+    private String checkAuthHeader(Map<String, String> headers) {
+        return  Optional.ofNullable(headers.get("authorization"))
+                .orElseThrow(() -> new MissingAuthenticationHeaderException());
     }
 }

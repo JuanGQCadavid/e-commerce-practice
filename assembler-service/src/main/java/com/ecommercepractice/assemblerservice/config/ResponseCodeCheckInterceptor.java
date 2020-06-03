@@ -16,11 +16,26 @@ public class ResponseCodeCheckInterceptor implements Interceptor {
         if (response.isSuccessful()){
             return response;
         }
+
         throw new ServiceFailException(castError(response));
     }
 
     public ServiceFail castError(Response responseCall) throws IOException {
+        String err = responseCall.body().string();
+
+        System.out.println(err);
+
+        if (err.isEmpty()){
+            return ServiceFail.builder()
+                    .errorType("NONE")
+                    .message("NONE")
+                    .payload("NONE")
+                    .timeStamp("NONE")
+                    .build();
+        }
+
+        System.out.println();
         ObjectMapper objectMapper = new ObjectMapper();
-        return objectMapper.readValue(responseCall.body().string(), ServiceFail.class);
+        return objectMapper.readValue(err, ServiceFail.class);
     }
 }

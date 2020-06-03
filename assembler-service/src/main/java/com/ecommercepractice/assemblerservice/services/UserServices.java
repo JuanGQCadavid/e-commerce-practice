@@ -14,7 +14,7 @@ public interface UserServices {
     @POST("users/")
     Observable<EntityModel<UserResponse>> createUser(@Body UserRequest userRequest);
 
-    @GET("users/{userEmail}")
+    @GET("users/email/{userEmail}")
     Observable<EntityModel<UserInfo>> fetchUserByEmail(@Path("userEmail") String userEmail);
 
 }

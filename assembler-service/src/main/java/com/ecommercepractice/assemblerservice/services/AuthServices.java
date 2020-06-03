@@ -4,10 +4,13 @@ import com.ecommercepractice.assemblerservice.models.authModels.request.AuthLogi
 import com.ecommercepractice.assemblerservice.models.authModels.request.AuthRegisterRequest;
 import com.ecommercepractice.assemblerservice.models.authModels.responses.AuthRegisterResponse;
 import com.ecommercepractice.assemblerservice.models.authModels.responses.AuthTokenResponse;
+import io.reactivex.Completable;
 import io.reactivex.Observable;
 import org.springframework.hateoas.EntityModel;
-import org.springframework.http.ResponseEntity;
+import retrofit2.Response;
 import retrofit2.http.Body;
+import retrofit2.http.DELETE;
+import retrofit2.http.Header;
 import retrofit2.http.POST;
 
 public interface AuthServices {
@@ -20,6 +23,6 @@ public interface AuthServices {
     @POST(ENDPOINT_PREFIX + "/login")
     Observable<EntityModel<AuthTokenResponse>> logInAuth(@Body AuthLoginModelRequest authLoginModelRequest);
 
-    @POST(ENDPOINT_PREFIX + "/logout")
-    Observable<ResponseEntity> logOutAuth();
+    @DELETE(ENDPOINT_PREFIX + "/logout")
+    Observable<Response<Void>> logOutAuth(@Header("authorization") String authorization);
 }
