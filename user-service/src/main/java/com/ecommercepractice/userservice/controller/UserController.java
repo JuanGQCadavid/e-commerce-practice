@@ -99,4 +99,13 @@ public class UserController {
         EntityModel<User> entityModel = userModelAssembler.toModel(userService.updateUser(userId,user));
         return new ResponseEntity(entityModel,HttpStatus.ACCEPTED);
     }
+
+    @ApiOperation(value = "FETCH a user by its userId", response = User.class)
+    @GetMapping(path = "/email/{userEmail:.+}")
+    public ResponseEntity<EntityModel<User>> getUserByEmail(
+            @ApiParam(name = "User id", value = "The user id associated to the user requested", required = true) @PathVariable("userEmail") String userEmail){
+        log.info(String.format("USER | GET | USER_ID {%s}",userEmail));
+        EntityModel<User> entityModel = userModelAssembler.toModel(userService.getUserByEmail(userEmail));
+        return new ResponseEntity(entityModel,HttpStatus.OK);
+    }
 }
