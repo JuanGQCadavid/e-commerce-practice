@@ -1,4 +1,4 @@
-package com.ecommercepractice.assemblerservice.services;
+package com.ecommercepractice.assemblerservice.clients;
 
 import com.ecommercepractice.assemblerservice.models.assemblerModels.UserInfo;
 import com.ecommercepractice.assemblerservice.models.userModel.UserRequest;

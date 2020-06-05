@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import javax.validation.Valid;
 import java.util.Map;
 
-
 @RequestMapping("api/v1/assembler/users")
 public interface RestUserAssembler {
     @PostMapping("/register")

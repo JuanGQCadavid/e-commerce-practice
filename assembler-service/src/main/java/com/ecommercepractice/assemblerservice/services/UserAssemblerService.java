@@ -1,8 +1,9 @@
 package com.ecommercepractice.assemblerservice.services;
 
+import com.ecommercepractice.assemblerservice.clients.AuthServices;
+import com.ecommercepractice.assemblerservice.clients.UserServices;
 import com.ecommercepractice.assemblerservice.exceptions.MissingAuthenticationHeaderException;
 import com.ecommercepractice.assemblerservice.models.assemblerModels.UserDetails;
-import com.ecommercepractice.assemblerservice.models.assemblerModels.UserInfo;
 import com.ecommercepractice.assemblerservice.models.assemblerModels.UserRegister;
 import com.ecommercepractice.assemblerservice.models.authModels.request.AuthLoginModelRequest;
 import com.ecommercepractice.assemblerservice.models.authModels.request.AuthRegisterRequest;
@@ -10,8 +11,8 @@ import com.ecommercepractice.assemblerservice.models.authModels.responses.AuthRe
 import com.ecommercepractice.assemblerservice.models.authModels.responses.AuthTokenResponse;
 import com.ecommercepractice.assemblerservice.models.userModel.UserRequest;
 import com.ecommercepractice.assemblerservice.models.userModel.UserResponse;
+import com.ecommercepractice.assemblerservice.services.mappers.UserAssemblerMappers;
 import io.reactivex.Observable;
-import io.reactivex.ObservableSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.EntityModel;
 import org.springframework.stereotype.Service;
@@ -28,9 +29,12 @@ public class UserAssemblerService {
     @Autowired
     private UserServices userServices;
 
+    @Autowired
+    private UserAssemblerMappers mappers;
+
     public HashMap<String,Object> userRegister(UserRegister userRegister) {
-        AuthRegisterRequest authRegisterRequest = buildAuthRegisterRequest(userRegister);
-        UserRequest userRequest = buildUserRegisterRequest(userRegister);
+        AuthRegisterRequest authRegisterRequest = mappers.buildAuthRegisterRequest(userRegister);
+        UserRequest userRequest = mappers.buildUserRegisterRequest(userRegister);
 
         return Observable.zip(authServices.registerAuth(authRegisterRequest), userServices.createUser(userRequest),
                 (authRegisterResponseEntityModel, userResponseEntityModel) ->
@@ -47,22 +51,6 @@ public class UserAssemblerService {
         return zipResponse;
     }
 
-    private AuthRegisterRequest buildAuthRegisterRequest(UserRegister userRegister){
-        return AuthRegisterRequest.builder()
-                .userEmail(userRegister.getUserEmail())
-                .userPassword(userRegister.getUserPassword())
-                .build();
-    }
-
-    private UserRequest buildUserRegisterRequest(UserRegister userRegister){
-        return UserRequest.builder()
-                .email(userRegister.getUserEmail())
-                .firstName(userRegister.getFirstName())
-                .lastName(userRegister.getLastName())
-                .isActive(true)
-                .build();
-    }
-
     public UserDetails userLogIn(AuthLoginModelRequest authMobile) {
          return authServices.logInAuth(authMobile)
                  .flatMap(authTokenResponseEntityModel -> userDetailsObservable(authTokenResponseEntityModel, authMobile))
@@ -74,15 +62,8 @@ public class UserAssemblerService {
                                                            AuthLoginModelRequest authMobile){
         return  userServices.fetchUserByEmail(authMobile.getUserInfo().getUserEmail())
                     .map(userInfoEntityModel ->
-                            castUserProfile(authTokenResponseEntityModel.getContent(),
+                            mappers.castUserProfile(authTokenResponseEntityModel.getContent(),
                             userInfoEntityModel.getContent()));
-    }
-
-    private UserDetails castUserProfile(AuthTokenResponse authTokenResponse, UserInfo userInfo) {
-        return UserDetails.builder()
-                .userGeneralInfo(userInfo)
-                .userToken(authTokenResponse)
-                .build();
     }
 
     public void userLogOut(Map<String, String> headers) {

@@ -1,7 +1,9 @@
 package com.ecommercepractice.assemblerservice.config;
 
-import com.ecommercepractice.assemblerservice.services.AuthServices;
-import com.ecommercepractice.assemblerservice.services.UserServices;
+import com.ecommercepractice.assemblerservice.clients.AuthServices;
+import com.ecommercepractice.assemblerservice.clients.ProductsServices;
+import com.ecommercepractice.assemblerservice.clients.StockServices;
+import com.ecommercepractice.assemblerservice.clients.UserServices;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import okhttp3.OkHttpClient;
@@ -20,6 +22,12 @@ public class AppConfig {
 
     @Value("${auth.base.url}")
     private String authEndpoint;
+
+    @Value("${product.base.url}")
+    private String productEndpoint;
+
+    @Value("${stock.base.url}")
+    private String stockEndpoint;
 
     @Bean
     public AuthServices retrofitAuth(){
@@ -41,6 +49,28 @@ public class AppConfig {
                 .client(customOkHttpClient())
                 .build();
         return retrofit.create(UserServices.class);
+    }
+
+    @Bean
+    public ProductsServices retrofitProducts(){
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(productEndpoint)
+                .addConverterFactory(JacksonConverterFactory.create(objectMapper()))
+                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+                .client(customOkHttpClient())
+                .build();
+        return retrofit.create(ProductsServices.class);
+    }
+
+    @Bean
+    public StockServices retrofitStock(){
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(stockEndpoint)
+                .addConverterFactory(JacksonConverterFactory.create(objectMapper()))
+                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+                .client(customOkHttpClient())
+                .build();
+        return retrofit.create(StockServices.class);
     }
 
     private ObjectMapper objectMapper() {

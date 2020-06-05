@@ -4,23 +4,29 @@ import com.ecommercepractice.assemblerservice.exceptions.ServiceFailException;
 import com.ecommercepractice.assemblerservice.exceptions.ServiceUnavailableException;
 import com.ecommercepractice.assemblerservice.models.ServiceFail;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import lombok.extern.slf4j.Slf4j;
 import okhttp3.Interceptor;
+import okhttp3.Request;
 import okhttp3.Response;
 
 import java.io.IOException;
 import java.net.ConnectException;
 
+@Slf4j
 public class ResponseCodeCheckInterceptor implements Interceptor {
 
     @Override
     public Response intercept(Chain chain) throws IOException {
 
         try{
-            Response response = chain.proceed(chain.request());
+            Request request = chain.request();
+            log.info(String.format("Making a petition to %s",request.url().toString()));
+            Response response = chain.proceed(request);
 
             if (response.isSuccessful()){
                 return response;
             }
+
             throw new ServiceFailException(castError(response));
 
         } catch(ConnectException connectException){

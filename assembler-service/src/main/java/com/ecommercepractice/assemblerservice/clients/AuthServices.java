@@ -1,10 +1,9 @@
-package com.ecommercepractice.assemblerservice.services;
+package com.ecommercepractice.assemblerservice.clients;
 
 import com.ecommercepractice.assemblerservice.models.authModels.request.AuthLoginModelRequest;
 import com.ecommercepractice.assemblerservice.models.authModels.request.AuthRegisterRequest;
 import com.ecommercepractice.assemblerservice.models.authModels.responses.AuthRegisterResponse;
 import com.ecommercepractice.assemblerservice.models.authModels.responses.AuthTokenResponse;
-import io.reactivex.Completable;
 import io.reactivex.Observable;
 import org.springframework.hateoas.EntityModel;
 import retrofit2.Response;
