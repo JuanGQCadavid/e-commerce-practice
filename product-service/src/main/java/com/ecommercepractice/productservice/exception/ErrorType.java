@@ -1,5 +1,6 @@
 package com.ecommercepractice.productservice.exception;
 
+import com.ecommercepractice.utilities.exception.GeneralErrorType;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import org.springframework.http.HttpStatus;
@@ -16,4 +17,8 @@ public enum ErrorType {
 
     private String label;
     private HttpStatus status;
+
+    public GeneralErrorType generateGeneral(){
+        return new GeneralErrorType(label, status);
+    }
 }

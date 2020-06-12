@@ -2,6 +2,7 @@ package com.ecommercepractice.userservice.service;
 
 import com.ecommercepractice.userservice.dao.IUserDao;
 import com.ecommercepractice.userservice.exception.UserAlreadyCreatedException;
+import com.ecommercepractice.userservice.exception.UserNotFoundByEmailException;
 import com.ecommercepractice.userservice.exception.UserNotFoundException;
 import com.ecommercepractice.userservice.models.User;
 import lombok.NoArgsConstructor;
@@ -39,5 +40,9 @@ public class UserService {
 
     public User updateUser(Long userId, User user){
         return userDao.updateUserByUserId(userId,user).orElseThrow(() -> new UserNotFoundException(userId));
+    }
+
+    public User getUserByEmail(String userEmail) {
+        return userDao.findUserByEamil(userEmail).orElseThrow(() -> new UserNotFoundByEmailException(userEmail));
     }
 }

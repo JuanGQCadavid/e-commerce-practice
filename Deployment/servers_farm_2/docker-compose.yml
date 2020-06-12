@@ -1,0 +1,10 @@
+version: '3'
+services:
+    auth:
+        image: jquiro12/auth-service
+        ports:
+          - 8083:8080
+    payment:
+        image: jquiro12/payment-service
+        ports:
+          - 8087:8080
