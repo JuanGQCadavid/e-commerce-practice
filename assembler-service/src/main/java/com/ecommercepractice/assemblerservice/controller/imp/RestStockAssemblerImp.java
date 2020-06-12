@@ -2,14 +2,18 @@ package com.ecommercepractice.assemblerservice.controller.imp;
 
 import com.ecommercepractice.assemblerservice.controller.RestStockAssembler;
 import com.ecommercepractice.assemblerservice.models.assemblerModels.StockProductDTO;
+import com.ecommercepractice.assemblerservice.models.stockModels.response.StockProduct;
 import com.ecommercepractice.assemblerservice.services.StockAssemblerService;
 import lombok.extern.slf4j.Slf4j;
+import okhttp3.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestBody;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @Slf4j
@@ -36,5 +40,12 @@ public class RestStockAssemblerImp implements RestStockAssembler {
         List<StockProductDTO> stockProducts = stockAssemblerService.fetchFilteredStockProducts(price,stockQuantity,
                 soldQuantity, onlyActive);
         return new ResponseEntity(stockProducts,HttpStatus.OK);
+    }
+
+    @Override
+    public ResponseEntity appendToStock(StockProduct stockProduct) {
+        log.info(String.format(" %s | STOCK | APPEND", appName));
+        stockAssemblerService.appendToStock(stockProduct);
+        return new ResponseEntity(HttpStatus.CREATED);
     }
 }

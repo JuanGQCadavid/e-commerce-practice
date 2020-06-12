@@ -6,6 +6,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import javax.validation.constraints.NotNull;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -14,9 +16,11 @@ public class StockProduct {
     @ApiModelProperty("Stock's id")
     private Long idInventory;
 
+    @NotNull
     @ApiModelProperty("Stock's product's id")
     private Long idProduct;
 
+    @NotNull
     @ApiModelProperty("Stock's Quantity available for being sold")
     private Long stockQuantity;
 
@@ -26,6 +30,7 @@ public class StockProduct {
     @ApiModelProperty("Stock's freeze quantity, middle step towards a purchased")
     private Long freezeQuantity;
 
+    @NotNull
     @ApiModelProperty("Stock's sales price")
     private Float salePrice;
 

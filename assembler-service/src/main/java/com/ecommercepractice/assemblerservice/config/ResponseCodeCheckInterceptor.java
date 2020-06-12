@@ -36,9 +36,7 @@ public class ResponseCodeCheckInterceptor implements Interceptor {
 
     public ServiceFail castError(Response responseCall) throws IOException {
         String err = responseCall.body().string();
-
-        System.out.println(err);
-
+        log.error(err);
         if (err.isEmpty()){
             return ServiceFail.builder()
                     .errorType("NONE")
@@ -48,7 +46,6 @@ public class ResponseCodeCheckInterceptor implements Interceptor {
                     .build();
         }
 
-        System.out.println();
         ObjectMapper objectMapper = new ObjectMapper();
         return objectMapper.readValue(err, ServiceFail.class);
     }

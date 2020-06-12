@@ -7,6 +7,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class StockAssemblerMappers {
+
     public Product noProduct(long idProduct) {
         return Product.builder()
                 .description("No description.")

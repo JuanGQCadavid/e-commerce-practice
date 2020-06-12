@@ -7,7 +7,7 @@ import com.ecommercepractice.assemblerservice.models.productModels.response.Prod
 import com.ecommercepractice.assemblerservice.models.stockModels.response.StockProduct;
 import com.ecommercepractice.assemblerservice.services.mappers.StockAssemblerMappers;
 import com.ecommercepractice.utilities.util.Pair;
-import io.reactivex.Observable;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.EntityModel;
 import org.springframework.stereotype.Service;
@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.stream.Collectors;
 
+@Slf4j
 @Service
 public class StockAssemblerService {
     @Autowired
@@ -38,7 +39,6 @@ public class StockAssemblerService {
                 .blockingFirst();
     }
 
-
     public List<StockProductDTO> castStockProducts(List<EntityModel<StockProduct>> stockProducts){
         return stockProducts.stream()
                 .map(EntityModel::getContent)
@@ -51,10 +51,25 @@ public class StockAssemblerService {
                 .collect(Collectors.toList());
     }
 
+
     public Product fetchProductInfo(long idProduct){
         return productsServices.fetchProductById(idProduct)
                 .map(productEntityModel -> productEntityModel.getContent())
                 .onErrorReturnItem(mappers.noProduct(idProduct))
                 .blockingFirst();
+    }
+
+    public void validProductId(Long idProduct){
+        productsServices.fetchProductById(idProduct)
+                .map(productEntityModel -> productEntityModel.getContent())
+                .doOnError( throwable -> {
+                    throwable.getCause();
+                })
+                .blockingFirst();
+    }
+
+    public void appendToStock(StockProduct stockProduct) {
+        validProductId(stockProduct.getIdProduct());
+        stockServices.appendToStock(stockProduct).blockingFirst();
     }
 }

@@ -3,7 +3,9 @@ package com.ecommercepractice.assemblerservice.clients;
 import com.ecommercepractice.assemblerservice.models.stockModels.response.StockProduct;
 import io.reactivex.Observable;
 import org.springframework.hateoas.EntityModel;
+import retrofit2.http.Body;
 import retrofit2.http.GET;
+import retrofit2.http.POST;
 import retrofit2.http.Query;
 
 import java.util.List;
@@ -19,6 +21,9 @@ public interface StockServices {
 
     @GET(ENDPOINT_PREFIX + "/filter")
     Observable<List<EntityModel<StockProduct>>> filterProducts();
+
+    @POST(ENDPOINT_PREFIX + "/")
+    Observable<EntityModel<StockProduct>> appendToStock(@Body StockProduct stockProduct);
 
 
 }
