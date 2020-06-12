@@ -1,0 +1,7 @@
+version: '3'
+services:
+    product:
+        image: jquiro12/product-service
+        ports:
+          - 8084:8080
+          

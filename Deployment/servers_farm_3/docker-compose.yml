@@ -1,0 +1,10 @@
+version: '3'
+services:
+    stock:
+        image: jquiro12/stock-service
+        ports:
+          - 8085:8080
+    cart:
+        image: jquiro12/cart-service
+        ports:
+          - 8086:8080

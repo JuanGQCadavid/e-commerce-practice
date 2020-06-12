@@ -1,5 +1,6 @@
 package com.ecommercepractice.authentication.exceptions;
 
+import com.ecommercepractice.utilities.exception.GeneralErrorType;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import org.springframework.http.HttpStatus;
@@ -22,4 +23,7 @@ public enum ErrorType {
 
     private final String label;
     private HttpStatus status;
+    public GeneralErrorType generateGeneral(){
+        return new GeneralErrorType(label, status);
+    }
 }
